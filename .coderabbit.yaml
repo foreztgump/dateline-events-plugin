@@ -1,0 +1,90 @@
+language: en-US
+reviews:
+  profile: assertive
+  request_changes_workflow: true
+  auto_review:
+    enabled: true
+  path_instructions:
+    - path: "packages/*/src/**/*.ts"
+      instructions: |
+        Review against CODE_PRINCIPLES.md. Focus on:
+        - SRP: does each function/class have a single responsibility?
+        - Deep modules: are interfaces simple while hiding complexity?
+        - Error handling: every `await ctx.content.*`, `await ctx.http.fetch`, `await ctx.kv.*`, and Stripe SDK call must be inside a try/catch on plugin route/hook handlers. Bare promises in handlers MUST use `ctx.waitUntil(promise)` — silent cancellation is the #1 EmDash plugin bug (Issue #710).
+        - Naming: camelCase for functions/vars; PascalCase for types, classes, interfaces; no abbreviations; no generic names (data, info, item, temp, result) in scopes longer than 3 lines.
+        - No magic values: all literals that aren't 0, 1, true, false, or '' must be named constants.
+        - Capability declarations: every plugin's `definePlugin({ capabilities })` array must be the minimum subset required by the code below it. `network:fetch:any`, `read:users`, and `email:intercept` add caution flags — push back if they appear without justification.
+        - Block Kit: sandboxed plugin admin routes return `{ blocks, toast? }`. Reject any handler that returns raw `Response`, redirects, or arbitrary HTML.
+        - Sandboxed CPU/subrequest budget (50ms / 10 subrequests): flag handlers with > 1 sequential awaited fetch + > 2 KV operations + > 1 content read. Recommend batching or `ctx.waitUntil` deferral.
+    - path: "packages/*/src/**/*.tsx"
+      instructions: |
+        React components in NATIVE-format plugins only. Apply the same TypeScript rules above plus:
+        - Hooks rules of React 19 (no conditional hooks, dependency arrays correct)
+        - Components < 200 lines; extract sub-components above that
+        - No inline event handler closures that capture stale state
+        - Accessibility: every interactive element has a label or aria-label; keyboard navigation works
+    - path: "packages/views/**/*.astro"
+      instructions: |
+        Astro components in `@dateline/views`. Review for:
+        - Server-side data fetching at the top fence; client-only logic in `<script>` islands
+        - No leaking sensitive content (admin tokens, internal IDs, full attendee email lists) to the client bundle
+        - Schema.org JSON-LD generated server-side from the structured event payload
+    - path: "**/*.test.ts"
+      instructions: |
+        Tests follow Arrange-Act-Assert. Each test covers one behavior. Test names describe expected behavior, not implementation details. No test logic duplication — use helpers for shared setup.
+        Race-correctness tests for inventory decrement, hold expiry, and Stripe webhook idempotency MUST exercise concurrent paths — flag any race-correctness test that runs sequentially.
+    - path: "**/wrangler.{json,jsonc,toml}"
+      instructions: |
+        Wrangler config. Verify:
+        - `compatibility_date` is recent (within 90 days of PR date)
+        - `compatibility_flags` includes `nodejs_compat`
+        - `kv_namespaces`, `d1_databases`, `r2_buckets` use `binding` names that match what the code reads from `env`
+        - No secrets in plain `vars` — they belong in `wrangler secret put`
+    - path: "packages/*/src/**/index.ts"
+      instructions: |
+        Plugin entry points using `definePlugin({...})`. Verify:
+        - `id` matches package name (e.g., `dateline-tickets-backend`)
+        - `version` matches package.json
+        - `capabilities` declares the minimum subset required
+        - `allowedHosts` is set if `network:fetch` is declared (and is NOT `*`)
+        - Storage settings flagged secret use `type: "secret"`
+        - All hooks return without leaving uncaught promises — async work uses `ctx.waitUntil`
+  tools:
+    eslint:
+      enabled: true
+  custom_checks:
+    - name: 'EmDash + Workers Hard Rules'
+      mode: 'warning'
+      instructions: |
+        Check changed files for these violations and report with file:line references:
+        1. Functions longer than 40 lines — suggest decomposition
+        2. Magic numbers/strings not defined as named constants (ignore 0, 1, true, false, '')
+        3. Functions with more than 3 parameters — suggest options object
+        4. Nesting deeper than 3 levels — suggest early returns or extraction
+        5. `await` calls without try/catch in plugin route/hook handlers — flag every external boundary call (ctx.content, ctx.http, ctx.kv, Stripe SDK)
+        6. Bare unawaited promises in plugin handlers (fire-and-forget) — MUST use `ctx.waitUntil(promise)` or the `after()` helper
+        7. Use of `void promise` to discard a promise in handler code — same issue as #6
+        8. Hardcoded capability names that don't match action-first canonical (`content:read` instead of `read:content`)
+        9. Sandboxed plugin handlers with more than 10 outbound `ctx.http.fetch` or 10 sequential awaited operations (likely exceeds 10-subrequest limit)
+        10. Stripe webhook handlers that don't call `stripe.webhooks.constructEvent(rawBody, signature, secret)` before processing
+        11. Stripe webhook handlers that don't dedupe by event id in KV with TTL
+        12. RRULE strings created without `tzid` set (DST/timezone correctness — rrule.js Issue #501)
+        13. Datetime fields stored as anything other than ISO 8601 UTC (`Z` suffix)
+        14. Generic names (data, info, item, temp, result) in scopes longer than 3 lines
+        15. Speculative abstractions — code that handles cases not required by the current task (YAGNI)
+        16. Method chains reaching through 2+ objects (Law of Demeter violations)
+        17. Plugin route handlers returning raw `Response` or redirects (must return `{ blocks, toast? }` Block Kit response)
+        18. Eager materialization of recurring event occurrences past 2 years forward
+        19. Use of D1, raw SQL, or filesystem APIs (forbidden in plugins — must go through ctx.content)
+        20. Missing `read:content` capability when `ctx.content.get/list` is called; missing `write:content` when `create/update/delete` is called
+        Pass if no violations found.
+knowledge_base:
+  code_guidelines:
+    enabled: true
+    filePatterns:
+      - 'CODE_PRINCIPLES.md'
+      - 'AGENTS.md'
+  learnings:
+    scope: auto
+chat:
+  auto_reply: true

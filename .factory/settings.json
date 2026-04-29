@@ -1,0 +1,28 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Execute",
+        "hooks": [
+          { "type": "command", "command": ".factory/hooks/pre-execute-firewall.sh" },
+          { "type": "command", "command": ".factory/hooks/pre-execute-protected-branch.sh" }
+        ]
+      },
+      {
+        "matcher": "Edit|Create",
+        "hooks": [
+          { "type": "command", "command": ".factory/hooks/pre-edit-secrets.sh" },
+          { "type": "command", "command": ".factory/hooks/pre-edit-worktree-boundary.sh" }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Create",
+        "hooks": [
+          { "type": "command", "command": ".factory/hooks/post-edit-autoformat.sh" }
+        ]
+      }
+    ]
+  }
+}

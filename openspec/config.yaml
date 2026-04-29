@@ -1,0 +1,119 @@
+schema: spec-driven
+
+context: |
+  Project: Dateline — events, calendar & ticketing plugin family for EmDash CMS
+
+  Overview: A modular plugin family that brings WordPress-grade events, calendar, and ticketing to EmDash. Standard-format (sandboxed) plugins handle backend logic — events, RSVPs, recurring rules, Stripe-backed ticketing, virtual meeting provisioning. Native-format plugins ship React admin UIs — seat-map designer, AI chat panel, check-in PWA, ticket admin. Frontend rendering is an Astro component package (@dateline/views) consumed by EmDash themes. AI-native by design: every Dateline operation is reachable via EmDash's built-in MCP server through ctx.content.
+
+  Stack:
+    - Runtime: Cloudflare Workers (Paid plan; required for Dynamic Worker sandbox)
+    - Language: TypeScript 6.0.3 (strict mode, project references)
+    - Package manager: pnpm 10.33.2 workspaces
+    - CMS host: EmDash 0.8.0 (plugin SDK via `emdash` npm package; Astro 6.1.10 frontend host)
+    - Cloudflare adapter: @astrojs/cloudflare 13.2.2
+    - Build/deploy: Wrangler 4.86.0 (JSONC config, nodejs_compat flag, compatibility_date pinned)
+    - Testing: Vitest 4.1.5 (unit) + @playwright/test 1.59.1 (E2E + visual)
+    - Validation: Zod 6.0.3 (manifest, payload, Block Kit response shapes)
+    - Payments: Stripe Node SDK 19.2.5 (API 2026-01-28; constructEvent for webhook signature)
+    - Recurrence: rrule 2.8.1 (RFC 5545, IANA tzid)
+    - iCal: ical-generator 10.2.0
+    - Content blocks: @portabletext/types 4.0.2 + @portabletext/toolkit 4.4.0
+    - React 19.2.5 (native-format admin UIs only — @dateline/ai, @dateline/seats, @dateline/checkin, @dateline/tickets-admin)
+
+  Standards:
+    - EmDash plugin SDK: definePlugin({ id, version, capabilities, allowedHosts, storage, hooks, routes, admin })
+    - Canonical capability naming: action-first (read:content, write:content, network:fetch, email:send) — match Cloudflare blog and docs.emdashcms.com, NOT the legacy SKILL.md content:read style
+    - Standard format = sandboxed (V8 isolate, 50ms CPU / 10 subrequest limit, marketplace-distributable)
+    - Native format = admin.entry set, locally registered, not sandboxed (used for React admin UIs that exceed Block Kit)
+    - ctx.waitUntil(promise) MANDATORY for async-after-response on Workers — bare promises silently cancel (EmDash Issue #710)
+    - Block Kit JSON only for sandboxed admin UIs (no arbitrary HTML/JS); use validateBlocks() against typed builders in CI
+    - ctx.kv and ctx.log always granted (no capability declaration)
+    - cron hook + ctx.cron.schedule() available in 0.8.x for time-based triggers (status transitions, hold expiry sweeps)
+    - Custom MCP tool registration: API not yet verified in 0.8.x — interim path is REST routes + standalone @dateline/mcp wrapper. Confirm or file upstream feature request before v0.4 (AI release).
+    - x402 micropayments handled by EmDash core; plugins set price metadata only
+
+  Structure (monorepo):
+    packages/
+      core/                  @dateline/core (sandboxed, MIT)
+      rsvp/                  @dateline/rsvp (sandboxed, MIT)
+      recurring/             @dateline/recurring (sandboxed, MIT)
+      importer/              @dateline/importer (sandboxed, MIT)
+      views/                 @dateline/views (Astro components, MIT)
+      tickets-backend/       @dateline/tickets-backend (sandboxed, commercial)
+      tickets-admin/         @dateline/tickets-admin (native, peer of tickets-backend)
+      seats/                 @dateline/seats (native, commercial)
+      checkin/               @dateline/checkin (native PWA, commercial)
+      virtual/               @dateline/virtual (sandboxed, commercial)
+      pricing/               @dateline/pricing (sandboxed, commercial)
+      ai/                    @dateline/ai (native, commercial)
+      blocks/                @dateline/blocks (internal Block Kit builder library)
+    apps/
+      reference-site/        Astro reference theme integrating @dateline/views
+    examples/
+      stripe-test-harness/   Stripe webhook fixtures and inventory race tests
+    research/                Source for clean-room analysis (gitignored sources/)
+    openspec/                Spec-driven workflow artifacts
+
+  Testing:
+    - Unit: Vitest 4.1.5 — colocated *.test.ts; AAA structure; one behavior per test
+    - Race-correctness: dedicated tests for inventory decrement, hold expiry, idempotent webhook delivery (Stripe at-least-once)
+    - Workers integration: @cloudflare/vitest-pool-workers for tests that need real KV bindings
+    - E2E: @playwright/test 1.59.1 — checkout flow, RSVP form, seat picker, check-in PWA
+    - Visual regression: Playwright screenshots for calendar views (month/week/day/list)
+    - Plugin sandbox limits enforced in CI: every sandboxed handler must complete within 50ms CPU and 10 subrequests; lint rule + perf test gate
+
+  Security:
+    - Sandboxed plugins ONLY get declared capabilities — no filesystem, no raw SQL, no unrestricted network, no other plugins' KV
+    - Native plugins are TRUSTED code; install dialog must show a clear trust grant
+    - Cloudflare Free plan disables Dynamic Workers — sandbox isolation pitch only valid on Paid; document at install time
+    - Stripe webhook verification: constructEvent with raw body + idempotency KV (TTL 7 days, key on stripeEventId) — never void/fire-and-forget; use ctx.waitUntil for promotion work
+    - PII protection: attendee names/emails NEVER sent to LLM in @dateline/ai unless user explicitly confirms; rate + spend caps per workspace
+    - GDPR data export + erasure handlers ship in v0.1 — required from day one
+    - x402 secrets, Stripe keys, LLM keys: declared in storage.settings as type:secret; never logged
+    - Cloudflare WAF/Bot Fight Mode known to block Stripe webhook deliveries — document carve-out in install guide
+    - AgentShield scans .claude/ and .factory/ at every CI gate (when CI added)
+
+  Deployment:
+    - Plugin distribution:
+      - Sandboxed packages → publish to npm under @dateline scope, list in EmDash plugin marketplace
+      - Native packages → npm + CLI installer (`npx dateline-<name> install`); cannot ship via marketplace auto-install
+    - Each EmDash site running Dateline deploys via Wrangler to Cloudflare Workers (Paid)
+    - Compatibility date pinned in wrangler.jsonc; nodejs_compat flag required
+    - Bindings used by Dateline plugins: KV (per-plugin scoped automatically), no D1 access (use ctx.content)
+
+  Legal:
+    - PRD authored from clean-room analysis of 14 GPL WordPress plugins (TEC, Eventin, EventON, EventON add-ons)
+    - Architecture and patterns are not copyrightable; specific code expression is. NEVER copy PHP source into TypeScript.
+    - MIT license for free plugins; commercial license for paid add-ons
+    - PHP → TypeScript language change is a deliberate guard against accidental verbatim derivation
+
+rules:
+  proposal:
+    - Include rollback plan for risky changes
+  specs:
+    - Use Given/When/Then format
+  design:
+    - Include sequence diagrams for complex flows
+    - Explicitly evaluate module depth — prefer deep modules (simple interface, complex implementation)
+    - Address information hiding — what design decisions does each module encapsulate?
+    - Consider at least two design approaches before committing (design it twice)
+    - Document dependency direction — high-level modules depend on abstractions
+  tasks:
+    - Each task < 2 hours
+    - Include acceptance criteria
+    - Specify test files to create/update
+    - Include applicable code quality constraints from CODE_PRINCIPLES.md
+    - Specify error handling strategy for the task's scope
+  code:
+    - Functions do one thing — if a function needs 'and' in its description, split it
+    - No magic values — all literals that aren't self-evident must be named constants
+    - Prefer deep modules — simple interface, complex implementation hidden behind it
+    - Error handling is mandatory for all async operations and external boundaries
+    - Names reveal intent — no abbreviations, no generic names (data, info, item, temp)
+    - Maximum 3 levels of nesting — use early returns, extraction, or guard clauses
+    - Comments explain WHY, not WHAT — code should be self-documenting for the what
+    - No duplicated logic — extract shared behavior into functions or modules
+    - KISS — pick the simplest solution that works; no unnecessary patterns or indirection
+    - YAGNI — only build what the task requires; no speculative abstractions
+    - Law of Demeter — talk to direct collaborators only; no chaining through objects
+    - Composition over inheritance — combine objects, don't extend class hierarchies

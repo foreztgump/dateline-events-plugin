@@ -1,0 +1,28 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          { "type": "command", "command": ".claude/hooks/pre-bash-firewall.sh" },
+          { "type": "command", "command": ".claude/hooks/pre-bash-protected-branch.sh" }
+        ]
+      },
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          { "type": "command", "command": ".claude/hooks/pre-edit-secrets.sh" },
+          { "type": "command", "command": ".claude/hooks/pre-edit-worktree-boundary.sh" }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          { "type": "command", "command": ".claude/hooks/post-edit-autoformat.sh" }
+        ]
+      }
+    ]
+  }
+}
