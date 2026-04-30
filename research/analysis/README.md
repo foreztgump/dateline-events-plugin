@@ -30,7 +30,7 @@ phase: <0|1|2|3|4>            # analysis phase that produced this doc
 doc: <00-overview|01-data-model|02-hooks|03-features|04-admin-ux|05-frontend-ux|06-integrations|07-edge-cases|08-anti-patterns>
 priority: <P0|P1|P2|P3>       # from PRD source inventory
 analyst: <human|claude>        # who produced this doc
-date: <YYYY-MM-DD>
+analyzed: <YYYY-MM-DD>
 status: <draft|review|final>
 notes: |
   Free-form notes about this doc — caveats, confidence level, anything the reader should know.

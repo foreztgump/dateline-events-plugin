@@ -31,14 +31,14 @@ Reading 14 plugins of PHP code raw is unmanageable. Copying any of it is a licen
 | eventon-rsvp | 3.0.3 | Free RSVP flow reference | P1 |
 | eventon-seats | 1.2.6 | Seat-map UX reference (hardest UX) | P1 |
 | eventon-ticket-variations-options | 1.1.4 | Combinatoric ticket pricing | P1 |
-| eventon-rsvp-waitlist | 1.1.1 | Capacity overflow / race conditions | P2 |
+| eventon-rsvp-events-waitlist | 1.1.1 | Capacity overflow / race conditions | P2 |
 | eventon-rsvp-invitees | 1.0.2 | Token-gated private events | P2 |
 | eventon-qrcode | 2.0.3 | Ticket validation / check-in flow | P2 |
 | eventon-full-cal | 2.1.3 | Traditional month-grid view | P2 |
 | eventon-weekly-view | 2.1.4 | Week layout patterns | P2 |
 | eventon-slider | 2.1 | Visual showcase patterns | P3 |
 | eventon-csv-importer | 1.1.10 | Bulk import patterns | P3 |
-| eventon-wishlist | 1.1.2 | Gamification primitives | P3 |
+| eventon-wishlist-add-on | 1.1.2 | Gamification primitives | P3 |
 
 ---
 
