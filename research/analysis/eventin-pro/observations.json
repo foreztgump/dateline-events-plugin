@@ -1,0 +1,730 @@
+{
+  "admin_screens": [
+    {
+      "name": "admin-001-events-list",
+      "desc": "Events list table (all events)",
+      "url": "/wp-admin/edit.php?post_type=etn",
+      "title": "WordPress \u203a Error",
+      "screenshot": "admin-001-events-list.png",
+      "tabs": [],
+      "form_fields": [],
+      "content_excerpt": "\n\tInvalid post type.\n\n\t\t\t\n\t\tThis message was triggered by WordPress Core.Call stack:wp_die()Query Monitor"
+    },
+    {
+      "name": "admin-002-event-new",
+      "desc": "New event creation screen",
+      "url": "/wp-admin/post-new.php?post_type=etn",
+      "title": "WordPress \u203a Error",
+      "screenshot": "admin-002-event-new.png",
+      "tabs": [],
+      "form_fields": [],
+      "content_excerpt": "\n\tInvalid post type.\n\n\t\t\t\n\t\tThis message was triggered by WordPress Core.Call stack:wp_die()Query Monitor"
+    },
+    {
+      "name": "admin-003-attendees-list",
+      "desc": "Attendees list table",
+      "url": "/wp-admin/edit.php?post_type=etn-attendee",
+      "title": "WordPress \u203a Error",
+      "screenshot": "admin-003-attendees-list.png",
+      "tabs": [],
+      "form_fields": [],
+      "content_excerpt": "\n\tInvalid post type.\n\n\t\t\t\n\t\tThis message was triggered by WordPress Core.Call stack:wp_die()Query Monitor"
+    },
+    {
+      "name": "admin-004-speakers-list",
+      "desc": "Speakers list table",
+      "url": "/wp-admin/edit.php?post_type=etn-speaker",
+      "title": "WordPress \u203a Error",
+      "screenshot": "admin-004-speakers-list.png",
+      "tabs": [],
+      "form_fields": [],
+      "content_excerpt": "\n\tInvalid post type.\n\n\t\t\t\n\t\tThis message was triggered by WordPress Core.Call stack:wp_die()Query Monitor"
+    },
+    {
+      "name": "admin-005-webhooks-list",
+      "desc": "Webhooks list",
+      "url": "/wp-admin/edit.php?post_type=etn-webhook",
+      "title": "WordPress \u203a Error",
+      "screenshot": "admin-005-webhooks-list.png",
+      "tabs": [],
+      "form_fields": [],
+      "content_excerpt": "\n\tInvalid post type.\n\n\t\t\t\n\t\tThis message was triggered by WordPress Core.Call stack:wp_die()Query Monitor"
+    },
+    {
+      "name": "admin-006-templates-list",
+      "desc": "Template builder \u2014 certificate/ticket templates",
+      "url": "/wp-admin/edit.php?post_type=etn-template",
+      "title": "WordPress \u203a Error",
+      "screenshot": "admin-006-templates-list.png",
+      "tabs": [],
+      "form_fields": [],
+      "content_excerpt": "\n\tInvalid post type.\n\n\t\t\t\n\t\tThis message was triggered by WordPress Core.Call stack:wp_die()Query Monitor"
+    },
+    {
+      "name": "admin-007-ticket-scanner",
+      "desc": "QR ticket scanner interface",
+      "url": "/wp-admin/edit.php?post_type=etn-attendee&etn_action=ticket_scanner",
+      "title": "WordPress \u203a Error",
+      "screenshot": "admin-007-ticket-scanner.png",
+      "tabs": [],
+      "form_fields": [],
+      "content_excerpt": "\n\tInvalid post type.\n\n\t\t\t\n\t\tThis message was triggered by WordPress Core.Call stack:wp_die()Query Monitor"
+    },
+    {
+      "name": "admin-010-settings-general",
+      "desc": "Settings \u2014 General",
+      "url": "/wp-admin/admin.php?page=eventin_settings",
+      "title": "WordPress \u203a Error",
+      "screenshot": "admin-010-settings-general.png",
+      "tabs": [],
+      "form_fields": [],
+      "content_excerpt": "\n\tSorry, you are not allowed to access this page.\n\n\t\t\t\n\t\tThis message was triggered by WordPress Core.Call stack:wp_die()Query Monitor"
+    },
+    {
+      "name": "admin-011-settings-ticket",
+      "desc": "Settings \u2014 Ticket",
+      "url": "/wp-admin/admin.php?page=eventin_settings&tab=ticket",
+      "title": "WordPress \u203a Error",
+      "screenshot": "admin-011-settings-ticket.png",
+      "tabs": [],
+      "form_fields": [],
+      "content_excerpt": "\n\tSorry, you are not allowed to access this page.\n\n\t\t\t\n\t\tThis message was triggered by WordPress Core.Call stack:wp_die()Query Monitor"
+    },
+    {
+      "name": "admin-012-settings-email",
+      "desc": "Settings \u2014 Email notifications",
+      "url": "/wp-admin/admin.php?page=eventin_settings&tab=email",
+      "title": "WordPress \u203a Error",
+      "screenshot": "admin-012-settings-email.png",
+      "tabs": [],
+      "form_fields": [],
+      "content_excerpt": "\n\tSorry, you are not allowed to access this page.\n\n\t\t\t\n\t\tThis message was triggered by WordPress Core.Call stack:wp_die()Query Monitor"
+    },
+    {
+      "name": "admin-013-settings-payments",
+      "desc": "Settings \u2014 Payments (Stripe/PayPal)",
+      "url": "/wp-admin/admin.php?page=eventin_settings&tab=payments",
+      "title": "WordPress \u203a Error",
+      "screenshot": "admin-013-settings-payments.png",
+      "tabs": [],
+      "form_fields": [],
+      "content_excerpt": "\n\tSorry, you are not allowed to access this page.\n\n\t\t\t\n\t\tThis message was triggered by WordPress Core.Call stack:wp_die()Query Monitor"
+    },
+    {
+      "name": "admin-014-settings-zoom",
+      "desc": "Settings \u2014 Zoom",
+      "url": "/wp-admin/admin.php?page=eventin_settings&tab=zoom",
+      "title": "WordPress \u203a Error",
+      "screenshot": "admin-014-settings-zoom.png",
+      "tabs": [],
+      "form_fields": [],
+      "content_excerpt": "\n\tSorry, you are not allowed to access this page.\n\n\t\t\t\n\t\tThis message was triggered by WordPress Core.Call stack:wp_die()Query Monitor"
+    },
+    {
+      "name": "admin-015-settings-google",
+      "desc": "Settings \u2014 Google Meet",
+      "url": "/wp-admin/admin.php?page=eventin_settings&tab=google_meet",
+      "title": "WordPress \u203a Error",
+      "screenshot": "admin-015-settings-google.png",
+      "tabs": [],
+      "form_fields": [],
+      "content_excerpt": "\n\tSorry, you are not allowed to access this page.\n\n\t\t\t\n\t\tThis message was triggered by WordPress Core.Call stack:wp_die()Query Monitor"
+    },
+    {
+      "name": "admin-016-settings-cert",
+      "desc": "Settings \u2014 Certificate",
+      "url": "/wp-admin/admin.php?page=eventin_settings&tab=certificate",
+      "title": "WordPress \u203a Error",
+      "screenshot": "admin-016-settings-cert.png",
+      "tabs": [],
+      "form_fields": [],
+      "content_excerpt": "\n\tSorry, you are not allowed to access this page.\n\n\t\t\t\n\t\tThis message was triggered by WordPress Core.Call stack:wp_die()Query Monitor"
+    },
+    {
+      "name": "admin-017-settings-rsvp",
+      "desc": "Settings \u2014 RSVP",
+      "url": "/wp-admin/admin.php?page=eventin_settings&tab=rsvp",
+      "title": "WordPress \u203a Error",
+      "screenshot": "admin-017-settings-rsvp.png",
+      "tabs": [],
+      "form_fields": [],
+      "content_excerpt": "\n\tSorry, you are not allowed to access this page.\n\n\t\t\t\n\t\tThis message was triggered by WordPress Core.Call stack:wp_die()Query Monitor"
+    },
+    {
+      "name": "admin-018-settings-ai",
+      "desc": "Settings \u2014 AI Generator",
+      "url": "/wp-admin/admin.php?page=eventin_settings&tab=ai",
+      "title": "WordPress \u203a Error",
+      "screenshot": "admin-018-settings-ai.png",
+      "tabs": [],
+      "form_fields": [],
+      "content_excerpt": "\n\tSorry, you are not allowed to access this page.\n\n\t\t\t\n\t\tThis message was triggered by WordPress Core.Call stack:wp_die()Query Monitor"
+    },
+    {
+      "name": "admin-019-settings-advanced",
+      "desc": "Settings \u2014 Advanced",
+      "url": "/wp-admin/admin.php?page=eventin_settings&tab=advanced",
+      "title": "WordPress \u203a Error",
+      "screenshot": "admin-019-settings-advanced.png",
+      "tabs": [],
+      "form_fields": [],
+      "content_excerpt": "\n\tSorry, you are not allowed to access this page.\n\n\t\t\t\n\t\tThis message was triggered by WordPress Core.Call stack:wp_die()Query Monitor"
+    },
+    {
+      "name": "admin-020-settings-api",
+      "desc": "Settings \u2014 API Keys",
+      "url": "/wp-admin/admin.php?page=eventin_settings&tab=api",
+      "title": "WordPress \u203a Error",
+      "screenshot": "admin-020-settings-api.png",
+      "tabs": [],
+      "form_fields": [],
+      "content_excerpt": "\n\tSorry, you are not allowed to access this page.\n\n\t\t\t\n\t\tThis message was triggered by WordPress Core.Call stack:wp_die()Query Monitor"
+    },
+    {
+      "name": "admin-021-settings-perm",
+      "desc": "Settings \u2014 Permissions tab",
+      "url": "/wp-admin/admin.php?page=eventin_settings&tab=permission",
+      "title": "WordPress \u203a Error",
+      "screenshot": "admin-021-settings-perm.png",
+      "tabs": [],
+      "form_fields": [],
+      "content_excerpt": "\n\tSorry, you are not allowed to access this page.\n\n\t\t\t\n\t\tThis message was triggered by WordPress Core.Call stack:wp_die()Query Monitor"
+    },
+    {
+      "name": "admin-030-license",
+      "desc": "License activation page",
+      "url": "/wp-admin/admin.php?page=eventin_license",
+      "title": "WordPress \u203a Error",
+      "screenshot": "admin-030-license.png",
+      "tabs": [],
+      "form_fields": [],
+      "content_excerpt": "\n\tSorry, you are not allowed to access this page.\n\n\t\t\t\n\t\tThis message was triggered by WordPress Core.Call stack:wp_die()Query Monitor"
+    },
+    {
+      "name": "admin-031-permissions",
+      "desc": "Role-based permissions manager",
+      "url": "/wp-admin/admin.php?page=eventin_permission",
+      "title": "WordPress \u203a Error",
+      "screenshot": "admin-031-permissions.png",
+      "tabs": [],
+      "form_fields": [],
+      "content_excerpt": "\n\tSorry, you are not allowed to access this page.\n\n\t\t\t\n\t\tThis message was triggered by WordPress Core.Call stack:wp_die()Query Monitor"
+    },
+    {
+      "name": "admin-032-shortcodes",
+      "desc": "Shortcode configuration page",
+      "url": "/wp-admin/admin.php?page=eventin_shortcode",
+      "title": "WordPress \u203a Error",
+      "screenshot": "admin-032-shortcodes.png",
+      "tabs": [],
+      "form_fields": [],
+      "content_excerpt": "\n\tSorry, you are not allowed to access this page.\n\n\t\t\t\n\t\tThis message was triggered by WordPress Core.Call stack:wp_die()Query Monitor"
+    },
+    {
+      "name": "admin-033-addons",
+      "desc": "Addons / extensions page",
+      "url": "/wp-admin/admin.php?page=eventin_addon",
+      "title": "WordPress \u203a Error",
+      "screenshot": "admin-033-addons.png",
+      "tabs": [],
+      "form_fields": [],
+      "content_excerpt": "\n\tSorry, you are not allowed to access this page.\n\n\t\t\t\n\t\tThis message was triggered by WordPress Core.Call stack:wp_die()Query Monitor"
+    },
+    {
+      "name": "admin-040-wp-dashboard",
+      "desc": "WP Dashboard with Eventin widgets",
+      "url": "/wp-admin/index.php",
+      "title": "Dashboard \u2039 Dateline Site A - TEC + Eventin \u2014 WordPress",
+      "screenshot": "admin-040-wp-dashboard.png",
+      "tabs": [],
+      "form_fields": [
+        {
+          "type": "input:checkbox",
+          "name": "dashboard_site_health-hide",
+          "label": "Site Health Status"
+        },
+        {
+          "type": "input:checkbox",
+          "name": "dashboard_right_now-hide",
+          "label": "At a Glance"
+        },
+        {
+          "type": "input:checkbox",
+          "name": "dashboard_activity-hide",
+          "label": "Activity"
+        },
+        {
+          "type": "input:checkbox",
+          "name": "dashboard_quick_press-hide",
+          "label": "Quick Draft Your Recent Drafts"
+        },
+        {
+          "type": "input:checkbox",
+          "name": "dashboard_primary-hide",
+          "label": "WordPress Events and News"
+        },
+        {
+          "type": "input:hidden",
+          "name": "screenoptionnonce",
+          "label": ""
+        },
+        {
+          "type": "input:hidden",
+          "name": "welcomepanelnonce",
+          "label": ""
+        },
+        {
+          "type": "textarea:textarea",
+          "name": "replycontent",
+          "label": "Comment"
+        },
+        {
+          "type": "input:text",
+          "name": "newcomment_author",
+          "label": "Name"
+        },
+        {
+          "type": "input:text",
+          "name": "newcomment_author_email",
+          "label": "Email"
+        },
+        {
+          "type": "input:text",
+          "name": "newcomment_author_url",
+          "label": "URL"
+        },
+        {
+          "type": "input:hidden",
+          "name": "action",
+          "label": ""
+        },
+        {
+          "type": "input:hidden",
+          "name": "comment_ID",
+          "label": ""
+        },
+        {
+          "type": "input:hidden",
+          "name": "comment_post_ID",
+          "label": ""
+        },
+        {
+          "type": "input:hidden",
+          "name": "status",
+          "label": ""
+        },
+        {
+          "type": "input:hidden",
+          "name": "position",
+          "label": ""
+        },
+        {
+          "type": "input:hidden",
+          "name": "checkbox",
+          "label": ""
+        },
+        {
+          "type": "input:hidden",
+          "name": "mode",
+          "label": ""
+        },
+        {
+          "type": "input:hidden",
+          "name": "_ajax_nonce-replyto-comment",
+          "label": ""
+        },
+        {
+          "type": "input:hidden",
+          "name": "_wp_unfiltered_html_comment",
+          "label": ""
+        },
+        {
+          "type": "input:text",
+          "name": "post_title",
+          "label": "Title"
+        },
+        {
+          "type": "textarea:textarea",
+          "name": "content",
+          "label": "Content"
+        },
+        {
+          "type": "input:hidden",
+          "name": "action",
+          "label": ""
+        },
+        {
+          "type": "input:hidden",
+          "name": "post_ID",
+          "label": ""
+        },
+        {
+          "type": "input:hidden",
+          "name": "post_type",
+          "label": ""
+        },
+        {
+          "type": "input:hidden",
+          "name": "_wpnonce",
+          "label": ""
+        },
+        {
+          "type": "input:hidden",
+          "name": "_wp_http_referer",
+          "label": ""
+        },
+        {
+          "type": "input:submit",
+          "name": "save",
+          "label": ""
+        },
+        {
+          "type": "input:text",
+          "name": "community-events-location",
+          "label": "City:"
+        },
+        {
+          "type": "input:submit",
+          "name": "community-events-submit",
+          "label": ""
+        },
+        {
+          "type": "input:hidden",
+          "name": "closedpostboxesnonce",
+          "label": ""
+        },
+        {
+          "type": "input:hidden",
+          "name": "meta-box-order-nonce",
+          "label": ""
+        },
+        {
+          "type": "input:hidden",
+          "name": "_ajax_linking_nonce",
+          "label": ""
+        },
+        {
+          "type": "input:submit",
+          "name": "wp-link-submit",
+          "label": ""
+        }
+      ],
+      "content_excerpt": "\n\n\n\n\n\n\n\nSkip to main content\nSkip to toolbar\n\n\n\n\n\n\t\t\n\n\t\t\n\n\n\n\t\t\n\t\t\t\t\n\t\t\n\n\tDashboardTo begin using Events Calendar Pro, please install the latest version of The Events Calendar.\n\n\t\n\n\t\n\t\t\t\tDismiss\n\t\t\t\n\t\n\t\t\n\t\t\t\n  \n    \n    \n    \n      \n    \n    \n      \n      \n      \n      \n      \n    \n  \n  \n    \n      \n      \n      \n      \n      \n    \n    \n      \n      \n      \n      \n      \n    \n    \n      \n      \n      \n      \n    \n    \n      \n      \n      \n      \n      \n    \n    \n      \n      \n      \n      \n      \n    \n    \n      \n      \n    \n    \n      \n      \n    \n    \n      \n    \n  \n\n\t\t\n\t\tWelcome to WordPress!\n\t\t\n\t\t\t\n\t\t\tLearn more about the 6.9.4 version.\t\t\t\n\t\t\n\t\n\t\n\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\tAuthor rich content with blocks and patterns\n\t\t\t\tBlock patterns are pre-configured block layouts. Use them to get inspired or create new pages in a flash.\n\t\t\t\tAdd a new page\n\t\t\t\n\t\t\n\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\t\t\tCustomize your entire site with block themes\n\t\t\t\tDesign everything on your site \u2014 from the header down to the footer, all using blocks and patterns.\n\t\t\t\tOpen site editor\n\t\t\t\t\t\t\n\t\t\n\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\t\t\tSwitch up your site\u2019s look & feel with Styles\n\t\t\t\tTweak your site, or give it a whole new look! Get creative \u2014 how about a new color palette or font?\n\t\t\t\tEdit styles\n\t\t\t\t\t\t\n\t\t\n\t\n\t\n\t\t\n\n\t\n\t\n\t\n\t\nSite Health Status\nMove upMove Site Health Status box upMove downMove Site Health Status box downToggle panel: Site Health Status\n\t\n\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\t\t\t\t\tNo information yet\u2026\t\t\t\t\t\t\t\n\t\t\n\n\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\tSite health checks will automatically run periodically to gather information about your site. You can also visit the Site Health screen to gather information about your site now.\t\t\t\t\n\t\t\t\n\t\t\t\t\t\n\t\n\n\t\n\n\nAt a Glance\nMove upMove At a Glance box upMove downMove At a Glance box downToggle panel: At a Glance\n\t\n\t\n\t1 Post1 Page\t\t\n\t\t\t1 Comment\n\t\t\n\t\t\t\t\n\t\t\t0 Comments in moderation\n\t\t\n\t\t\t\n\tWordPress 6.9.4 running Twenty Twenty-Five theme.\t\n\t\n\n\nActivity\nMove upMove Activity box upMove downMove Activity box downToggle panel: Activity\nRecently PublishedToday, 2:00 am Hello world!Recent Comments\n\t\t\n\n\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\tFrom A WordPress Commenter on Hello world! [Pending]\t\t\t\n\n\t\t\t\t\t\t\tHi, this is a comment. To get started with moderating, editing, and deleting comments, please visit the Comments screen in\u2026\n\t\t\t\t\t\tApproveUnapprove | Reply | Edit | Spam | Trash | View\n\t\t\t\t\t\t\n\t\t\n\tView more comments\n\tAll (1) |\n\tMine (0) |\n\tPending (0) |\n\tApproved (1) |\n\tSpam (0) |\n\tTrash (0)\n\n\t\n\t\n\t\n\t\tEdit Comment\n\t\tReply to Comment\n\t\tAdd Comment\n\t\n\n\t\n\t\n\t\tComment\t\n\t\n\n\n\n\t\n\n\t\n\t\t\n\t\tName\n\t\t\n\t\t\n\n\t\t\n\t\tEmail\n\t\t\n\t\t\n\n\t\t\n\t\tURL\n\t\t\n\t\t\n\t\n\n\t\n\t\t\n\t\t\t\n\t\t\t\tAdd Comment\n\t\t\t\tUpdate Comment\n\t\t\t\tSubmit Reply\n\t\t\t\n\t\t\tCancel\n\t\t\t\n\t\t\n\t\t\t\n\n\t\n\t\n\t\n\t\n\t\n\t\n\t\n\t\t\n\t\n\t\n\t\n\t\n\t\tComment by  moved to the Trash.\t\tUndo\n\t\n\n\n\t\n\t\tComment by  marked as spam.\t\tUndo\n\t\n\n\t\n\n\t\n\t\n\t\nQuick Draft Your Recent Drafts\nMove upMove Quick Draft Your Recent Drafts box upMove downMove Quick Draft Your Recent Drafts box downToggle panel: Quick Draft Your Recent Drafts\n\n\t\n\n\t\t\n\t\t\n\t\t\t\n\t\t\t\tTitle\t\t\t\n\t\t\t\n\t\t\n\n\t\t\n\t\t\tContent\n\t\t\t\n\t\t\n\n\t\t\n\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\n\n\t\n\t\n\n\nWordPress Events and News\nMove upMove WordPress Events and News box upMove downMove WordPress Events and News box downToggle panel: WordPress Events and News\nThis widget requires JavaScript.An error occurred. Please try again.\t\n\t\t\n\t\t\t\n\t\t\t\tAttend an upcoming event near you.\n\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\tSelect location\n\t\t\t\t\n\t\t\t\n\n\t\t\t\n\t\t\t\t\n\t\t\t\t\tCity:\t\t\t\t\n\t\t\t\t\t\t\t\t\n\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\tCancel\t\t\t\t\n\n\t\t\t\t\n\t\t\t\n\t\t\n\n\t\t\n\t\t\n\t\t\t\n\t\t\t\tThere are no events scheduled near you at the moment. Would you like to organize a WordPress event?\t\t\t\n\t\t\n\t\n\t\n\n\t\n\t\n\t\tWordPress Student Clubs Build MomentumCelebrating Community at WordCamp Asia 2026WPTavern: #214 \u2013 Robby McCullough on Beaver Builder, AI Hype, and Evolving WordPress WorkflowsWordPress.org blog: WordPress Student Clubs Build MomentumHeroPress: The Hero of HeroPress and quiet art of walking with people\t\n\n\t\n\t\tMeetups  (opens in a new tab)\n\t\t|\n\n\t\tWordCamps  (opens in a new tab)\n\t\t|\n\n\t\tNews  (opens in a new tab)\t\n\n\t\n\n\t\n\t\n\t\t\n\t\n\t\t\n\n\n\t\t\n\n\n\n\n\t\n\n\t\n\n\t\n\n\t\n\t\n\n\n\n\n\n\n\n\t\n\t\n\t\n\t\n\t\tClose dialog\t\n\t\t\t\n\t\t\t\n\t\tSession expired\n\t\tPlease log in again.\n\t\tThe login page will open in a new tab. After logging in you can close it and return to this page.\n\t\n\t\n\t\n\t\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\n\t\t\n\t\t\t\tInsert/edit link\n\t\t\n\t\t\tClose\t\t\n\t\t\n\t\t\t\n\t\t\t\tEnter the destination URL\n\t\t\t\t\n\t\t\t\t\tURL\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\tLink Text\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t Open link in a new tab\n\t\t\t\t\n\t\t\t\n\t\t\tOr link to existing content\n\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\tSearch\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\tNo search term specified. Showing recent items.\n\t\t\t\t\t\t\n\t\t\t\t\t\t\tSearch or use up and down arrow keys to select an item.\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\t\t\n\t\t\t\tCancel\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\n\n\n\n\n\n\n\nNotifications"
+    },
+    {
+      "name": "admin-060-speaker-new",
+      "desc": "New speaker creation screen",
+      "url": "/wp-admin/post-new.php?post_type=etn-speaker",
+      "title": "WordPress \u203a Error",
+      "screenshot": "admin-060-speaker-new.png",
+      "tabs": [],
+      "form_fields": [],
+      "content_excerpt": "\n\tInvalid post type.\n\n\t\t\t\n\t\tThis message was triggered by WordPress Core.Call stack:wp_die()Query Monitor"
+    },
+    {
+      "name": "admin-061-webhook-new",
+      "desc": "New webhook creation screen",
+      "url": "/wp-admin/post-new.php?post_type=etn-webhook",
+      "title": "WordPress \u203a Error",
+      "screenshot": "admin-061-webhook-new.png",
+      "tabs": [],
+      "form_fields": [],
+      "content_excerpt": "\n\tInvalid post type.\n\n\t\t\t\n\t\tThis message was triggered by WordPress Core.Call stack:wp_die()Query Monitor"
+    },
+    {
+      "name": "admin-062-template-new",
+      "desc": "New template (Gutenberg block editor)",
+      "url": "/wp-admin/post-new.php?post_type=etn-template",
+      "title": "WordPress \u203a Error",
+      "screenshot": "admin-062-template-new.png",
+      "tabs": [],
+      "form_fields": [],
+      "content_excerpt": "\n\tInvalid post type.\n\n\t\t\t\n\t\tThis message was triggered by WordPress Core.Call stack:wp_die()Query Monitor"
+    }
+  ],
+  "frontend_screens": [
+    {
+      "name": "frontend-001-home",
+      "desc": "Site home page",
+      "url": "/",
+      "title": "Dateline Site A \u2013 TEC + Eventin",
+      "screenshot": "frontend-001-home.png",
+      "content_excerpt": "\n\t\t\n\n\t\t\nSkip to content\n\n\t\n\t\n\t\t\n\t\t\n\t\t\tDateline Site A \u2013 TEC + Eventin\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\tSample Page\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\n\t\n\n\n\n\n\n\n\n\t\nBlog\n\n\n\t\n\n\t\n\t\t\n\t\t\n\t\t\t\n\t\t\tHello world!\n\t\t\t\nWelcome to WordPress. This is your first post. Edit or delete it, then start writing!\n\n\t\t\tApril 30, 2026\n\t\t\n\t\t\n\t\n\t\n\t\n\t\t\n\t\n\t\n\t\n\t\n\t\t\n\t\n\t\n\n\n\n\n\n\n\n\n\t\n\t\n\t\t\n\n\t\t\n\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\tDateline Site A \u2013 TEC + Eventin\n\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\n\n\t\t\t\n\t\t\t\n\t\t\t\tBlogAboutFAQsAuthors\n\n\t\t\t\tEventsShopPatternsThemes\n\t\t\t\n\t\t\t\t\n\t\t\n\t\t\n\n\t\t\n\t\t\n\t\t\n\n\t\t\n\t\t\n\t\t\t\n\t\t\tTwenty Twenty-Five\n\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\tDesigned with WordPress\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\n\t\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
+    },
+    {
+      "name": "frontend-002-events-archive",
+      "desc": "Events archive page",
+      "url": "/events/",
+      "title": "Page not found \u2013 Dateline Site A \u2013 TEC + Eventin",
+      "screenshot": "frontend-002-events-archive.png",
+      "content_excerpt": "\n\t\t\n\n\t\t\nSkip to content\n\n\t\n\t\n\t\t\n\t\t\n\t\t\tDateline Site A \u2013 TEC + Eventin\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\tSample Page\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\n\t\n\n\n\n\n\n\n\n\t\n\n\t\n\t\n\t\t\n\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\tPage not found\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\tThe page you are looking for doesn't exist, or it has been moved. Please try searching using the form below.\n\t\t\t\t\n\t\t\t\t\nSearchSearch\n\n\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\n\t\n\n\n\n\n\n\n\n\n\t\n\t\n\t\t\n\n\t\t\n\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\tDateline Site A \u2013 TEC + Eventin\n\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\n\n\t\t\t\n\t\t\t\n\t\t\t\tBlogAboutFAQsAuthors\n\n\t\t\t\tEventsShopPatternsThemes\n\t\t\t\n\t\t\t\t\n\t\t\n\t\t\n\n\t\t\n\t\t\n\t\t\n\n\t\t\n\t\t\n\t\t\t\n\t\t\tTwenty Twenty-Five\n\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\tDesigned with WordPress\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\n\t\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
+    },
+    {
+      "name": "frontend-003-events-query",
+      "desc": "Events query",
+      "url": "/?post_type=etn",
+      "title": "Dateline Site A \u2013 TEC + Eventin",
+      "screenshot": "frontend-003-events-query.png",
+      "content_excerpt": "\n\t\t\n\n\t\t\nSkip to content\n\n\t\n\t\n\t\t\n\t\t\n\t\t\tDateline Site A \u2013 TEC + Eventin\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\tSample Page\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\n\t\n\n\n\n\n\n\n\n\t\nBlog\n\n\n\t\n\n\t\n\t\t\n\t\t\n\t\t\t\n\t\t\tHello world!\n\t\t\t\nWelcome to WordPress. This is your first post. Edit or delete it, then start writing!\n\n\t\t\tApril 30, 2026\n\t\t\n\t\t\n\t\n\t\n\t\n\t\t\n\t\n\t\n\t\n\t\n\t\t\n\t\n\t\n\n\n\n\n\n\n\n\n\t\n\t\n\t\t\n\n\t\t\n\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\tDateline Site A \u2013 TEC + Eventin\n\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\n\n\t\t\t\n\t\t\t\n\t\t\t\tBlogAboutFAQsAuthors\n\n\t\t\t\tEventsShopPatternsThemes\n\t\t\t\n\t\t\t\t\n\t\t\n\t\t\n\n\t\t\n\t\t\n\t\t\n\n\t\t\n\t\t\n\t\t\t\n\t\t\tTwenty Twenty-Five\n\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\tDesigned with WordPress\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\n\t\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
+    }
+  ],
+  "rest_api": [
+    {
+      "endpoint": "/wp-json/eventin/v2/events",
+      "status": 404,
+      "sample": "{\"code\":\"rest_no_route\",\"message\":\"No route was found matching the URL and request method.\",\"data\":{\"status\":404}}"
+    },
+    {
+      "endpoint": "/wp-json/eventin/v2/permissions",
+      "status": 404,
+      "sample": "{\"code\":\"rest_no_route\",\"message\":\"No route was found matching the URL and request method.\",\"data\":{\"status\":404}}"
+    },
+    {
+      "endpoint": "/wp-json/eventin/v2/permissions/current-user",
+      "status": 404,
+      "sample": "{\"code\":\"rest_no_route\",\"message\":\"No route was found matching the URL and request method.\",\"data\":{\"status\":404}}"
+    },
+    {
+      "endpoint": "/wp-json/eventin/v2/webhooks",
+      "status": 404,
+      "sample": "{\"code\":\"rest_no_route\",\"message\":\"No route was found matching the URL and request method.\",\"data\":{\"status\":404}}"
+    },
+    {
+      "endpoint": "/wp-json/eventin/v2/rsvp",
+      "status": 404,
+      "sample": "{\"code\":\"rest_no_route\",\"message\":\"No route was found matching the URL and request method.\",\"data\":{\"status\":404}}"
+    }
+  ],
+  "eventin_menus": [
+    {
+      "text": "Dashboard",
+      "href": "index.php",
+      "subs": [
+        {
+          "text": "Dashboard",
+          "href": "index.php"
+        },
+        {
+          "text": "Home",
+          "href": "index.php"
+        },
+        {
+          "text": "Updates 1",
+          "href": "update-core.php"
+        }
+      ]
+    },
+    {
+      "text": "Posts",
+      "href": "edit.php",
+      "subs": [
+        {
+          "text": "Posts",
+          "href": "edit.php"
+        },
+        {
+          "text": "All Posts",
+          "href": "edit.php"
+        },
+        {
+          "text": "Add Post",
+          "href": "post-new.php"
+        },
+        {
+          "text": "Categories",
+          "href": "edit-tags.php?taxonomy=category"
+        },
+        {
+          "text": "Tags",
+          "href": "edit-tags.php?taxonomy=post_tag"
+        }
+      ]
+    },
+    {
+      "text": "Media",
+      "href": "upload.php",
+      "subs": [
+        {
+          "text": "Media",
+          "href": "upload.php"
+        },
+        {
+          "text": "Library",
+          "href": "upload.php"
+        },
+        {
+          "text": "Add Media File",
+          "href": "media-new.php"
+        }
+      ]
+    },
+    {
+      "text": "Pages",
+      "href": "edit.php?post_type=page",
+      "subs": [
+        {
+          "text": "Pages",
+          "href": "edit.php?post_type=page"
+        },
+        {
+          "text": "All Pages",
+          "href": "edit.php?post_type=page"
+        },
+        {
+          "text": "Add Page",
+          "href": "post-new.php?post_type=page"
+        }
+      ]
+    },
+    {
+      "text": "Comments 00 Comments in moderation",
+      "href": "edit-comments.php",
+      "subs": [
+        {
+          "text": "Comments 00 Comments in moderation",
+          "href": "edit-comments.php"
+        }
+      ]
+    },
+    {
+      "text": "Appearance",
+      "href": "themes.php",
+      "subs": [
+        {
+          "text": "Appearance",
+          "href": "themes.php"
+        },
+        {
+          "text": "Themes 0",
+          "href": "themes.php"
+        },
+        {
+          "text": "Editor",
+          "href": "site-editor.php"
+        }
+      ]
+    },
+    {
+      "text": "Plugins",
+      "href": "plugins.php",
+      "subs": [
+        {
+          "text": "Plugins 1",
+          "href": "plugins.php"
+        },
+        {
+          "text": "Installed Plugins",
+          "href": "plugins.php"
+        },
+        {
+          "text": "Add Plugin",
+          "href": "plugin-install.php"
+        }
+      ]
+    },
+    {
+      "text": "Users",
+      "href": "users.php",
+      "subs": [
+        {
+          "text": "Users",
+          "href": "users.php"
+        },
+        {
+          "text": "All Users",
+          "href": "users.php"
+        },
+        {
+          "text": "Add User",
+          "href": "user-new.php"
+        },
+        {
+          "text": "Profile",
+          "href": "profile.php"
+        }
+      ]
+    },
+    {
+      "text": "Tools",
+      "href": "tools.php",
+      "subs": [
+        {
+          "text": "Tools",
+          "href": "tools.php"
+        },
+        {
+          "text": "Available Tools",
+          "href": "tools.php"
+        },
+        {
+          "text": "Import",
+          "href": "import.php"
+        },
+        {
+          "text": "Export",
+          "href": "export.php"
+        },
+        {
+          "text": "Site Health 0",
+          "href": "site-health.php"
+        },
+        {
+          "text": "Export Personal Data",
+          "href": "export-personal-data.php"
+        },
+        {
+          "text": "Erase Personal Data",
+          "href": "erase-personal-data.php"
+        },
+        {
+          "text": "Theme File Editor",
+          "href": "theme-editor.php"
+        },
+        {
+          "text": "Plugin File Editor",
+          "href": "plugin-editor.php"
+        }
+      ]
+    },
+    {
+      "text": "Settings",
+      "href": "options-general.php",
+      "subs": [
+        {
+          "text": "Settings",
+          "href": "options-general.php"
+        },
+        {
+          "text": "General",
+          "href": "options-general.php"
+        },
+        {
+          "text": "Writing",
+          "href": "options-writing.php"
+        },
+        {
+          "text": "Reading",
+          "href": "options-reading.php"
+        },
+        {
+          "text": "Discussion",
+          "href": "options-discussion.php"
+        },
+        {
+          "text": "Media",
+          "href": "options-media.php"
+        },
+        {
+          "text": "Permalinks",
+          "href": "options-permalink.php"
+        },
+        {
+          "text": "Privacy",
+          "href": "options-privacy.php"
+        }
+      ]
+    }
+  ],
+  "event_metaboxes": [],
+  "js_globals": {}
+}
