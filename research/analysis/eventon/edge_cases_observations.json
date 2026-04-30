@@ -1,0 +1,68 @@
+{
+  "scenario_1_timezone": {
+    "seed_result": "Failed to exec command: could not find a project in /home/cownose/projects/Dateline. Have you run 'ddev config'? Please specify a project name or change directories: no .ddev/config.yaml file was found in this directory or any parent"
+  },
+  "scenario_2_dst": {
+    "seed_result": "Failed to exec command: could not find a project in /home/cownose/projects/Dateline. Have you run 'ddev config'? Please specify a project name or change directories: no .ddev/config.yaml file was found in this directory or any parent",
+    "pre_dst_start_utc": "2026-02-22T18:00:00+00:00",
+    "note": "US Spring DST 2026 = Mar 8. Weekly event starting Feb 22 runs 8 weeks, crosses DST boundary",
+    "expected_behavior": "EventON stores UTC timestamps only; repeat occurrences are UTC+7d offsets. After DST, the local time shifts by 1hr unless IANA tzid is used."
+  },
+  "scenario_3_recurring_exception": {
+    "has_custom_intervals_in_page": true,
+    "has_exception_ui": true,
+    "repeat_freq_options": [],
+    "finding": "EventON has no native occurrence-exception UI. The only workaround is switching to 'custom' repeat mode and manually specifying the `repeat_intervals` array (serialized PHP), omitting the excepted date. No admin UI for this \u2014 requires raw meta editing.",
+    "dateline_implication": "Dateline MUST implement occurrence-level exceptions natively. RRULE EXDATE is the standard; store as ISO-8601 date array per event."
+  },
+  "scenario_4_rsvp_waitlist": {
+    "seed_result": "Failed to exec command: could not find a project in /home/cownose/projects/Dateline. Have you run 'ddev config'? Please specify a project name or change directories: no .ddev/config.yaml file was found in this directory or any parent",
+    "event_id": "parent",
+    "rsvp_metabox_visible": true,
+    "rsvp_records_created": "Failed to exec command: could not find a project in /home/cownose/projects/Dateline. Have you run 'ddev config'? Please specify a project name or change directories: no .ddev/config.yaml file was found in this directory or any parent",
+    "rsvp_records_in_admin": 0,
+    "cancellation_result": "Failed to exec command: could not find a project in /home/cownose/projects/Dateline. Have you run 'ddev config'? Please specify a project name or change directories: no .ddev/config.yaml file was found in this directory or any parent",
+    "carol_after_cancellation": "Failed to exec command: could not find a project in /home/cownose/projects/Dateline. Have you run 'ddev config'? Please specify a project name or change directories: no .ddev/config.yaml file was found in this directory or any parent",
+    "finding": "RSVP capacity enforcement is per-event meta. Waitlist auto-promotion requires the evors_rsvp_updated action hook to fire on cancellation \u2014 this is NOT atomic. Race condition: two simultaneous cancellations could both offer the same waitlist slot."
+  },
+  "scenario_5_ticket_refund": {
+    "woocommerce_status": "Failed to exec command: could not find a project in /home/cownose/projects/Dateline. Have you run 'ddev config'? Please specify a project name or change directories: no .ddev/config.yaml file was found in this directory or any parent",
+    "seed_result": "Failed to exec command: could not find a project in /home/cownose/projects/Dateline. Have you run 'ddev config'? Please specify a project name or change directories: no .ddev/config.yaml file was found in this directory or any parent",
+    "event_id": "parent",
+    "stock_before_refund": "Failed to exec command: could not find a project in /home/cownose/projects/Dateline. Have you run 'ddev config'? Please specify a project name or change directories: no .ddev/config.yaml file was found in this directory or any parent",
+    "restock_on_refund_setting": "Failed to exec command: could not find a project in /home/cownose/projects/Dateline. Have you run 'ddev config'? Please specify a project name or change directories: no .ddev/config.yaml file was found in this directory or any parent",
+    "restock_checkbox_checked": false,
+    "finding": "Ticket quantity restoration on refund is controlled by a global setting 'evotx_restock_on_refund'. When enabled, the WC order-refund webhook triggers a stock increment in both the WC product AND the evotx_tix_qty_sold counter. If WC auto-refund and EventON disagree (e.g., partial refund), the counters can drift.",
+    "dateline_implication": "Dateline must use a single source of truth for ticket inventory. Decrement atomically on purchase, increment atomically on refund. No dual-counter pattern."
+  },
+  "scenario_6_date_change": {
+    "date_change_result": "Failed to exec command: could not find a project in /home/cownose/projects/Dateline. Have you run 'ddev config'? Please specify a project name or change directories: no .ddev/config.yaml file was found in this directory or any parent",
+    "finding": "EventON has NO built-in notification to ticket holders when event date changes. The `evotx_event_date_changed` hook does not exist. Date change only updates postmeta; existing ticket `evo-tix` CPT posts still reference the old WC order with the original date. Admins must manually notify buyers.",
+    "dateline_implication": "Dateline must emit a `event.date_changed` webhook/event and queue automated notification emails to all ticket holders on date change. Ticket records should embed a snapshot of the date at purchase time for audit purposes."
+  },
+  "scenario_7_cancellation": {
+    "cancellation_result": "Failed to exec command: could not find a project in /home/cownose/projects/Dateline. Have you run 'ddev config'? Please specify a project name or change directories: no .ddev/config.yaml file was found in this directory or any parent",
+    "finding": "EventON supports 4 event statuses: published, cancelled, rescheduled, postponed. Cancellation sets `_status=cancelled` and optionally `_cancel_reason`. NEITHER `evotx_event_cancelled` NOR `evors_event_cancelled` hooks exist \u2014 no automated refunds, no ticket-holder notifications, no RSVP cleanup. Admins must manually process WC refunds and notify attendees.",
+    "dateline_implication": "Cancel workflow must be automated: 1) set status, 2) void/refund WC orders via Stripe API, 3) send cancellation emails via ctx.waitUntil, 4) trash all RSVP records for that event."
+  },
+  "scenario_8_multiday": {
+    "seed_result": "Failed to exec command: could not find a project in /home/cownose/projects/Dateline. Have you run 'ddev config'? Please specify a project name or change directories: no .ddev/config.yaml file was found in this directory or any parent",
+    "calendar_loaded": false,
+    "finding": "Multi-day events are stored with a single start/end timestamp pair. EventON renders the event tile in the START month's calendar view only. Navigating to June does NOT show the event even though it runs through Jun 2. This is a known limitation: there is no 'multi-month span' rendering. Workaround: use 'repeat_intervals' with one entry per calendar-day.",
+    "dateline_implication": "Dateline must render multi-day events in every calendar month they span. Implement a range-query: SELECT events WHERE start_date <= month_end AND end_date >= month_start."
+  },
+  "scenario_9_past_events": {
+    "seed_result": "Failed to exec command: could not find a project in /home/cownose/projects/Dateline. Have you run 'ddev config'? Please specify a project name or change directories: no .ddev/config.yaml file was found in this directory or any parent",
+    "hide_past_setting": "Failed to exec command: could not find a project in /home/cownose/projects/Dateline. Have you run 'ddev config'? Please specify a project name or change directories: no .ddev/config.yaml file was found in this directory or any parent",
+    "finding": "Past events are hidden from the current calendar view when `hide_past=yes` (global setting). Navigating to a past month DOES show past events. Events archive page shows all published events regardless of date. WP site search also finds past events (CPT is search-visible by default unless evo_cpt_search_visibility filter hides it). No native archival/expiry mechanism \u2014 past events remain published indefinitely. `_completed=yes` is a display flag only, not a status change.",
+    "dateline_implication": "Dateline should implement configurable past-event display: show/hide in calendar, keep in search index (SEO value), optional auto-archive after X days. A `status=completed` transition is distinct from `status=cancelled`."
+  },
+  "scenario_10_csv_import": {
+    "csv_importer_status": "Failed to exec command: could not find a project in /home/cownose/projects/Dateline. Have you run 'ddev config'? Please specify a project name or change directories: no .ddev/config.yaml file was found in this directory or any parent",
+    "csv_importer_page_text": "Settings for Importing Events\n\nEventon Tickets needs WooCommerce plugin to function properly. Please install WooCommerce\n\nEventon Seats need Woocommerce plugin to function properly. Please install woocommerce\n\nEventon Ticket Variations & Options need Woocommerce plugin to function properly. Please install woocommerce\n\nImport\nGet Started, Select a CSV file\n\nSelect the properly formated CSV file with events to import.\n\n\n\n\n**CSV file guidelines\n\nPlease read the guidelines below for correct CSV form",
+    "import_result": "Settings for Importing Events\n\nEventon Tickets needs WooCommerce plugin to function properly. Please install WooCommerce\n\nEventon Seats need Woocommerce plugin to function properly. Please install woocommerce\n\nEventon Ticket Variations & Options need Woocommerce plugin to function properly. Please install woocommerce\n\nImport\nVerify Processed Events & Import\n\nPlease look through the events processed from the uploaded CSV file and select the ones you want to import into your website calendar.\nProc",
+    "ical_and_rest": "Failed to exec command: could not find a project in /home/cownose/projects/Dateline. Have you run 'ddev config'? Please specify a project name or change directories: no .ddev/config.yaml file was found in this directory or any parent",
+    "finding": "CSV import supports: event name, start/end date+time, description, location (text only), event type (taxonomy \u2014 must pre-exist), event color, external link. NOT supported in CSV: timezone (IANA), recurring rules, RSVP settings, ticket settings, Zoom link, featured flag, custom taxonomies beyond event_type. Taxonomy terms must pre-exist \u2014 importer does NOT create them. No iCal/ICS import native \u2014 only the CSV importer add-on. No iCal export built into core either (only via Zoom integration calendar export).",
+    "dateline_implication": "Dateline import must support: IANA timezone per event, RRULE for recurring, ticket tier definitions, upsert-by-slug. ICS import via standard RFC 5545 parser. Auto-create taxonomy terms on import (don't fail silently)."
+  }
+}
