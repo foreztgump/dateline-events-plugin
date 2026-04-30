@@ -1,0 +1,628 @@
+{
+  "admin_screens": [
+    {
+      "path": "/wp-admin/edit.php?post_type=tribe_events",
+      "name": "admin-001-events-list",
+      "desc": "Events list table",
+      "title": "Events \u2039 Dateline Site A - TEC + Eventin \u2014 WordPress",
+      "screenshot": "admin-001-events-list.png",
+      "tabs": [],
+      "body_excerpt": "\n\n\n\n\n\n\n\nSkip to main content\nSkip to toolbar\n\n\n\n\n\n\t\t\n\n\t\t\n\n\n\n\t\t\n\t\t\t\t\n\t\tView Calendar\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\n\t\t\n\nEventsAdd New Event\n\n Manager\nWhen using The Events Calendar, we recommend that you use a geographic timezone such as \"America/Los_Angeles\" and avoid using a UTC timezone offset such as \u201cUTC+0\u201d.Choosing a UTC timezone for your site or individual events may cause problems when importing events or with Daylight Saving Time. Read moreDismiss this notice.\n\t\n\n\n\n\tStart selling tickets to your Events\n\n\t\n\t\tSell tickets, collect RSVPs, and manage attendees for free with Event Tickets.\n\t\n\n\tInstall Event Tickets\n\n\nDismiss this notice.\n\n\nFilter posts list\n\tAll (7) |\n\tPublished (7)\n\n\n\n\n\tSearch Events:\n\t\n\t\t\n\t\t\n\n\n\n\n\n\t\n\n\t\t\t\t\n\t\t\tSelect bulk action\nBulk actions\n\tEdit\n\tMove to Trash\n\n\n\t\t\n\t\t\t\t\t\n\t\t\t\tFilter by date\n\t\t\n\t\t\tAll dates\n\t\tApril 2026\n\t\t\n\t\t\t\t\n\t\t7 items\n\u00ab\n\u2039\nCurrent Page of 1\n\u203a\n\u00bb\n\t\t\n\t\n\t\tPosts list\n\t\t\t\n\t\n\t\t\n\t\t\tSelect AllTitle Sort ascending.AuthorEvent Categories Sort ascending.Tags Sort ascending.SeriesStart Date Sort ascending.End Date Sort ascending.\t\n\t\n\n\t\n\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\tSelect VIP Gala Night\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\u201cVIP Gala Night\u201d is locked\t\t\t\t\n\t\t\t\n\t\t\t \nVIP Gala Night\n\n\n\tVIP Gala Nightvip-gala-night\n\t0\n\tclosed\n\tclosed\n\tpublish\n\t30\n\t04\n\t2026\n\t05\n\t24\n\t37\n\tdefaultEdit | Quick\u00a0Edit | Trash | View | \t\t\n\t\t\tDuplicate\t\t\n\t\tShow more details\u2014(no author)\u2014No tagsJune 15, 2026June 15, 2026\t\t\n\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\tSelect Annual Conference 2026\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\u201cAnnual Conf"
+    },
+    {
+      "path": "/wp-admin/post-new.php?post_type=tribe_events",
+      "name": "admin-002-event-new",
+      "desc": "New event editor (Gutenberg)",
+      "title": "Add New Event \u2039 Dateline Site A - TEC + Eventin \u2014 WordPress",
+      "screenshot": "admin-002-event-new.png",
+      "tabs": [],
+      "body_excerpt": "\n\n\n\n\n\n\n\nSkip to main content\nSkip to toolbar\n\n\n\n\n\n\t\t\n\n\t\t\n\n\n\n\t\t\n\t\t\t\t\n\t\tView Calendar\n\n\nAdd New Event\n\n\nWhen using The Events Calendar, we recommend that you use a geographic timezone such as \"America/Los_Angeles\" and avoid using a UTC timezone offset such as \u201cUTC+0\u201d.Choosing a UTC timezone for your site or individual events may cause problems when importing events or with Daylight Saving Time. Read moreDismiss this notice.\n\t\n\n\n\n\tStart selling tickets to your Events\n\n\t\n\t\tSell tickets, collect RSVPs, and manage attendees for free with Event Tickets.\n\t\n\n\tInstall Event Tickets\n\n\nDismiss this notice. Connection lost. Saving has been disabled until you are reconnected. This post is being backed up in your browser, just in case.The backup of this post in your browser is different from the version below.Restore the backupThis will replace the current editor content with the last backup version. You can use undo and redo in the editor to get the old content back or to return to the restored version.Dismiss this notice.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\tAdd title\n\t\n\t\t\tSkip to Editor\n\t\t\n\t\n\t\t\n\t\t\t\t\n\t\t\t\n\t\n\t\n\n\t Add Media\nVisual\nCode\n\n\nParagraph  \u00a0\n\n\t\t\n\t\t\tDrop files to upload\n\t\t\n\t\n\n\n\t\n\tWord count: 0\t\n\t\n\t\u00a0\n\t\t\n\t\n\n\n\n\t\n\n\n\nPublish\nMove upMove Publish box upMove downMove Publish box downToggle panel: Publish\n\n\n\n\n\t\t\n\t\t\t\n\n\t\n\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\n\t\t\t\t\t\n\t\t\t\t\t\t\t\tPreview (opens in a new tab)\n\t\t\t\t\n\t\t\t\n\t\t\t\t\t\n\t\n\n\t\n\t\t\n\t\t\tStatus:\t\t\t\n\t\t\t\tDraft\t\t\t\n\n\t\t\t\t\t\t\tEdit \n\t\t\t\t\tEdit status\t\t\t\t\n\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\tSet status\t\t\t\t\t\n\t\t\t"
+    },
+    {
+      "path": "/wp-admin/edit.php?post_type=tribe_venue",
+      "name": "admin-003-venues-list",
+      "desc": "Venues list table",
+      "title": "Venues \u2039 Dateline Site A - TEC + Eventin \u2014 WordPress",
+      "screenshot": "admin-003-venues-list.png",
+      "tabs": [],
+      "body_excerpt": "\n\n\n\n\n\n\n\nSkip to main content\nSkip to toolbar\n\n\n\n\n\n\t\t\n\n\t\t\n\n\n\n\t\t\n\t\t\t\t\n\t\tView Calendar\n\nVenues\n\n Add New Venue\nWhen using The Events Calendar, we recommend that you use a geographic timezone such as \"America/Los_Angeles\" and avoid using a UTC timezone offset such as \u201cUTC+0\u201d.Choosing a UTC timezone for your site or individual events may cause problems when importing events or with Daylight Saving Time. Read moreDismiss this notice.\n\t\n\n\n\n\tStart selling tickets to your Events\n\n\t\n\t\tSell tickets, collect RSVPs, and manage attendees for free with Event Tickets.\n\t\n\n\tInstall Event Tickets\n\n\nDismiss this notice.\n\n\nFilter posts list\n\tAll (1) |\n\tPublished (1)\n\n\n\n\n\tSearch Venues:\n\t\n\t\t\n\t\t\n\n\n\n\n\n\t\n\n\t\t\t\t\n\t\t\tSelect bulk action\nBulk actions\n\tEdit\n\tMove to Trash\n\n\n\t\t\n\t\t\t\t\t\n\t\t\t\tFilter by date\n\t\t\n\t\t\tAll dates\n\t\tApril 2026\n\t\t\n\t\t\t\t\n\t\t1 item\n\u00ab\n\u2039\nCurrent Page of 1\n\u203a\n\u00bb\n\t\t\n\t\n\t\tPosts list\n\t\tTable ordered by Date. Descending.\t\n\t\n\t\t\n\t\t\tSelect AllTitle Sort ascending.AuthorDateVenue Categories\t\n\t\n\n\t\n\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\tSelect Soundcheck Hall\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\u201cSoundcheck Hall\u201d is locked\t\t\t\t\n\t\t\t\n\t\t\t \nSoundcheck Hall\n\n\n\tSoundcheck Hallsoundcheck-hall\n\t0\n\tclosed\n\tclosed\n\tpublish\n\t30\n\t04\n\t2026\n\t05\n\t24\n\t37\n\tdefaultEdit | Quick\u00a0Edit | Trash | ViewShow more details\u2014(no author)Published2026/04/30 at 5:24 am\u2014No Venue Categories.\t\t\n\t\t\t\n\n\t\n\t\n\t\t\n\t\t\tSelect AllTitle Sort ascending.AuthorDateVenue Categories\t\n\t\n\n\n\t\t\t\n\n\t\t\t\t\n\t\t\tSelect bulk action\nBulk actions\n\tEdit\n\tMove to Trash\n\n\n\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t1 item\n\u00ab\n\u2039\nCurr"
+    },
+    {
+      "path": "/wp-admin/post-new.php?post_type=tribe_venue",
+      "name": "admin-004-venue-new",
+      "desc": "New venue editor",
+      "title": "Add New Venue \u2039 Dateline Site A - TEC + Eventin \u2014 WordPress",
+      "screenshot": "admin-004-venue-new.png",
+      "tabs": [],
+      "body_excerpt": "\n\n\n\n\n\n\n\nSkip to main content\nSkip to toolbar\n\n\n\n\n\n\t\t\n\n\t\t\n\n\n\n\t\t\n\t\t\t\t\n\t\tView Calendar\n\n\nAdd New Venue\n\n\nWhen using The Events Calendar, we recommend that you use a geographic timezone such as \"America/Los_Angeles\" and avoid using a UTC timezone offset such as \u201cUTC+0\u201d.Choosing a UTC timezone for your site or individual events may cause problems when importing events or with Daylight Saving Time. Read moreDismiss this notice.\n\t\n\n\n\n\tStart selling tickets to your Events\n\n\t\n\t\tSell tickets, collect RSVPs, and manage attendees for free with Event Tickets.\n\t\n\n\tInstall Event Tickets\n\n\nDismiss this notice. Connection lost. Saving has been disabled until you are reconnected. This post is being backed up in your browser, just in case.The backup of this post in your browser is different from the version below.Restore the backupThis will replace the current editor content with the last backup version. You can use undo and redo in the editor to get the old content back or to return to the restored version.Dismiss this notice.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\tAdd title\n\t\n\t\t\tSkip to Editor\n\t\t\n\t\n\t\t\n\t\t\t\t\n\t\t\t\n\t\n\t\n\n\t Add Media\nVisual\nCode\n\n\nParagraph  \u00a0\n\n\t\t\n\t\t\tDrop files to upload\n\t\t\n\t\n\n\n\t\n\tWord count: 0\t\n\t\n\t\u00a0\n\t\t\n\t\n\n\n\n\t\n\n\n\nPublish\nMove upMove Publish box upMove downMove Publish box downToggle panel: Publish\n\n\n\n\n\t\t\n\t\t\t\n\n\t\n\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\n\t\t\t\t\t\n\t\t\t\t\t\t\t\tPreview (opens in a new tab)\n\t\t\t\t\n\t\t\t\n\t\t\t\t\t\n\t\n\n\t\n\t\t\n\t\t\tStatus:\t\t\t\n\t\t\t\tDraft\t\t\t\n\n\t\t\t\t\t\t\tEdit \n\t\t\t\t\tEdit status\t\t\t\t\n\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\tSet status\t\t\t\t\t\n\t\t\t"
+    },
+    {
+      "path": "/wp-admin/edit.php?post_type=tribe_organizer",
+      "name": "admin-005-organizers-list",
+      "desc": "Organizers list table",
+      "title": "Organizers \u2039 Dateline Site A - TEC + Eventin \u2014 WordPress",
+      "screenshot": "admin-005-organizers-list.png",
+      "tabs": [],
+      "body_excerpt": "\n\n\n\n\n\n\n\nSkip to main content\nSkip to toolbar\n\n\n\n\n\n\t\t\n\n\t\t\n\n\n\n\t\t\n\t\t\t\t\n\t\tView Calendar\n\nOrganizers\n\n Add New Organizer\nWhen using The Events Calendar, we recommend that you use a geographic timezone such as \"America/Los_Angeles\" and avoid using a UTC timezone offset such as \u201cUTC+0\u201d.Choosing a UTC timezone for your site or individual events may cause problems when importing events or with Daylight Saving Time. Read moreDismiss this notice.\n\t\n\n\n\n\tStart selling tickets to your Events\n\n\t\n\t\tSell tickets, collect RSVPs, and manage attendees for free with Event Tickets.\n\t\n\n\tInstall Event Tickets\n\n\nDismiss this notice.\n\n\nFilter posts list\n\tAll (1) |\n\tPublished (1)\n\n\n\n\n\tSearch Organizers:\n\t\n\t\t\n\t\t\n\n\n\n\n\n\t\n\n\t\t\t\t\n\t\t\tSelect bulk action\nBulk actions\n\tEdit\n\tMove to Trash\n\n\n\t\t\n\t\t\t\t\t\n\t\t\t\tFilter by date\n\t\t\n\t\t\tAll dates\n\t\tApril 2026\n\t\t\n\t\t\t\t\n\t\t1 item\n\u00ab\n\u2039\nCurrent Page of 1\n\u203a\n\u00bb\n\t\t\n\t\n\t\tPosts list\n\t\tTable ordered by Date. Descending.\t\n\t\n\t\t\n\t\t\tSelect AllTitle Sort ascending.AuthorDateOrganizer Categories\t\n\t\n\n\t\n\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\tSelect Dateline Productions\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\u201cDateline Productions\u201d is locked\t\t\t\t\n\t\t\t\n\t\t\t \nDateline Productions\n\n\n\tDateline Productionsdateline-productions\n\t0\n\tclosed\n\tclosed\n\tpublish\n\t30\n\t04\n\t2026\n\t05\n\t24\n\t37\n\tdefaultEdit | Quick\u00a0Edit | Trash | ViewShow more details\u2014(no author)Published2026/04/30 at 5:24 am\u2014No Organizer Categories.\t\t\n\t\t\t\n\n\t\n\t\n\t\t\n\t\t\tSelect AllTitle Sort ascending.AuthorDateOrganizer Categories\t\n\t\n\n\n\t\t\t\n\n\t\t\t\t\n\t\t\tSelect bulk action\nBulk actions\n\tEdit"
+    },
+    {
+      "path": "/wp-admin/post-new.php?post_type=tribe_organizer",
+      "name": "admin-006-organizer-new",
+      "desc": "New organizer editor",
+      "title": "Add New Organizer \u2039 Dateline Site A - TEC + Eventin \u2014 WordPress",
+      "screenshot": "admin-006-organizer-new.png",
+      "tabs": [],
+      "body_excerpt": "\n\n\n\n\n\n\n\nSkip to main content\nSkip to toolbar\n\n\n\n\n\n\t\t\n\n\t\t\n\n\n\n\t\t\n\t\t\t\t\n\t\tView Calendar\n\n\nAdd New Organizer\n\n\nWhen using The Events Calendar, we recommend that you use a geographic timezone such as \"America/Los_Angeles\" and avoid using a UTC timezone offset such as \u201cUTC+0\u201d.Choosing a UTC timezone for your site or individual events may cause problems when importing events or with Daylight Saving Time. Read moreDismiss this notice.\n\t\n\n\n\n\tStart selling tickets to your Events\n\n\t\n\t\tSell tickets, collect RSVPs, and manage attendees for free with Event Tickets.\n\t\n\n\tInstall Event Tickets\n\n\nDismiss this notice. Connection lost. Saving has been disabled until you are reconnected. This post is being backed up in your browser, just in case.The backup of this post in your browser is different from the version below.Restore the backupThis will replace the current editor content with the last backup version. You can use undo and redo in the editor to get the old content back or to return to the restored version.Dismiss this notice.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\tAdd title\n\t\n\t\t\tSkip to Editor\n\t\t\n\t\n\t\t\n\t\t\t\t\n\t\t\t\n\t\n\t\n\n\t Add Media\nVisual\nCode\n\n\nParagraph  \u00a0\n\n\t\t\n\t\t\tDrop files to upload\n\t\t\n\t\n\n\n\t\n\tWord count: 0\t\n\t\n\t\u00a0\n\t\t\n\t\n\n\n\n\t\n\n\n\nPublish\nMove upMove Publish box upMove downMove Publish box downToggle panel: Publish\n\n\n\n\n\t\t\n\t\t\t\n\n\t\n\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\n\t\t\t\t\t\n\t\t\t\t\t\t\t\tPreview (opens in a new tab)\n\t\t\t\t\n\t\t\t\n\t\t\t\t\t\n\t\n\n\t\n\t\t\n\t\t\tStatus:\t\t\t\n\t\t\t\tDraft\t\t\t\n\n\t\t\t\t\t\t\tEdit \n\t\t\t\t\tEdit status\t\t\t\t\n\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\tSet status\t\t\t\t\t"
+    },
+    {
+      "path": "/wp-admin/edit.php?post_type=tribe_event_series",
+      "name": "admin-007-series-list",
+      "desc": "Series list table (CT1)",
+      "title": "Series \u2039 Dateline Site A - TEC + Eventin \u2014 WordPress",
+      "screenshot": "admin-007-series-list.png",
+      "tabs": [],
+      "body_excerpt": "\n\n\n\n\n\n\n\nSkip to main content\nSkip to toolbar\n\n\n\n\n\n\t\t\n\n\t\t\n\n\n\n\t\t\n\t\t\t\t\n\t\tView Calendar\n\nSeries\n\n Add New Series\nWhen using The Events Calendar, we recommend that you use a geographic timezone such as \"America/Los_Angeles\" and avoid using a UTC timezone offset such as \u201cUTC+0\u201d.Choosing a UTC timezone for your site or individual events may cause problems when importing events or with Daylight Saving Time. Read moreDismiss this notice.\n\t\n\n\n\n\tStart selling tickets to your Events\n\n\t\n\t\tSell tickets, collect RSVPs, and manage attendees for free with Event Tickets.\n\t\n\n\tInstall Event Tickets\n\n\nDismiss this notice.\n\n\nFilter posts list\n\tAll (0)\n\n\n\n\n\n\n\n\n\n\t\n\n\t\t\t\t\n\t\t\t\t\n\t\t\n\t\t\n\t\n\t\tPosts list\n\t\t\t\n\t\n\t\t\n\t\t\tSelect AllTitle Sort ascending.AuthorStart Date Sort descending.Events\t\n\t\n\n\t\n\t\tNo series found\t\n\n\t\n\t\n\t\t\n\t\t\tSelect AllTitle Sort ascending.AuthorStart Date Sort descending.Events\t\n\t\n\n\n\t\t\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\n\t\n\t\n\t\n\t\tClose dialog\t\n\t\t\t\n\t\t\t\n\t\tSession expired\n\t\tPlease log in again.\n\t\tThe login page will open in a new tab. After logging in you can close it and return to this page.\n\t\n\t\n\t\n\t\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThe Events Calendar Context\nThe Events Calendar ContextPHP Render ContextKeyValueORM argReadsWritespost_idpost_id => yesnopermalink_structure/%postname%/permalink_structure => /%postname%/yesnoplain_permalinkplain_permalink => yesnoposts_per_page10posts_per_page => 10yesyesis_main_"
+    },
+    {
+      "path": "/wp-admin/edit-tags.php?taxonomy=tribe_events_cat&post_type=tribe_events",
+      "name": "admin-008-categories",
+      "desc": "Event categories taxonomy",
+      "title": "Event Categories \u2039 Dateline Site A - TEC + Eventin \u2014 WordPress",
+      "screenshot": "admin-008-categories.png",
+      "tabs": [],
+      "body_excerpt": "\n\n\n\n\n\n\n\nSkip to main content\nSkip to toolbar\n\n\n\n\n\n\t\t\n\n\t\t\n\n\n\n\t\t\n\t\t\t\t\n\t\tView Calendar\n\nEvent Categories\n\n\nWhen using The Events Calendar, we recommend that you use a geographic timezone such as \"America/Los_Angeles\" and avoid using a UTC timezone offset such as \u201cUTC+0\u201d.Choosing a UTC timezone for your site or individual events may cause problems when importing events or with Daylight Saving Time. Read moreDismiss this notice.\n\t\n\n\n\n\tStart selling tickets to your Events\n\n\t\n\t\tSell tickets, collect RSVPs, and manage attendees for free with Event Tickets.\n\t\n\n\tInstall Event Tickets\n\n\nDismiss this notice.\n\n\n\n\n\n\n\n\n\tSearch Event Categories:\n\t\n\t\t\n\t\t\n\n\n\n\n\n\n\n\t\n\nAdd New Event Category\n\n\n\n\n\n\t\n\n\tName\n\t\n\tThe name is how it appears on your site.\n\n\n\tSlug\n\t\n\tThe \u201cslug\u201d is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens.\n\n\t\n\tParent Event Category\n\t\t\n\tNone\n\tMusic\n\tTech\n\tWorkshops\n\n\t\t\t\tAssign a parent term to create a hierarchy. The term Jazz, for example, would be the parent of Bebop and Big Band.\n\t\n\t\n\tDescription\n\t\n\tThe description is not prominent by default; however, some themes may show it.\n\n\n\t\t\n\t\t\t\t\n\t\n\t\n\n\n\n\n\n\n\n\n\n\n\n\t\n\n\t\t\t\t\n\t\t\tSelect bulk action\nBulk actions\n\tDelete\n\n\n\t\t\n\t\t\t3 items\n\u00ab\n\u2039\nCurrent Page of 1\n\u203a\n\u00bb\n\t\t\n\t\n\t\tCategories list\n\t\tTable ordered hierarchically. Ascending.\t\n\t\n\t\t\n\t\t\tSelect AllNameDescription Sort ascending.Slug Sort ascending.Count Sort ascending.\t\n\t\n\n\t\n\t\t\tSelect MusicMusicMusicmusic0Edit | Quick\u00a0Edit | Delete | Vie"
+    },
+    {
+      "path": "/wp-admin/admin.php?page=tec-events-settings",
+      "name": "admin-010-settings-general",
+      "desc": "Settings: General",
+      "title": "Settings \u2039 Dateline Site A - TEC + Eventin \u2014 WordPress",
+      "screenshot": "admin-010-settings-general.png",
+      "tabs": [],
+      "body_excerpt": "\n\n\n\n\n\n\n\nSkip to main content\nSkip to toolbar\n\n\n\n\n\n\t\t\n\n\t\t\n\n\n\n\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\tThe Events Calendar offers basic support for themes using Site Editor. Read more.Dismiss this notice.When using The Events Calendar, we recommend that you use a geographic timezone such as \"America/Los_Angeles\" and avoid using a UTC timezone offset such as \u201cUTC+0\u201d.Choosing a UTC timezone for your site or individual events may cause problems when importing events or with Daylight Saving Time. Read moreDismiss this notice.\n\t\n\n\n\n\tStart selling tickets to your Events\n\n\t\n\t\tSell tickets, collect RSVPs, and manage attendees for free with Event Tickets.\n\t\n\n\tInstall Event Tickets\n\n\nDismiss this notice.\n\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\tSettings\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\n\t\n\t\t\n\t\t\tNotifications\t\t\n\t\t\n\t\t\tMark all as read\n\t\t\t\n\t\t\n\t\n\t\n\t\t\n\t\t\n\t\t\n\t\t\t\t\n\t\t\t\tThere are no notifications\n\t\t\t\tCongratulations! You are up to date.\n\t\t\t\n\t\t\t\t\t\n\t\t\t\n\t\t\tThere are no notifications\n\t\t\t\n\t\t\t\tBe up to date with the latest updates, fixes and features for The Events Calendar.\n\t\t\t\t\t\t\t\t\n\t\t\t\tTo receive notifications you need to agree to our data sharing agreement.\t\t\t\t\n\t\t\t\n\t\t\tOpt-in to notifications\n\t\t\t\n\t\t\t\n\n\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tSettings\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\tClose\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\tGeneral\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\tViewing\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tEditing\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tMaintenance\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tDebugging\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\tDisplay\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\tCalendar\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tOrganizers\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tDate "
+    },
+    {
+      "path": "/wp-admin/admin.php?page=tec-events-settings&tab=display",
+      "name": "admin-011-settings-display",
+      "desc": "Settings: Display",
+      "title": "Settings \u2039 Dateline Site A - TEC + Eventin \u2014 WordPress",
+      "screenshot": "admin-011-settings-display.png",
+      "tabs": [],
+      "body_excerpt": "\n\n\n\n\n\n\n\nSkip to main content\nSkip to toolbar\n\n\n\n\n\n\t\t\n\n\t\t\n\n\n\n\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\tThe Events Calendar offers basic support for themes using Site Editor. Read more.Dismiss this notice.When using The Events Calendar, we recommend that you use a geographic timezone such as \"America/Los_Angeles\" and avoid using a UTC timezone offset such as \u201cUTC+0\u201d.Choosing a UTC timezone for your site or individual events may cause problems when importing events or with Daylight Saving Time. Read moreDismiss this notice.\n\t\n\n\n\n\tStart selling tickets to your Events\n\n\t\n\t\tSell tickets, collect RSVPs, and manage attendees for free with Event Tickets.\n\t\n\n\tInstall Event Tickets\n\n\nDismiss this notice.\n\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\tSettings\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\n\t\n\t\t\n\t\t\tNotifications\t\t\n\t\t\n\t\t\tMark all as read\n\t\t\t\n\t\t\n\t\n\t\n\t\t\n\t\t\n\t\t\n\t\t\t\t\n\t\t\t\tThere are no notifications\n\t\t\t\tCongratulations! You are up to date.\n\t\t\t\n\t\t\t\t\t\n\t\t\t\n\t\t\tThere are no notifications\n\t\t\t\n\t\t\t\tBe up to date with the latest updates, fixes and features for The Events Calendar.\n\t\t\t\t\t\t\t\t\n\t\t\t\tTo receive notifications you need to agree to our data sharing agreement.\t\t\t\t\n\t\t\t\n\t\t\tOpt-in to notifications\n\t\t\t\n\t\t\t\n\n\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tSettings\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\tClose\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\tGeneral\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\tViewing\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tEditing\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tMaintenance\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tDebugging\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\tDisplay\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\tCalendar\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tOrganizers\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tDate "
+    },
+    {
+      "path": "/wp-admin/admin.php?page=tec-events-settings&tab=defaults",
+      "name": "admin-012-settings-defaults",
+      "desc": "Settings: Defaults (ECP)",
+      "title": "Settings \u2039 Dateline Site A - TEC + Eventin \u2014 WordPress",
+      "screenshot": "admin-012-settings-defaults.png",
+      "tabs": [],
+      "body_excerpt": "\n\n\n\n\n\n\n\nSkip to main content\nSkip to toolbar\n\n\n\n\n\n\t\t\n\n\t\t\n\n\n\n\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\tThe Events Calendar offers basic support for themes using Site Editor. Read more.Dismiss this notice.When using The Events Calendar, we recommend that you use a geographic timezone such as \"America/Los_Angeles\" and avoid using a UTC timezone offset such as \u201cUTC+0\u201d.Choosing a UTC timezone for your site or individual events may cause problems when importing events or with Daylight Saving Time. Read moreDismiss this notice.\n\t\n\n\n\n\tStart selling tickets to your Events\n\n\t\n\t\tSell tickets, collect RSVPs, and manage attendees for free with Event Tickets.\n\t\n\n\tInstall Event Tickets\n\n\nDismiss this notice.\n\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\tSettings\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\n\t\n\t\t\n\t\t\tNotifications\t\t\n\t\t\n\t\t\tMark all as read\n\t\t\t\n\t\t\n\t\n\t\n\t\t\n\t\t\n\t\t\n\t\t\t\t\n\t\t\t\tThere are no notifications\n\t\t\t\tCongratulations! You are up to date.\n\t\t\t\n\t\t\t\t\t\n\t\t\t\n\t\t\tThere are no notifications\n\t\t\t\n\t\t\t\tBe up to date with the latest updates, fixes and features for The Events Calendar.\n\t\t\t\t\t\t\t\t\n\t\t\t\tTo receive notifications you need to agree to our data sharing agreement.\t\t\t\t\n\t\t\t\n\t\t\tOpt-in to notifications\n\t\t\t\n\t\t\t\n\n\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tSettings\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\tClose\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\tGeneral\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\tViewing\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tEditing\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tMaintenance\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tDebugging\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\tDisplay\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\tCalendar\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tOrganizers\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tDate "
+    },
+    {
+      "path": "/wp-admin/admin.php?page=tec-events-settings&tab=imports",
+      "name": "admin-013-settings-imports",
+      "desc": "Settings: Imports",
+      "title": "Settings \u2039 Dateline Site A - TEC + Eventin \u2014 WordPress",
+      "screenshot": "admin-013-settings-imports.png",
+      "tabs": [],
+      "body_excerpt": "\n\n\n\n\n\n\n\nSkip to main content\nSkip to toolbar\n\n\n\n\n\n\t\t\n\n\t\t\n\n\n\n\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\tThe Events Calendar offers basic support for themes using Site Editor. Read more.Dismiss this notice.When using The Events Calendar, we recommend that you use a geographic timezone such as \"America/Los_Angeles\" and avoid using a UTC timezone offset such as \u201cUTC+0\u201d.Choosing a UTC timezone for your site or individual events may cause problems when importing events or with Daylight Saving Time. Read moreDismiss this notice.\n\t\n\n\n\n\tStart selling tickets to your Events\n\n\t\n\t\tSell tickets, collect RSVPs, and manage attendees for free with Event Tickets.\n\t\n\n\tInstall Event Tickets\n\n\nDismiss this notice.\n\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\tSettings\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\n\t\n\t\t\n\t\t\tNotifications\t\t\n\t\t\n\t\t\tMark all as read\n\t\t\t\n\t\t\n\t\n\t\n\t\t\n\t\t\n\t\t\n\t\t\t\t\n\t\t\t\tThere are no notifications\n\t\t\t\tCongratulations! You are up to date.\n\t\t\t\n\t\t\t\t\t\n\t\t\t\n\t\t\tThere are no notifications\n\t\t\t\n\t\t\t\tBe up to date with the latest updates, fixes and features for The Events Calendar.\n\t\t\t\t\t\t\t\t\n\t\t\t\tTo receive notifications you need to agree to our data sharing agreement.\t\t\t\t\n\t\t\t\n\t\t\tOpt-in to notifications\n\t\t\t\n\t\t\t\n\n\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tSettings\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\tClose\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\tGeneral\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\tViewing\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tEditing\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tMaintenance\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tDebugging\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\tDisplay\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\tCalendar\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tOrganizers\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tDate "
+    },
+    {
+      "path": "/wp-admin/admin.php?page=tec-events-settings&tab=integrations",
+      "name": "admin-014-settings-integrations",
+      "desc": "Settings: Integrations",
+      "title": "Settings \u2039 Dateline Site A - TEC + Eventin \u2014 WordPress",
+      "screenshot": "admin-014-settings-integrations.png",
+      "tabs": [],
+      "body_excerpt": "\n\n\n\n\n\n\n\nSkip to main content\nSkip to toolbar\n\n\n\n\n\n\t\t\n\n\t\t\n\n\n\n\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\tThe Events Calendar offers basic support for themes using Site Editor. Read more.Dismiss this notice.When using The Events Calendar, we recommend that you use a geographic timezone such as \"America/Los_Angeles\" and avoid using a UTC timezone offset such as \u201cUTC+0\u201d.Choosing a UTC timezone for your site or individual events may cause problems when importing events or with Daylight Saving Time. Read moreDismiss this notice.\n\t\n\n\n\n\tStart selling tickets to your Events\n\n\t\n\t\tSell tickets, collect RSVPs, and manage attendees for free with Event Tickets.\n\t\n\n\tInstall Event Tickets\n\n\nDismiss this notice.\n\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\tSettings\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\n\t\n\t\t\n\t\t\tNotifications\t\t\n\t\t\n\t\t\tMark all as read\n\t\t\t\n\t\t\n\t\n\t\n\t\t\n\t\t\n\t\t\n\t\t\t\t\n\t\t\t\tThere are no notifications\n\t\t\t\tCongratulations! You are up to date.\n\t\t\t\n\t\t\t\t\t\n\t\t\t\n\t\t\tThere are no notifications\n\t\t\t\n\t\t\t\tBe up to date with the latest updates, fixes and features for The Events Calendar.\n\t\t\t\t\t\t\t\t\n\t\t\t\tTo receive notifications you need to agree to our data sharing agreement.\t\t\t\t\n\t\t\t\n\t\t\tOpt-in to notifications\n\t\t\t\n\t\t\t\n\n\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tSettings\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\tClose\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\tGeneral\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\tViewing\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tEditing\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tMaintenance\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tDebugging\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\tDisplay\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\tCalendar\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tOrganizers\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tDate "
+    },
+    {
+      "path": "/wp-admin/admin.php?page=tec-events-settings&tab=apis",
+      "name": "admin-015-settings-apis",
+      "desc": "Settings: APIs",
+      "title": "Settings \u2039 Dateline Site A - TEC + Eventin \u2014 WordPress",
+      "screenshot": "admin-015-settings-apis.png",
+      "tabs": [],
+      "body_excerpt": "\n\n\n\n\n\n\n\nSkip to main content\nSkip to toolbar\n\n\n\n\n\n\t\t\n\n\t\t\n\n\n\n\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\tThe Events Calendar offers basic support for themes using Site Editor. Read more.Dismiss this notice.When using The Events Calendar, we recommend that you use a geographic timezone such as \"America/Los_Angeles\" and avoid using a UTC timezone offset such as \u201cUTC+0\u201d.Choosing a UTC timezone for your site or individual events may cause problems when importing events or with Daylight Saving Time. Read moreDismiss this notice.\n\t\n\n\n\n\tStart selling tickets to your Events\n\n\t\n\t\tSell tickets, collect RSVPs, and manage attendees for free with Event Tickets.\n\t\n\n\tInstall Event Tickets\n\n\nDismiss this notice.\n\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\tSettings\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\n\t\n\t\t\n\t\t\tNotifications\t\t\n\t\t\n\t\t\tMark all as read\n\t\t\t\n\t\t\n\t\n\t\n\t\t\n\t\t\n\t\t\n\t\t\t\t\n\t\t\t\tThere are no notifications\n\t\t\t\tCongratulations! You are up to date.\n\t\t\t\n\t\t\t\t\t\n\t\t\t\n\t\t\tThere are no notifications\n\t\t\t\n\t\t\t\tBe up to date with the latest updates, fixes and features for The Events Calendar.\n\t\t\t\t\t\t\t\t\n\t\t\t\tTo receive notifications you need to agree to our data sharing agreement.\t\t\t\t\n\t\t\t\n\t\t\tOpt-in to notifications\n\t\t\t\n\t\t\t\n\n\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tSettings\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\tClose\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\tGeneral\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\tViewing\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tEditing\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tMaintenance\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tDebugging\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\tDisplay\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\tCalendar\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tOrganizers\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tDate "
+    },
+    {
+      "path": "/wp-admin/admin.php?page=tec-events-settings&tab=addons",
+      "name": "admin-016-settings-addons",
+      "desc": "Settings: Add-ons",
+      "title": "Settings \u2039 Dateline Site A - TEC + Eventin \u2014 WordPress",
+      "screenshot": "admin-016-settings-addons.png",
+      "tabs": [],
+      "body_excerpt": "\n\n\n\n\n\n\n\nSkip to main content\nSkip to toolbar\n\n\n\n\n\n\t\t\n\n\t\t\n\n\n\n\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\tThe Events Calendar offers basic support for themes using Site Editor. Read more.Dismiss this notice.When using The Events Calendar, we recommend that you use a geographic timezone such as \"America/Los_Angeles\" and avoid using a UTC timezone offset such as \u201cUTC+0\u201d.Choosing a UTC timezone for your site or individual events may cause problems when importing events or with Daylight Saving Time. Read moreDismiss this notice.\n\t\n\n\n\n\tStart selling tickets to your Events\n\n\t\n\t\tSell tickets, collect RSVPs, and manage attendees for free with Event Tickets.\n\t\n\n\tInstall Event Tickets\n\n\nDismiss this notice.\n\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\tSettings\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\n\t\n\t\t\n\t\t\tNotifications\t\t\n\t\t\n\t\t\tMark all as read\n\t\t\t\n\t\t\n\t\n\t\n\t\t\n\t\t\n\t\t\n\t\t\t\t\n\t\t\t\tThere are no notifications\n\t\t\t\tCongratulations! You are up to date.\n\t\t\t\n\t\t\t\t\t\n\t\t\t\n\t\t\tThere are no notifications\n\t\t\t\n\t\t\t\tBe up to date with the latest updates, fixes and features for The Events Calendar.\n\t\t\t\t\t\t\t\t\n\t\t\t\tTo receive notifications you need to agree to our data sharing agreement.\t\t\t\t\n\t\t\t\n\t\t\tOpt-in to notifications\n\t\t\t\n\t\t\t\n\n\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tSettings\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\tClose\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\tGeneral\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\tViewing\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tEditing\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tMaintenance\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tDebugging\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\tDisplay\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\tCalendar\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tOrganizers\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tDate "
+    },
+    {
+      "path": "/wp-admin/admin.php?page=tec-events-settings&tab=licenses",
+      "name": "admin-017-settings-licenses",
+      "desc": "Settings: Licenses (PUE)",
+      "title": "Settings \u2039 Dateline Site A - TEC + Eventin \u2014 WordPress",
+      "screenshot": "admin-017-settings-licenses.png",
+      "tabs": [],
+      "body_excerpt": "\n\n\n\n\n\n\n\nSkip to main content\nSkip to toolbar\n\n\n\n\n\n\t\t\n\n\t\t\n\n\n\n\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\tThe Events Calendar offers basic support for themes using Site Editor. Read more.Dismiss this notice.When using The Events Calendar, we recommend that you use a geographic timezone such as \"America/Los_Angeles\" and avoid using a UTC timezone offset such as \u201cUTC+0\u201d.Choosing a UTC timezone for your site or individual events may cause problems when importing events or with Daylight Saving Time. Read moreDismiss this notice.\n\t\n\n\n\n\tStart selling tickets to your Events\n\n\t\n\t\tSell tickets, collect RSVPs, and manage attendees for free with Event Tickets.\n\t\n\n\tInstall Event Tickets\n\n\nDismiss this notice.\n\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\tSettings\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\n\t\n\t\t\n\t\t\tNotifications\t\t\n\t\t\n\t\t\tMark all as read\n\t\t\t\n\t\t\n\t\n\t\n\t\t\n\t\t\n\t\t\n\t\t\t\t\n\t\t\t\tThere are no notifications\n\t\t\t\tCongratulations! You are up to date.\n\t\t\t\n\t\t\t\t\t\n\t\t\t\n\t\t\tThere are no notifications\n\t\t\t\n\t\t\t\tBe up to date with the latest updates, fixes and features for The Events Calendar.\n\t\t\t\t\t\t\t\t\n\t\t\t\tTo receive notifications you need to agree to our data sharing agreement.\t\t\t\t\n\t\t\t\n\t\t\tOpt-in to notifications\n\t\t\t\n\t\t\t\n\n\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tSettings\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\tClose\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\tGeneral\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\tViewing\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tEditing\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tMaintenance\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tDebugging\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\tDisplay\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\tCalendar\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tOrganizers\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tDate "
+    },
+    {
+      "path": "/wp-admin/admin.php?page=tec-events-settings&tab=integrations#tribe-tab-section-zoom",
+      "name": "admin-020-integrations-zoom",
+      "desc": "Integrations: Zoom",
+      "title": "Settings \u2039 Dateline Site A - TEC + Eventin \u2014 WordPress",
+      "screenshot": "admin-020-integrations-zoom.png",
+      "tabs": [],
+      "body_excerpt": "\n\n\n\n\n\n\n\nSkip to main content\nSkip to toolbar\n\n\n\n\n\n\t\t\n\n\t\t\n\n\n\n\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\tThe Events Calendar offers basic support for themes using Site Editor. Read more.Dismiss this notice.When using The Events Calendar, we recommend that you use a geographic timezone such as \"America/Los_Angeles\" and avoid using a UTC timezone offset such as \u201cUTC+0\u201d.Choosing a UTC timezone for your site or individual events may cause problems when importing events or with Daylight Saving Time. Read moreDismiss this notice.\n\t\n\n\n\n\tStart selling tickets to your Events\n\n\t\n\t\tSell tickets, collect RSVPs, and manage attendees for free with Event Tickets.\n\t\n\n\tInstall Event Tickets\n\n\nDismiss this notice.\n\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\tSettings\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\n\t\n\t\t\n\t\t\tNotifications\t\t\n\t\t\n\t\t\tMark all as read\n\t\t\t\n\t\t\n\t\n\t\n\t\t\n\t\t\n\t\t\n\t\t\t\t\n\t\t\t\tThere are no notifications\n\t\t\t\tCongratulations! You are up to date.\n\t\t\t\n\t\t\t\t\t\n\t\t\t\n\t\t\tThere are no notifications\n\t\t\t\n\t\t\t\tBe up to date with the latest updates, fixes and features for The Events Calendar.\n\t\t\t\t\t\t\t\t\n\t\t\t\tTo receive notifications you need to agree to our data sharing agreement.\t\t\t\t\n\t\t\t\n\t\t\tOpt-in to notifications\n\t\t\t\n\t\t\t\n\n\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tSettings\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\tClose\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\tGeneral\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\tViewing\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tEditing\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tMaintenance\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tDebugging\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\tDisplay\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\tCalendar\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tOrganizers\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tDate "
+    },
+    {
+      "path": "/wp-admin/admin.php?page=tec-events-settings&tab=integrations#tribe-tab-section-google",
+      "name": "admin-021-integrations-google",
+      "desc": "Integrations: Google Meet",
+      "title": "Settings \u2039 Dateline Site A - TEC + Eventin \u2014 WordPress",
+      "screenshot": "admin-021-integrations-google.png",
+      "tabs": [],
+      "body_excerpt": "\n\n\n\n\n\n\n\nSkip to main content\nSkip to toolbar\n\n\n\n\n\n\t\t\n\n\t\t\n\n\n\n\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\tThe Events Calendar offers basic support for themes using Site Editor. Read more.Dismiss this notice.When using The Events Calendar, we recommend that you use a geographic timezone such as \"America/Los_Angeles\" and avoid using a UTC timezone offset such as \u201cUTC+0\u201d.Choosing a UTC timezone for your site or individual events may cause problems when importing events or with Daylight Saving Time. Read moreDismiss this notice.\n\t\n\n\n\n\tStart selling tickets to your Events\n\n\t\n\t\tSell tickets, collect RSVPs, and manage attendees for free with Event Tickets.\n\t\n\n\tInstall Event Tickets\n\n\nDismiss this notice.\n\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\tSettings\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\n\t\n\t\t\n\t\t\tNotifications\t\t\n\t\t\n\t\t\tMark all as read\n\t\t\t\n\t\t\n\t\n\t\n\t\t\n\t\t\n\t\t\n\t\t\t\t\n\t\t\t\tThere are no notifications\n\t\t\t\tCongratulations! You are up to date.\n\t\t\t\n\t\t\t\t\t\n\t\t\t\n\t\t\tThere are no notifications\n\t\t\t\n\t\t\t\tBe up to date with the latest updates, fixes and features for The Events Calendar.\n\t\t\t\t\t\t\t\t\n\t\t\t\tTo receive notifications you need to agree to our data sharing agreement.\t\t\t\t\n\t\t\t\n\t\t\tOpt-in to notifications\n\t\t\t\n\t\t\t\n\n\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tSettings\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\tClose\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\tGeneral\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\tViewing\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tEditing\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tMaintenance\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tDebugging\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\tDisplay\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\tCalendar\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tOrganizers\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tDate "
+    },
+    {
+      "path": "/wp-admin/admin.php?page=tec-events-settings&tab=integrations#tribe-tab-section-microsoft",
+      "name": "admin-022-integrations-microsoft",
+      "desc": "Integrations: Microsoft Teams / Webex",
+      "title": "Settings \u2039 Dateline Site A - TEC + Eventin \u2014 WordPress",
+      "screenshot": "admin-022-integrations-microsoft.png",
+      "tabs": [],
+      "body_excerpt": "\n\n\n\n\n\n\n\nSkip to main content\nSkip to toolbar\n\n\n\n\n\n\t\t\n\n\t\t\n\n\n\n\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\tThe Events Calendar offers basic support for themes using Site Editor. Read more.Dismiss this notice.When using The Events Calendar, we recommend that you use a geographic timezone such as \"America/Los_Angeles\" and avoid using a UTC timezone offset such as \u201cUTC+0\u201d.Choosing a UTC timezone for your site or individual events may cause problems when importing events or with Daylight Saving Time. Read moreDismiss this notice.\n\t\n\n\n\n\tStart selling tickets to your Events\n\n\t\n\t\tSell tickets, collect RSVPs, and manage attendees for free with Event Tickets.\n\t\n\n\tInstall Event Tickets\n\n\nDismiss this notice.\n\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\tSettings\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\n\t\n\t\t\n\t\t\tNotifications\t\t\n\t\t\n\t\t\tMark all as read\n\t\t\t\n\t\t\n\t\n\t\n\t\t\n\t\t\n\t\t\n\t\t\t\t\n\t\t\t\tThere are no notifications\n\t\t\t\tCongratulations! You are up to date.\n\t\t\t\n\t\t\t\t\t\n\t\t\t\n\t\t\tThere are no notifications\n\t\t\t\n\t\t\t\tBe up to date with the latest updates, fixes and features for The Events Calendar.\n\t\t\t\t\t\t\t\t\n\t\t\t\tTo receive notifications you need to agree to our data sharing agreement.\t\t\t\t\n\t\t\t\n\t\t\tOpt-in to notifications\n\t\t\t\n\t\t\t\n\n\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tSettings\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\tClose\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\tGeneral\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\tViewing\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tEditing\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tMaintenance\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tDebugging\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\tDisplay\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\tCalendar\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tOrganizers\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tDate "
+    },
+    {
+      "path": "/wp-admin/admin.php?page=tec-events-settings&tab=integrations#tribe-tab-section-youtube",
+      "name": "admin-023-integrations-youtube",
+      "desc": "Integrations: YouTube",
+      "title": "Settings \u2039 Dateline Site A - TEC + Eventin \u2014 WordPress",
+      "screenshot": "admin-023-integrations-youtube.png",
+      "tabs": [],
+      "body_excerpt": "\n\n\n\n\n\n\n\nSkip to main content\nSkip to toolbar\n\n\n\n\n\n\t\t\n\n\t\t\n\n\n\n\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\tThe Events Calendar offers basic support for themes using Site Editor. Read more.Dismiss this notice.When using The Events Calendar, we recommend that you use a geographic timezone such as \"America/Los_Angeles\" and avoid using a UTC timezone offset such as \u201cUTC+0\u201d.Choosing a UTC timezone for your site or individual events may cause problems when importing events or with Daylight Saving Time. Read moreDismiss this notice.\n\t\n\n\n\n\tStart selling tickets to your Events\n\n\t\n\t\tSell tickets, collect RSVPs, and manage attendees for free with Event Tickets.\n\t\n\n\tInstall Event Tickets\n\n\nDismiss this notice.\n\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\tSettings\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\n\t\n\t\t\n\t\t\tNotifications\t\t\n\t\t\n\t\t\tMark all as read\n\t\t\t\n\t\t\n\t\n\t\n\t\t\n\t\t\n\t\t\n\t\t\t\t\n\t\t\t\tThere are no notifications\n\t\t\t\tCongratulations! You are up to date.\n\t\t\t\n\t\t\t\t\t\n\t\t\t\n\t\t\tThere are no notifications\n\t\t\t\n\t\t\t\tBe up to date with the latest updates, fixes and features for The Events Calendar.\n\t\t\t\t\t\t\t\t\n\t\t\t\tTo receive notifications you need to agree to our data sharing agreement.\t\t\t\t\n\t\t\t\n\t\t\tOpt-in to notifications\n\t\t\t\n\t\t\t\n\n\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tSettings\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\tClose\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\tGeneral\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\tViewing\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tEditing\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tMaintenance\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tDebugging\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\tDisplay\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\tCalendar\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tOrganizers\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tDate "
+    },
+    {
+      "path": "/wp-admin/admin.php?page=tec-events-settings&tab=integrations#tribe-tab-section-facebook",
+      "name": "admin-024-integrations-facebook",
+      "desc": "Integrations: Facebook Live",
+      "title": "Settings \u2039 Dateline Site A - TEC + Eventin \u2014 WordPress",
+      "screenshot": "admin-024-integrations-facebook.png",
+      "tabs": [],
+      "body_excerpt": "\n\n\n\n\n\n\n\nSkip to main content\nSkip to toolbar\n\n\n\n\n\n\t\t\n\n\t\t\n\n\n\n\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\tThe Events Calendar offers basic support for themes using Site Editor. Read more.Dismiss this notice.When using The Events Calendar, we recommend that you use a geographic timezone such as \"America/Los_Angeles\" and avoid using a UTC timezone offset such as \u201cUTC+0\u201d.Choosing a UTC timezone for your site or individual events may cause problems when importing events or with Daylight Saving Time. Read moreDismiss this notice.\n\t\n\n\n\n\tStart selling tickets to your Events\n\n\t\n\t\tSell tickets, collect RSVPs, and manage attendees for free with Event Tickets.\n\t\n\n\tInstall Event Tickets\n\n\nDismiss this notice.\n\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\tSettings\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\n\t\n\t\t\n\t\t\tNotifications\t\t\n\t\t\n\t\t\tMark all as read\n\t\t\t\n\t\t\n\t\n\t\n\t\t\n\t\t\n\t\t\n\t\t\t\t\n\t\t\t\tThere are no notifications\n\t\t\t\tCongratulations! You are up to date.\n\t\t\t\n\t\t\t\t\t\n\t\t\t\n\t\t\tThere are no notifications\n\t\t\t\n\t\t\t\tBe up to date with the latest updates, fixes and features for The Events Calendar.\n\t\t\t\t\t\t\t\t\n\t\t\t\tTo receive notifications you need to agree to our data sharing agreement.\t\t\t\t\n\t\t\t\n\t\t\tOpt-in to notifications\n\t\t\t\n\t\t\t\n\n\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tSettings\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\tClose\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\tGeneral\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\tViewing\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tEditing\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tMaintenance\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tDebugging\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\tDisplay\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\tCalendar\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tOrganizers\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tDate "
+    },
+    {
+      "path": "/wp-admin/edit.php?post_type=tribe_events&page=aggregator",
+      "name": "admin-030-aggregator",
+      "desc": "Event Aggregator (importer)",
+      "title": "New Import \u2013 Events Import \u2039 Dateline Site A - TEC + Eventin \u2014 WordPress",
+      "screenshot": "admin-030-aggregator.png",
+      "tabs": [
+        "New Import"
+      ],
+      "body_excerpt": "\n\n\n\n\n\n\n\nSkip to main content\nSkip to toolbar\n\n\n\n\n\n\t\t\n\n\t\t\n\n\n\n\t\t\n\t\tView Calendar\n\tEvents ImportWhen using The Events Calendar, we recommend that you use a geographic timezone such as \"America/Los_Angeles\" and avoid using a UTC timezone offset such as \u201cUTC+0\u201d.Choosing a UTC timezone for your site or individual events may cause problems when importing events or with Daylight Saving Time. Read moreDismiss this notice.\n\t\n\n\n\n\tStart selling tickets to your Events\n\n\t\n\t\tSell tickets, collect RSVPs, and manage attendees for free with Event Tickets.\n\t\n\n\tInstall Event Tickets\n\n\nDismiss this notice.\n\n\t\t\t\t\tNew Import\n\t\t\t\t\t\n\t\n\t\n\n\t\n\n\n\tEvent Aggregator will try to fetch 300 events starting from the current date or the specified date; you can modify this setting here. \n\n\tNeed assistance? You can find more information here:\n\t\n\t\n\t\tImporting Calendar Data From a CSV File\t\n\n\t\n\t\n\t\tCSV File Formatting and Examples \t\n\n    Event Aggregator will try to fetch events starting within the next one month from the current date or the specified date; you can modify this setting here. \n\n\t\n\n\t\t\t\t\n\t\t\t\n\t\t\t\tImport Origin:\n\t\t\t\n\t\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\tCSV File\n\t\t\t\t\t\t\t\t\t\t\t\t\tEventbrite\n\t\t\t\t\t\t\t\t\t\t\t\t\tGoogle Calendar\n\t\t\t\t\t\t\t\t\t\t\t\t\tiCalendar\n\t\t\t\t\t\t\t\t\t\t\t\t\tICS File\n\t\t\t\t\t\t\t\t\t\t\t\t\tMeetup\n\t\t\t\t\t\t\t\t\t\t\t\t\tOther URL\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\tSelect Origin\n\t\tChoose where you are importing from.\n\n\t\t\n\t\t\t\n\t\t\t\tImport Name:\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\n\n\t\t\n\n\n\t\n\t\tContent Type:\n\t\n\t\n\t\t\n\t\t\tSelect Content Type\n\t\t\t\t\t\t\tEvents\n\t\t\t\t\t\t\tOrgan"
+    },
+    {
+      "path": "/wp-admin/admin.php?page=tec-events-settings&tab=display#tribe-tab-section-additional-fields",
+      "name": "admin-031-additional-fields",
+      "desc": "Additional Fields setup",
+      "title": "Settings \u2039 Dateline Site A - TEC + Eventin \u2014 WordPress",
+      "screenshot": "admin-031-additional-fields.png",
+      "tabs": [],
+      "body_excerpt": "\n\n\n\n\n\n\n\nSkip to main content\nSkip to toolbar\n\n\n\n\n\n\t\t\n\n\t\t\n\n\n\n\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\tThe Events Calendar offers basic support for themes using Site Editor. Read more.Dismiss this notice.When using The Events Calendar, we recommend that you use a geographic timezone such as \"America/Los_Angeles\" and avoid using a UTC timezone offset such as \u201cUTC+0\u201d.Choosing a UTC timezone for your site or individual events may cause problems when importing events or with Daylight Saving Time. Read moreDismiss this notice.\n\t\n\n\n\n\tStart selling tickets to your Events\n\n\t\n\t\tSell tickets, collect RSVPs, and manage attendees for free with Event Tickets.\n\t\n\n\tInstall Event Tickets\n\n\nDismiss this notice.\n\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\tSettings\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\n\t\n\t\t\n\t\t\tNotifications\t\t\n\t\t\n\t\t\tMark all as read\n\t\t\t\n\t\t\n\t\n\t\n\t\t\n\t\t\n\t\t\n\t\t\t\t\n\t\t\t\tThere are no notifications\n\t\t\t\tCongratulations! You are up to date.\n\t\t\t\n\t\t\t\t\t\n\t\t\t\n\t\t\tThere are no notifications\n\t\t\t\n\t\t\t\tBe up to date with the latest updates, fixes and features for The Events Calendar.\n\t\t\t\t\t\t\t\t\n\t\t\t\tTo receive notifications you need to agree to our data sharing agreement.\t\t\t\t\n\t\t\t\n\t\t\tOpt-in to notifications\n\t\t\t\n\t\t\t\n\n\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tSettings\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\tClose\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\tGeneral\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\tViewing\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tEditing\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tMaintenance\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tDebugging\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\tDisplay\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\tCalendar\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tOrganizers\n\t\t\t\t\t\n\t\t\t\t\n\t\t\tDate "
+    },
+    {
+      "path": "/wp-admin/admin.php?page=tec-troubleshooting",
+      "name": "admin-032-troubleshooting",
+      "desc": "Troubleshooting",
+      "title": "Troubleshooting \u2039 Dateline Site A - TEC + Eventin \u2014 WordPress",
+      "screenshot": "admin-032-troubleshooting.png",
+      "tabs": [],
+      "body_excerpt": "\n\n\n\n\n\n\n\nSkip to main content\nSkip to toolbar\n\n\n\n\n\n\t\t\n\n\t\t\n\n\n\n\t\t\n\t\tWhen using The Events Calendar, we recommend that you use a geographic timezone such as \"America/Los_Angeles\" and avoid using a UTC timezone offset such as \u201cUTC+0\u201d.Choosing a UTC timezone for your site or individual events may cause problems when importing events or with Daylight Saving Time. Read moreDismiss this notice.\n\t\n\n\n\n\tStart selling tickets to your Events\n\n\t\n\t\tSell tickets, collect RSVPs, and manage attendees for free with Event Tickets.\n\t\n\n\tInstall Event Tickets\n\n\nDismiss this notice.\n\t\n\t\tHey there... did you check out the Help page?\t\n\n\n\t\t\n\t\t\n\t\tTroubleshooting\n\t\tSometimes things just don\u2019t work as expected. We\u2019ve created a wealth of resources to get you back on track.\n\t\n\n\n\n\t\n\t\n\t\t\n\t\t\tWe\u2019ve detected the following issues\t\t\n\t\n\n\t\t\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\tSite time zone uses UTC\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\tWhen using The Events Calendar, we highly recommend that you use a geographic timezone such as \"America/Los_Angeles\" and avoid using a UTC timezone offset such as \u201cUTC+9\u201d. Choosing a UTC timezone for your site or individual events may cause problems when importing events or with Daylight Saving Time. Go to your the General WordPress settings to adjust your site timezone.\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\tLearn more\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\tAdjust your timezone\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\n\t\t\t\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\tDefault Google Maps API key\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\tThe Events Calendar comes with an API key fo"
+    },
+    {
+      "path": "/wp-admin/post.php?post=6&action=edit",
+      "name": "admin-040-edit-recurring",
+      "desc": "Edit recurring event (CT1 prompt)",
+      "error": "Page.goto: Timeout 25000ms exceeded.\nCall log:\n  - navigating to \"https://dateline-site-a.ddev.site:8443/wp-admin/post.php?post=6&action=edit\", waiting until \"networkidle\"\n"
+    }
+  ],
+  "frontend_screens": [
+    {
+      "path": "/events/",
+      "name": "frontend-001-default",
+      "desc": "Default calendar (list/month)",
+      "title": "Events for April 2026 \u2013 Dateline Site A \u2013 TEC + Eventin",
+      "screenshot": "frontend-001-default.png",
+      "body_excerpt": "\n\n\t\t\n\n\t\t\n\n\n\t\n\t\n\t\t\n\t\t\n\t\t\tDateline Site A \u2013 TEC + Eventin\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\tEtn CategoryEtn Speaker CategoryEtn TagsSample Page\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\n\t\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\n\t\n\t\t\n\t\n\t\t35 events found.\t\n\t\n\t\t\n\t\t\n\t\t\n\t\n\n\n\t\t\n\t\t\n\n\t\t\n\t\t\n\n\t\n\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\tThere are no upcoming events.\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\n\t\n\n\t\n\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\tThere are no upcoming events.\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\n\t\n\n\t\n\t\n\t\n\n\t\n\t\tEvents Search and Views Navigation\t\n\n\t\t\t\n\t\n\t\n\t\tSearch\t\n\n\n\t\t\n\t\t\t\n\t\n\t\t\n\n\t\t\n\t\t\t\n\t\n\t\tEnter Keyword. Search for Events by Keyword.\t\n\t\n\t\n\n\t\t\n\n\t\t\n\tFind Events\n\t\n\n\t\t\n\t\n\t\n\t\n\t\tEvent Views Navigation\t\n\t\n\t\t\n\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\n\t\t\t\tMonth\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\n\t\t\t\t\t\n\t\n\t\t\n\t\t\t\n\t\t\n\t\t\n\t\t\tList\t\t\n\t\n\n\t\t\t\t\t\n\t\n\t\t\n\t\t\t\t\t\n\t\t\n\t\t\tMonth\t\t\n\t\n\n\t\t\t\t\t\n\t\n\t\t\n\t\t\t\t\t\n\t\t\n\t\t\tDay\t\t\n\t\n\n\t\t\t\t\t\n\t\n\t\t\n\t\t\t\n\t\t\n\t\t\n\t\t\tSummary\t\t\n\t\n\n\t\t\t\t\t\n\t\n\t\t\n\t\t\t\n\t\t\n\t\t\n\t\t\tPhoto\t\t\n\t\n\n\t\t\t\t\t\n\t\n\t\t\n\t\t\t\t\t\n\t\t\n\t\t\tWeek\t\t\n\t\n\n\t\t\t\t\t\n\t\n\t\t\n\t\t\t\t\t\n\t\t\n\t\t\tMap\t\t\n\t\n\n\t\t\t\n\n\t\n\n\n\n\n\t\n\t\n\n\t\n\t\n\t\t\n\t\n\t\t\n\t\n\n\n\t\t\n\t\n\t\t\n\t\n\n\t\n\n\n\t\n\tThis Month\n\n\t\n\t\n\t\t\n\t\t\t\n\t\t\t\t4/2026\t\t\t\n\t\t\t\n\t\t\t\tApril 2026\t\t\t\n\t\t\n\t\t\n\t\n\t\n\t\tSelect date.\t\n\t\n\t\n\t\n\t\n\n\n\t\n\t\n\n\n\n\n\t\t\n\t\t\n\n\t\t\t\n\n\t\n\t\tCalendar of Events\t\n\n\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\tM\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\tMon\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\tT\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\tTue\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\tW\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\tWed\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\tT\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\tThu\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\tF\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\tFri\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\tS\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\tSat\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\tS\t\t\t\t"
+    },
+    {
+      "path": "/events/list/",
+      "name": "frontend-002-list",
+      "desc": "List view",
+      "title": "Upcoming Events \u2013 Dateline Site A \u2013 TEC + Eventin",
+      "screenshot": "frontend-002-list.png",
+      "body_excerpt": "\n\n\t\t\n\n\t\t\n\n\n\t\n\t\n\t\t\n\t\t\n\t\t\tDateline Site A \u2013 TEC + Eventin\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\tEtn CategoryEtn Speaker CategoryEtn TagsSample Page\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\n\t\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\n\t\n\t\t\n\t\n\t\t0 events found.\t\n\t\n\t\t\n\t\t\n\t\t\n\t\n\n\n\t\t\n\t\t\n\n\t\t\n\t\t\n\n\t\n\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\tThere are no upcoming events.\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\n\t\n\n\t\n\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\tThere are no upcoming events.\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\n\t\n\n\t\n\t\n\t\n\n\t\n\t\tEvents Search and Views Navigation\t\n\n\t\t\t\n\t\n\t\n\t\tSearch\t\n\n\n\t\t\n\t\t\t\n\t\n\t\t\n\n\t\t\n\t\t\t\n\t\n\t\tEnter Keyword. Search for Events by Keyword.\t\n\t\n\t\n\n\t\t\n\n\t\t\n\tFind Events\n\t\n\n\t\t\n\t\n\t\n\t\n\t\tEvent Views Navigation\t\n\t\n\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\tList\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\n\t\t\t\t\t\n\t\n\t\t\n\t\t\t\n\t\t\n\t\t\n\t\t\tList\t\t\n\t\n\n\t\t\t\t\t\n\t\n\t\t\n\t\t\t\t\t\n\t\t\n\t\t\tMonth\t\t\n\t\n\n\t\t\t\t\t\n\t\n\t\t\n\t\t\t\t\t\n\t\t\n\t\t\tDay\t\t\n\t\n\n\t\t\t\t\t\n\t\n\t\t\n\t\t\t\n\t\t\n\t\t\n\t\t\tSummary\t\t\n\t\n\n\t\t\t\t\t\n\t\n\t\t\n\t\t\t\n\t\t\n\t\t\n\t\t\tPhoto\t\t\n\t\n\n\t\t\t\t\t\n\t\n\t\t\n\t\t\t\t\t\n\t\t\n\t\t\tWeek\t\t\n\t\n\n\t\t\t\t\t\n\t\n\t\t\n\t\t\t\t\t\n\t\t\n\t\t\tMap\t\t\n\t\n\n\t\t\t\n\n\t\n\n\n\n\n\t\n\t\n\n\t\n\t\n\t\t\n\t\n\t\t\n\t\n\n\n\t\t\n\t\n\t\t\n\t\n\n\t\n\n\n\t\n\tToday\n\n\t\n\t\n\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\tUpcoming\t\t\t\t\n\t\t\t\t\n\t\t\t\t\tUpcoming\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\n\t\n\t\tSelect date.\t\n\t\n\t\n\t\n\t\n\n\n\t\n\t\n\n\n\n\n\t\t\n\t\t\n\n\t\t\t\n\t\t\n\n\t\t\n\t\n\t\t\n\t\n\t\t\n\t\t\n\t\t\tPrevious Events\t\t\n\t\n\n\n\t\t\n\t\n\t\tToday\t\n\n\n\t\t\n\t\n\t\t\n\t\t\tNext Events\t\t\n\t\t\n\t\n\n\t\n\n\n\t\t\n\t\n\t\t\n\t\t\t\n\t\t\t\tSubscribe to calendar\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\t\t\n\t\t\t\t\t\t\t\t\t\n\n\t\n\t\tGoogle Calendar\t\n\n\t\t\t\t\t\t\t\t\t\n\n\t\n\t\tiCalendar\t\n\n\t\t\t\t\t\t\t\t\t\n\n\t\n\t\tOutlook 365\t\n\n\t\t\t\t\t\t\t\t\t\n\n\t\n\t\tOutlook Live\t\n\n\t\t\t\t\t\t\t\t\t\n\n\t\n\t\tExport .ics file\t\n\n\t\t\t\t\t\t\t\t\t\n\n\t\n\t\tExport Outlook .ics file\t\n\n\t\t\t\t\t\t\t\n\t\t\n\t\n\n\n\t\t\n\t\n\n\n\n\t\n\n\n\n\n\n\n\n\t\n\t\n\t\t\n\n\t\t\n\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t"
+    },
+    {
+      "path": "/events/month/",
+      "name": "frontend-003-month",
+      "desc": "Month view",
+      "title": "Events for April 2026 \u2013 Dateline Site A \u2013 TEC + Eventin",
+      "screenshot": "frontend-003-month.png",
+      "body_excerpt": "\n\n\t\t\n\n\t\t\n\n\n\t\n\t\n\t\t\n\t\t\n\t\t\tDateline Site A \u2013 TEC + Eventin\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\tEtn CategoryEtn Speaker CategoryEtn TagsSample Page\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\n\t\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\n\t\n\t\t\n\t\n\t\t35 events found.\t\n\t\n\t\t\n\t\t\n\t\t\n\t\n\n\n\t\t\n\t\t\n\n\t\t\n\t\t\n\n\t\n\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\tThere are no upcoming events.\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\n\t\n\n\t\n\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\tThere are no upcoming events.\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\n\t\n\n\t\n\t\n\t\n\n\t\n\t\tEvents Search and Views Navigation\t\n\n\t\t\t\n\t\n\t\n\t\tSearch\t\n\n\n\t\t\n\t\t\t\n\t\n\t\t\n\n\t\t\n\t\t\t\n\t\n\t\tEnter Keyword. Search for Events by Keyword.\t\n\t\n\t\n\n\t\t\n\n\t\t\n\tFind Events\n\t\n\n\t\t\n\t\n\t\n\t\n\t\tEvent Views Navigation\t\n\t\n\t\t\n\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\n\t\t\t\tMonth\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\n\t\t\t\t\t\n\t\n\t\t\n\t\t\t\n\t\t\n\t\t\n\t\t\tList\t\t\n\t\n\n\t\t\t\t\t\n\t\n\t\t\n\t\t\t\t\t\n\t\t\n\t\t\tMonth\t\t\n\t\n\n\t\t\t\t\t\n\t\n\t\t\n\t\t\t\t\t\n\t\t\n\t\t\tDay\t\t\n\t\n\n\t\t\t\t\t\n\t\n\t\t\n\t\t\t\n\t\t\n\t\t\n\t\t\tSummary\t\t\n\t\n\n\t\t\t\t\t\n\t\n\t\t\n\t\t\t\n\t\t\n\t\t\n\t\t\tPhoto\t\t\n\t\n\n\t\t\t\t\t\n\t\n\t\t\n\t\t\t\t\t\n\t\t\n\t\t\tWeek\t\t\n\t\n\n\t\t\t\t\t\n\t\n\t\t\n\t\t\t\t\t\n\t\t\n\t\t\tMap\t\t\n\t\n\n\t\t\t\n\n\t\n\n\n\n\n\t\n\t\n\n\t\n\t\n\t\t\n\t\n\t\t\n\t\n\n\n\t\t\n\t\n\t\t\n\t\n\n\t\n\n\n\t\n\tThis Month\n\n\t\n\t\n\t\t\n\t\t\t\n\t\t\t\t4/2026\t\t\t\n\t\t\t\n\t\t\t\tApril 2026\t\t\t\n\t\t\n\t\t\n\t\n\t\n\t\tSelect date.\t\n\t\n\t\n\t\n\t\n\n\n\t\n\t\n\n\n\n\n\t\t\n\t\t\n\n\t\t\t\n\n\t\n\t\tCalendar of Events\t\n\n\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\tM\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\tMon\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\tT\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\tTue\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\tW\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\tWed\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\tT\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\tThu\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\tF\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\tFri\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\tS\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\tSat\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\tS\t\t\t\t"
+    },
+    {
+      "path": "/events/day/",
+      "name": "frontend-004-day",
+      "desc": "Day view",
+      "title": "Page not found \u2013 Dateline Site A \u2013 TEC + Eventin",
+      "screenshot": "frontend-004-day.png",
+      "body_excerpt": "\n\n\t\t\n\n\t\t\nSkip to content\n\n\t\n\t\n\t\t\n\t\t\n\t\t\tDateline Site A \u2013 TEC + Eventin\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\tEtn CategoryEtn Speaker CategoryEtn TagsSample Page\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\n\t\n\n\n\n\n\n\n\n\t\n\n\t\n\t\n\t\t\n\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\tPage not found\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\tThe page you are looking for doesn't exist, or it has been moved. Please try searching using the form below.\n\t\t\t\t\n\t\t\t\t\nSearchSearch\n\n\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\n\t\n\n\n\n\n\n\n\n\n\t\n\t\n\t\t\n\n\t\t\n\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\tDateline Site A \u2013 TEC + Eventin\n\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\n\n\t\t\t\n\t\t\t\n\t\t\t\tBlogAboutFAQsAuthors\n\n\t\t\t\tEventsShopPatternsThemes\n\t\t\t\n\t\t\t\t\n\t\t\n\t\t\n\n\t\t\n\t\t\n\t\t\n\n\t\t\n\t\t\n\t\t\t\n\t\t\tTwenty Twenty-Five\n\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\tDesigned with WordPress\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\n\t\n\n\n\n\n\n\t\t\n\t\t\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThe Events Calendar Context\nThe Events Calendar ContextPHP Render ContextKeyValueORM argReadsWritespost_idpost_id => yesnopermalink_structure/%postname%/permalink_structure => /%postname%/yesnoplain_permalinkplain_permalink => yesnoposts_per_page10posts_per_page => 10yesyesis_main_query1is_main_query => 1yesyespaged0paged => 0yesyespage0page => 0yesyesnamedayname => dayyesyespost_typepost_type => yesnosinglesingle => yesnotaxonomyundefinedtaxonomy => yesnopost_tagpost_tag => yesnobulk_editundefinedbulk_edit => yesnoinline_saveundefinedinline_save => yesnoevent_displaymonthevent_display => monthyesyesviewmonthview => monthyesyesview_dataundefinedview_data => yesyesevent_d"
+    },
+    {
+      "path": "/events/week/",
+      "name": "frontend-005-week",
+      "desc": "Week view (ECP)",
+      "title": "Events for week of April 27, 2026 \u2013 Dateline Site A \u2013 TEC + Eventin",
+      "screenshot": "frontend-005-week.png",
+      "body_excerpt": "\n\n\t\t\n\n\t\t\n\n\n\t\n\t\n\t\t\n\t\t\n\t\t\tDateline Site A \u2013 TEC + Eventin\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\tEtn CategoryEtn Speaker CategoryEtn TagsSample Page\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\n\t\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\n\t\n\n\t\t\n\t\n\t\t7 events found.\t\n\t\n\t\t\n\t\t\n\t\t\n\t\n\n\n\t\t\n\t\t\n\n\t\t\n\t\t\n\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\tThere are no upcoming events.\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\n\t\n\n\t\t\t\n\t\t\t\n\n\t\n\t\tEvents Search and Views Navigation\t\n\n\t\t\t\n\t\n\t\n\t\tSearch\t\n\n\n\t\t\n\t\t\t\n\t\n\t\t\n\n\t\t\n\t\t\t\n\t\n\t\tEnter Keyword. Search for Events by Keyword.\t\n\t\n\t\n\n\t\t\n\n\t\t\n\tFind Events\n\t\n\n\t\t\n\t\n\t\n\t\n\t\tEvent Views Navigation\t\n\t\n\t\t\n\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\n\t\t\t\tWeek\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\n\t\t\t\t\t\n\t\n\t\t\n\t\t\t\n\t\t\n\t\t\n\t\t\tList\t\t\n\t\n\n\t\t\t\t\t\n\t\n\t\t\n\t\t\t\t\t\n\t\t\n\t\t\tMonth\t\t\n\t\n\n\t\t\t\t\t\n\t\n\t\t\n\t\t\t\t\t\n\t\t\n\t\t\tDay\t\t\n\t\n\n\t\t\t\t\t\n\t\n\t\t\n\t\t\t\n\t\t\n\t\t\n\t\t\tSummary\t\t\n\t\n\n\t\t\t\t\t\n\t\n\t\t\n\t\t\t\n\t\t\n\t\t\n\t\t\tPhoto\t\t\n\t\n\n\t\t\t\t\t\n\t\n\t\t\n\t\t\t\t\t\n\t\t\n\t\t\tWeek\t\t\n\t\n\n\t\t\t\t\t\n\t\n\t\t\n\t\t\t\t\t\n\t\t\n\t\t\tMap\t\t\n\t\n\n\t\t\t\n\n\t\n\n\n\n\n\t\t\t\n\n\t\n\t\n\t\t\n\t\n\t\t\n\t\n\n\n\t\t\n\t\n\t\t\n\t\n\n\t\n\n\n\t\n\tThis Week\n\n\t\n\t\n\t\t\n\t\t\t\n\t\t\t\t4/27/2026\t\t\t\n\t\t\t\n\t\t\t\tApril 2026\t\t\t\n\t\t\n\t\t \u2013 \n\t\t\n\t\t\t\n\t\t\t\tMay 2026\t\t\t\n\t\t\n\t\t\n\t\n\t\n\t\tSelect date.\t\n\t\n\t\n\t\n\t\n\n\n\t\n\t\n\n\n\t\t\n\n\t\t\n\t\t\n\n\t\n\n\t\t\t\n\t\n\n\t\t\n\t\t\n\n\t\t\t\n\t\t\t\tMon\t\t\t\n\n\t\t\t\n\t\t\t\t27\t\t\t\n\n\t\t\n\n\t\n\n\t\t\t\n\t\n\n\t\t\n\t\t\n\n\t\t\t\n\t\t\t\tTue\t\t\t\n\n\t\t\t\n\t\t\t\t28\t\t\t\n\n\t\t\n\n\t\n\n\t\t\t\n\t\n\n\t\t\n\t\t\n\n\t\t\t\n\t\t\t\tWed\t\t\t\n\n\t\t\t\n\t\t\t\t29\t\t\t\n\n\t\t\n\n\t\n\n\t\t\t\n\t\n\n\t\t\n\t\t\n\n\t\t\t\n\t\t\t\tThu\t\t\t\n\n\t\t\t\n\t\t\t\t30\t\t\t\n\n\t\t\n\n\t\n\n\t\t\t\n\t\n\n\t\t\n\t\t\n\n\t\t\t\n\t\t\t\tFri\t\t\t\n\n\t\t\t\n\t\t\t\t1\t\t\t\n\n\t\t\n\n\t\n\n\t\t\t\n\t\n\n\t\t\n\t\t\n\n\t\t\t\n\t\t\t\tSat\t\t\t\n\n\t\t\t\n\t\t\t\t2\t\t\t\n\n\t\t\n\n\t\n\n\t\t\t\n\t\n\n\t\t\n\t\t\n\n\t\t\t\n\t\t\t\tSun\t\t\t\n\n\t\t\t\n\t\t\t\t3\t\t\t\n\n\t\t\n\n\t\n\n\t\n\n\n\t\n\t\n\n\t\t\n\t\n\t\t\n\t\t\n\t\t\tPrevious week\t\t\n\t\n\n\n\t\t\n\t\n\t\t\n\t\t\tNext week\t\t\n\t\t\n\t\n\n\n\t\n\n\n\n\n\t\t\n\n\n\t\t\t\n\n\t\t\t\n\t\t\t"
+    },
+    {
+      "path": "/events/photo/",
+      "name": "frontend-006-photo",
+      "desc": "Photo view (ECP)",
+      "title": "Display of Events from \u2013 \u2013 Dateline Site A \u2013 TEC + Eventin",
+      "screenshot": "frontend-006-photo.png",
+      "body_excerpt": "\n\n\t\t\n\n\t\t\n\n\n\t\n\t\n\t\t\n\t\t\n\t\t\tDateline Site A \u2013 TEC + Eventin\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\tEtn CategoryEtn Speaker CategoryEtn TagsSample Page\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\n\t\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\n\t\n\t\t\n\t\n\t\t0 events found.\t\n\t\n\t\t\n\t\t\n\t\t\n\t\n\n\n\t\t\n\t\t\n\n\t\t\n\t\t\n\n\t\n\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\tThere are no upcoming events.\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\n\t\n\n\t\n\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\tThere are no upcoming events.\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\n\t\n\n\t\n\t\n\t\n\n\t\n\t\tEvents Search and Views Navigation\t\n\n\t\t\t\n\t\n\t\n\t\tSearch\t\n\n\n\t\t\n\t\t\t\n\t\n\t\t\n\n\t\t\n\t\t\t\n\t\n\t\tEnter Keyword. Search for Events by Keyword.\t\n\t\n\t\n\n\t\t\n\n\t\t\n\tFind Events\n\t\n\n\t\t\n\t\n\t\n\t\n\t\tEvent Views Navigation\t\n\t\n\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\tPhoto\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\n\t\t\t\t\t\n\t\n\t\t\n\t\t\t\n\t\t\n\t\t\n\t\t\tList\t\t\n\t\n\n\t\t\t\t\t\n\t\n\t\t\n\t\t\t\t\t\n\t\t\n\t\t\tMonth\t\t\n\t\n\n\t\t\t\t\t\n\t\n\t\t\n\t\t\t\t\t\n\t\t\n\t\t\tDay\t\t\n\t\n\n\t\t\t\t\t\n\t\n\t\t\n\t\t\t\n\t\t\n\t\t\n\t\t\tSummary\t\t\n\t\n\n\t\t\t\t\t\n\t\n\t\t\n\t\t\t\n\t\t\n\t\t\n\t\t\tPhoto\t\t\n\t\n\n\t\t\t\t\t\n\t\n\t\t\n\t\t\t\t\t\n\t\t\n\t\t\tWeek\t\t\n\t\n\n\t\t\t\t\t\n\t\n\t\t\n\t\t\t\t\t\n\t\t\n\t\t\tMap\t\t\n\t\n\n\t\t\t\n\n\t\n\n\n\n\n\t\n\t\n\n\t\n\t\n\t\t\n\t\n\t\t\n\t\n\n\n\t\t\n\t\n\t\t\n\t\n\n\t\n\n\n\t\n\tToday\n\n\t\n\t\n\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\tUpcoming\t\t\t\t\n\t\t\t\t\n\t\t\t\t\tUpcoming\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\n\t\n\t\tSelect date.\t\n\t\n\t\n\t\n\t\n\n\n\t\n\t\n\n\n\n\n\t\t\n\t\t\n\n\t\t\t\n\n\t\t\t\t\n\t\t\t\n\n\t\t\n\n\t\t\n\t\n\t\t\n\t\n\t\t\n\t\t\n\t\t\tPrevious Events\t\t\n\t\n\n\n\t\t\n\t\n\t\tToday\t\n\n\n\t\t\n\t\n\t\t\n\t\t\tNext Events\t\t\n\t\t\n\t\n\n\t\n\n\n\t\t\n\t\n\t\t\n\t\t\t\n\t\t\t\tSubscribe to calendar\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\t\t\n\t\t\t\t\t\t\t\t\t\n\n\t\n\t\tGoogle Calendar\t\n\n\t\t\t\t\t\t\t\t\t\n\n\t\n\t\tiCalendar\t\n\n\t\t\t\t\t\t\t\t\t\n\n\t\n\t\tOutlook 365\t\n\n\t\t\t\t\t\t\t\t\t\n\n\t\n\t\tOutlook Live\t\n\n\t\t\t\t\t\t\t\t\t\n\n\t\n\t\tExport .ics file\t\n\n\t\t\t\t\t\t\t\t\t\n\n\t\n\t\tExport Outlook .ics file\t\n\n\t\t\t\t\t\t\t\n\t\t\n\t\n\n\n\t\t\n\t\n\n\n\t\n\n\n\n\n\n\n\n\t\n\t\n\t\t\n\n\t\t\n\t\t\n\t\t\t\n\t"
+    },
+    {
+      "path": "/events/map/",
+      "name": "frontend-007-map",
+      "desc": "Map view (ECP)",
+      "title": "Map of Events from \u2013 \u2013 Dateline Site A \u2013 TEC + Eventin",
+      "screenshot": "frontend-007-map.png",
+      "body_excerpt": "\n\n\t\t\n\n\t\t\n\n\n\t\n\t\n\t\t\n\t\t\n\t\t\tDateline Site A \u2013 TEC + Eventin\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\tEtn CategoryEtn Speaker CategoryEtn TagsSample Page\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\n\t\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\n\t\n\t\t\n\t\n\t\t0 events found.\t\n\t\n\t\t\n\t\t\n\t\t\n\t\n\n\n\t\t\n\t\t\n\n\t\t\n\t\t\n\n\t\n\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\tThere are no upcoming events.\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\n\t\n\n\t\n\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\tThere are no upcoming events.\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\n\t\n\n\t\n\t\n\t\n\n\t\n\t\tEvents Search and Views Navigation\t\n\n\t\t\t\n\t\n\t\n\t\tSearch\t\n\n\n\t\t\n\t\t\t\n\t\n\t\t\n\n\t\t\n\t\t\t\n\t\n\t\tEnter Keyword. Search for Events by Keyword.\t\n\t\n\t\n\n\t\t\n\n\t\t\n\tFind Events\n\t\n\n\t\t\n\t\n\t\n\t\n\t\tEvent Views Navigation\t\n\t\n\t\t\n\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\n\t\t\t\tMap\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\n\t\t\t\t\t\n\t\n\t\t\n\t\t\t\n\t\t\n\t\t\n\t\t\tList\t\t\n\t\n\n\t\t\t\t\t\n\t\n\t\t\n\t\t\t\t\t\n\t\t\n\t\t\tMonth\t\t\n\t\n\n\t\t\t\t\t\n\t\n\t\t\n\t\t\t\t\t\n\t\t\n\t\t\tDay\t\t\n\t\n\n\t\t\t\t\t\n\t\n\t\t\n\t\t\t\n\t\t\n\t\t\n\t\t\tSummary\t\t\n\t\n\n\t\t\t\t\t\n\t\n\t\t\n\t\t\t\n\t\t\n\t\t\n\t\t\tPhoto\t\t\n\t\n\n\t\t\t\t\t\n\t\n\t\t\n\t\t\t\t\t\n\t\t\n\t\t\tWeek\t\t\n\t\n\n\t\t\t\t\t\n\t\n\t\t\n\t\t\t\t\t\n\t\t\n\t\t\tMap\t\t\n\t\n\n\t\t\t\n\n\t\n\n\n\n\n\t\n\t\n\n\t\n\t\n\t\t\n\t\n\t\t\n\t\n\n\n\t\t\n\t\n\t\t\n\t\n\n\t\n\n\n\t\n\tToday\n\n\t\n\t\n\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\tUpcoming\t\t\t\t\n\t\t\t\t\n\t\t\t\t\tUpcoming\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\n\t\n\t\tSelect date.\t\n\t\n\t\n\t\n\t\n\n\n\t\n\t\n\n\n\n\n\t\t\n\t\t\n\t\t\n\t\n\t\t\n\t\t\t\n\t\t\t\tSubscribe to calendar\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\t\t\n\t\t\t\t\t\t\t\t\t\n\n\t\n\t\tGoogle Calendar\t\n\n\t\t\t\t\t\t\t\t\t\n\n\t\n\t\tiCalendar\t\n\n\t\t\t\t\t\t\t\t\t\n\n\t\n\t\tOutlook 365\t\n\n\t\t\t\t\t\t\t\t\t\n\n\t\n\t\tOutlook Live\t\n\n\t\t\t\t\t\t\t\t\t\n\n\t\n\t\tExport .ics file\t\n\n\t\t\t\t\t\t\t\t\t\n\n\t\n\t\tExport Outlook .ics file\t\n\n\t\t\t\t\t\t\t\n\t\t\n\t\n\n\n\t\t\n\t\n\n\n\t\n\n\n\n\n\n\n\n\t\n\t\n\t\t\n\n\t\t\n\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\tDateline Site A \u2013 TEC + Eventin\n\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\n\n\t\t\t\n\t\t\t"
+    },
+    {
+      "path": "/events/summary/",
+      "name": "frontend-008-summary",
+      "desc": "Summary view (ECP)",
+      "title": "Summary of Events from \u2013 \u2013 Dateline Site A \u2013 TEC + Eventin",
+      "screenshot": "frontend-008-summary.png",
+      "body_excerpt": "\n\n\t\t\n\n\t\t\n\n\n\t\n\t\n\t\t\n\t\t\n\t\t\tDateline Site A \u2013 TEC + Eventin\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\tEtn CategoryEtn Speaker CategoryEtn TagsSample Page\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\n\t\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\n\t\n\t\t\n\t\n\t\t0 events found.\t\n\t\n\t\t\n\t\t\n\t\t\n\t\n\n\n\t\t\n\t\t\n\n\t\t\n\t\t\n\n\t\n\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\tThere are no upcoming events.\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\n\t\n\n\t\n\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\tThere are no upcoming events.\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\n\t\n\n\t\n\t\n\t\n\n\t\n\t\tEvents Search and Views Navigation\t\n\n\t\t\t\n\t\n\t\n\t\tSearch\t\n\n\n\t\t\n\t\t\t\n\t\n\t\t\n\n\t\t\n\t\t\t\n\t\n\t\tEnter Keyword. Search for Events by Keyword.\t\n\t\n\t\n\n\t\t\n\n\t\t\n\tFind Events\n\t\n\n\t\t\n\t\n\t\n\t\n\t\tEvent Views Navigation\t\n\t\n\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\tSummary\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\n\t\t\t\t\t\n\t\n\t\t\n\t\t\t\n\t\t\n\t\t\n\t\t\tList\t\t\n\t\n\n\t\t\t\t\t\n\t\n\t\t\n\t\t\t\t\t\n\t\t\n\t\t\tMonth\t\t\n\t\n\n\t\t\t\t\t\n\t\n\t\t\n\t\t\t\t\t\n\t\t\n\t\t\tDay\t\t\n\t\n\n\t\t\t\t\t\n\t\n\t\t\n\t\t\t\n\t\t\n\t\t\n\t\t\tSummary\t\t\n\t\n\n\t\t\t\t\t\n\t\n\t\t\n\t\t\t\n\t\t\n\t\t\n\t\t\tPhoto\t\t\n\t\n\n\t\t\t\t\t\n\t\n\t\t\n\t\t\t\t\t\n\t\t\n\t\t\tWeek\t\t\n\t\n\n\t\t\t\t\t\n\t\n\t\t\n\t\t\t\t\t\n\t\t\n\t\t\tMap\t\t\n\t\n\n\t\t\t\n\n\t\n\n\n\n\n\t\n\t\n\n\t\n\t\n\t\t\n\t\n\t\t\n\t\n\n\n\t\t\n\t\n\t\t\n\t\n\n\t\n\n\n\t\n\tToday\n\n\t\n\t\n\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\tUpcoming\t\t\t\t\n\t\t\t\t\n\t\t\t\t\tUpcoming\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\n\t\n\t\tSelect date.\t\n\t\n\t\n\t\n\t\n\n\n\t\n\t\n\n\n\n\n\t\t\n\t\t\n\n\t\t\t\n\t\t\n\n\t\t\n\t\n\t\t\n\t\n\t\n\t\t\n\t\t\tPrevious Events\t\t\n\t\n\n\n\t\t\n\t\n\t\tToday\t\n\n\n\t\t\n\t\n\t\t\n\t\t\tNext Events\t\t\n\t\t\n\t\n\n\t\n\n\n\t\t\n\t\n\t\t\n\t\t\t\n\t\t\t\tSubscribe to calendar\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\t\t\n\t\t\t\t\t\t\t\t\t\n\n\t\n\t\tGoogle Calendar\t\n\n\t\t\t\t\t\t\t\t\t\n\n\t\n\t\tiCalendar\t\n\n\t\t\t\t\t\t\t\t\t\n\n\t\n\t\tOutlook 365\t\n\n\t\t\t\t\t\t\t\t\t\n\n\t\n\t\tOutlook Live\t\n\n\t\t\t\t\t\t\t\t\t\n\n\t\n\t\tExport .ics file\t\n\n\t\t\t\t\t\t\t\t\t\n\n\t\n\t\tExport Outlook .ics file\t\n\n\t\t\t\t\t\t\t\n\t\t\n\t\n\n\n\t\t\n\t\n\n\n\n\t\n\n\n\n\n\n\n\n\t\n\t\n\t\t\n\n\t\t\n\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t"
+    },
+    {
+      "path": "/event/tech-meetup-cloudflare-workers-deep-dive/",
+      "name": "frontend-010-single-standard",
+      "desc": "Single event \u2014 standard",
+      "title": "Upcoming Events \u2013 Dateline Site A \u2013 TEC + Eventin",
+      "screenshot": "frontend-010-single-standard.png",
+      "body_excerpt": "\n\n\t\t\n\n\t\t\nSkip to content\n\n\t\n\t\n\t\t\n\t\t\n\t\t\tDateline Site A \u2013 TEC + Eventin\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\tEtn CategoryEtn Speaker CategoryEtn TagsSample Page\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\n\t\n\n\n\n\n\n\n\n\t\n\n\t\n\t\n\t\t\n\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\tPage not found\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\tThe page you are looking for doesn't exist, or it has been moved. Please try searching using the form below.\n\t\t\t\t\n\t\t\t\t\nSearchSearch\n\n\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\n\t\n\n\n\n\n\n\n\n\n\t\n\t\n\t\t\n\n\t\t\n\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\tDateline Site A \u2013 TEC + Eventin\n\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\n\n\t\t\t\n\t\t\t\n\t\t\t\tBlogAboutFAQsAuthors\n\n\t\t\t\tEventsShopPatternsThemes\n\t\t\t\n\t\t\t\t\n\t\t\n\t\t\n\n\t\t\n\t\t\n\t\t\n\n\t\t\n\t\t\n\t\t\t\n\t\t\tTwenty Twenty-Five\n\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\tDesigned with WordPress\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\n\t\n\n\n\n\n\n\t\t\n\t\t\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThe Events Calendar Context\nThe Events Calendar ContextPHP Render ContextKeyValueORM argReadsWritespost_idpost_id => yesnopermalink_structure/%postname%/permalink_structure => /%postname%/yesnoplain_permalinkplain_permalink => yesnoposts_per_page10posts_per_page => 10yesyesis_main_query1is_main_query => 1yesyespaged0paged => 0yesyespage0page => 0yesyesnametech-meetup-cloudflare-workers-deep-divename => tech-meetup-cloudflare-workers-deep-diveyesyespost_typetribe_eventspost_type => tribe_eventsyesnosinglesingle => yesnotaxonomyundefinedtaxonomy => yesnopost_tagpost_tag => yesnobulk_editundefinedbulk_edit => yesnoinline_saveundefinedi"
+    },
+    {
+      "path": "/event/virtual-workshop-edge-compute-patterns/",
+      "name": "frontend-011-single-virtual",
+      "desc": "Single event \u2014 virtual (Zoom)",
+      "title": "Upcoming Events \u2013 Dateline Site A \u2013 TEC + Eventin",
+      "screenshot": "frontend-011-single-virtual.png",
+      "body_excerpt": "\n\n\t\t\n\n\t\t\nSkip to content\n\n\t\n\t\n\t\t\n\t\t\n\t\t\tDateline Site A \u2013 TEC + Eventin\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\tEtn CategoryEtn Speaker CategoryEtn TagsSample Page\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\n\t\n\n\n\n\n\n\n\n\t\n\n\t\n\t\n\t\t\n\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\tPage not found\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\tThe page you are looking for doesn't exist, or it has been moved. Please try searching using the form below.\n\t\t\t\t\n\t\t\t\t\nSearchSearch\n\n\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\n\t\n\n\n\n\n\n\n\n\n\t\n\t\n\t\t\n\n\t\t\n\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\tDateline Site A \u2013 TEC + Eventin\n\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\n\n\t\t\t\n\t\t\t\n\t\t\t\tBlogAboutFAQsAuthors\n\n\t\t\t\tEventsShopPatternsThemes\n\t\t\t\n\t\t\t\t\n\t\t\n\t\t\n\n\t\t\n\t\t\n\t\t\n\n\t\t\n\t\t\n\t\t\t\n\t\t\tTwenty Twenty-Five\n\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\tDesigned with WordPress\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\n\t\n\n\n\n\n\n\t\t\n\t\t\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThe Events Calendar Context\nThe Events Calendar ContextPHP Render ContextKeyValueORM argReadsWritespost_idpost_id => yesnopermalink_structure/%postname%/permalink_structure => /%postname%/yesnoplain_permalinkplain_permalink => yesnoposts_per_page10posts_per_page => 10yesyesis_main_query1is_main_query => 1yesyespaged0paged => 0yesyespage0page => 0yesyesnamevirtual-workshop-edge-compute-patternsname => virtual-workshop-edge-compute-patternsyesyespost_typetribe_eventspost_type => tribe_eventsyesnosinglesingle => yesnotaxonomyundefinedtaxonomy => yesnopost_tagpost_tag => yesnobulk_editundefinedbulk_edit => yesnoinline_saveundefinedinlin"
+    },
+    {
+      "path": "/event/weekly-tuesday-standup/",
+      "name": "frontend-012-single-recurring",
+      "desc": "Single event \u2014 recurring",
+      "title": "Upcoming Events \u2013 Dateline Site A \u2013 TEC + Eventin",
+      "screenshot": "frontend-012-single-recurring.png",
+      "body_excerpt": "\n\n\t\t\n\n\t\t\nSkip to content\n\n\t\n\t\n\t\t\n\t\t\n\t\t\tDateline Site A \u2013 TEC + Eventin\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\tEtn CategoryEtn Speaker CategoryEtn TagsSample Page\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\n\t\n\n\n\n\n\n\n\n\t\n\n\t\n\t\n\t\t\n\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\tPage not found\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\tThe page you are looking for doesn't exist, or it has been moved. Please try searching using the form below.\n\t\t\t\t\n\t\t\t\t\nSearchSearch\n\n\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\n\t\n\n\n\n\n\n\n\n\n\t\n\t\n\t\t\n\n\t\t\n\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\tDateline Site A \u2013 TEC + Eventin\n\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\n\n\t\t\t\n\t\t\t\n\t\t\t\tBlogAboutFAQsAuthors\n\n\t\t\t\tEventsShopPatternsThemes\n\t\t\t\n\t\t\t\t\n\t\t\n\t\t\n\n\t\t\n\t\t\n\t\t\n\n\t\t\n\t\t\n\t\t\t\n\t\t\tTwenty Twenty-Five\n\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\tDesigned with WordPress\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\n\t\n\n\n\n\n\n\t\t\n\t\t\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThe Events Calendar Context\nThe Events Calendar ContextPHP Render ContextKeyValueORM argReadsWritespost_idpost_id => yesnopermalink_structure/%postname%/permalink_structure => /%postname%/yesnoplain_permalinkplain_permalink => yesnoposts_per_page10posts_per_page => 10yesyesis_main_query1is_main_query => 1yesyespaged0paged => 0yesyespage0page => 0yesyesnameweekly-tuesday-standupname => weekly-tuesday-standupyesyespost_typetribe_eventspost_type => tribe_eventsyesnosinglesingle => yesnotaxonomyundefinedtaxonomy => yesnopost_tagpost_tag => yesnobulk_editundefinedbulk_edit => yesnoinline_saveundefinedinline_save => yesnoevent_displaymont"
+    },
+    {
+      "path": "/event/annual-conference-2026/",
+      "name": "frontend-013-single-multiday",
+      "desc": "Single event \u2014 multi-day",
+      "title": "Upcoming Events \u2013 Dateline Site A \u2013 TEC + Eventin",
+      "screenshot": "frontend-013-single-multiday.png",
+      "body_excerpt": "\n\n\t\t\n\n\t\t\nSkip to content\n\n\t\n\t\n\t\t\n\t\t\n\t\t\tDateline Site A \u2013 TEC + Eventin\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\tEtn CategoryEtn Speaker CategoryEtn TagsSample Page\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\n\t\n\n\n\n\n\n\n\n\t\n\n\t\n\t\n\t\t\n\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\tPage not found\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\tThe page you are looking for doesn't exist, or it has been moved. Please try searching using the form below.\n\t\t\t\t\n\t\t\t\t\nSearchSearch\n\n\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\n\t\n\n\n\n\n\n\n\n\n\t\n\t\n\t\t\n\n\t\t\n\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\tDateline Site A \u2013 TEC + Eventin\n\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\n\n\t\t\t\n\t\t\t\n\t\t\t\tBlogAboutFAQsAuthors\n\n\t\t\t\tEventsShopPatternsThemes\n\t\t\t\n\t\t\t\t\n\t\t\n\t\t\n\n\t\t\n\t\t\n\t\t\n\n\t\t\n\t\t\n\t\t\t\n\t\t\tTwenty Twenty-Five\n\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\tDesigned with WordPress\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\n\t\n\n\n\n\n\n\t\t\n\t\t\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThe Events Calendar Context\nThe Events Calendar ContextPHP Render ContextKeyValueORM argReadsWritespost_idpost_id => yesnopermalink_structure/%postname%/permalink_structure => /%postname%/yesnoplain_permalinkplain_permalink => yesnoposts_per_page10posts_per_page => 10yesyesis_main_query1is_main_query => 1yesyespaged0paged => 0yesyespage0page => 0yesyesnameannual-conference-2026name => annual-conference-2026yesyespost_typetribe_eventspost_type => tribe_eventsyesnosinglesingle => yesnotaxonomyundefinedtaxonomy => yesnopost_tagpost_tag => yesnobulk_editundefinedbulk_edit => yesnoinline_saveundefinedinline_save => yesnoevent_displaymont"
+    },
+    {
+      "path": "/venue/soundcheck-hall/",
+      "name": "frontend-020-venue-archive",
+      "desc": "Venue archive page",
+      "title": "Soundcheck Hall \u2013 Dateline Site A \u2013 TEC + Eventin",
+      "screenshot": "frontend-020-venue-archive.png",
+      "body_excerpt": "\n\n\t\t\n\n\t\t\nSkip to content\n\n\t\n\t\n\t\t\n\t\t\n\t\t\tDateline Site A \u2013 TEC + Eventin\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\tEtn CategoryEtn Speaker CategoryEtn TagsSample Page\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\n\t\n\n\n\n\n\n\n\n\t\n\t\n\t\tSoundcheck Hall\n\t\t\n\t\t\n\n\t\n\tWritten by \n\t\n\t\n\t\n\tin\n\t\n\t\n\n\n\n\t\t\n\t\t\n\t\t\n\t\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\n\t\n\t\n\t\t\n\t\t\n\t\n\t\n\n\n\n\t\t\n\n\t\n\t\n\t\n\n\t\n\tMore posts\n\t\n\n\t\n\t\n\t\t\n\t\t\t\n\t\t\t\n\t\t\t\tHello world!\n\t\t\t\tApril 30, 2026\n\t\t\t\n\t\t\t\n\t\t\n\t\n\t\n\n\n\n\n\n\n\n\n\t\n\t\n\t\t\n\n\t\t\n\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\tDateline Site A \u2013 TEC + Eventin\n\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\n\n\t\t\t\n\t\t\t\n\t\t\t\tBlogAboutFAQsAuthors\n\n\t\t\t\tEventsShopPatternsThemes\n\t\t\t\n\t\t\t\t\n\t\t\n\t\t\n\n\t\t\n\t\t\n\t\t\n\n\t\t\n\t\t\n\t\t\t\n\t\t\tTwenty Twenty-Five\n\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\tDesigned with WordPress\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\n\t\n\n\n\n\n\n\t\t\n\t\t\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThe Events Calendar Context\nThe Events Calendar ContextPHP Render ContextKeyValueORM argReadsWritespost_id9post_id => 9yesnopermalink_structure/%postname%/permalink_structure => /%postname%/yesnoplain_permalinkplain_permalink => yesnoposts_per_page10posts_per_page => 10yesyesis_main_query1is_main_query => 1yesyespaged0paged => 0yesyespage0page => 0yesyesnamesoundcheck-hallname => soundcheck-hallyesyespost_typetribe_venuepost_type => tribe_venueyesnosingle1single => 1yesnotaxonomyundefinedtaxonomy => yesnopost_tagpost_tag => yesnobulk_editundefinedbulk_edit => yesnoinline_saveundefinedinline_save => yesnoevent_displayvenueevent_display => venueyesyesviewvenueview => venueyesyesview_datau"
+    },
+    {
+      "path": "/organizer/dateline-productions/",
+      "name": "frontend-021-organizer-archive",
+      "desc": "Organizer archive page",
+      "title": "Dateline Productions \u2013 Dateline Site A \u2013 TEC + Eventin",
+      "screenshot": "frontend-021-organizer-archive.png",
+      "body_excerpt": "\n\n\t\t\n\n\t\t\nSkip to content\n\n\t\n\t\n\t\t\n\t\t\n\t\t\tDateline Site A \u2013 TEC + Eventin\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\tEtn CategoryEtn Speaker CategoryEtn TagsSample Page\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\n\t\n\n\n\n\n\n\n\n\t\n\t\n\t\tDateline Productions\n\t\t\n\t\t\n\n\t\n\tWritten by \n\t\n\t\n\t\n\tin\n\t\n\t\n\n\n\n\t\t\n\t\t\n\t\t\n\t\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\n\t\n\t\n\t\t\n\t\t\n\t\n\t\n\n\n\n\t\t\n\n\t\n\t\n\t\n\n\t\n\tMore posts\n\t\n\n\t\n\t\n\t\t\n\t\t\t\n\t\t\t\n\t\t\t\tHello world!\n\t\t\t\tApril 30, 2026\n\t\t\t\n\t\t\t\n\t\t\n\t\n\t\n\n\n\n\n\n\n\n\n\t\n\t\n\t\t\n\n\t\t\n\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\tDateline Site A \u2013 TEC + Eventin\n\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\n\n\t\t\t\n\t\t\t\n\t\t\t\tBlogAboutFAQsAuthors\n\n\t\t\t\tEventsShopPatternsThemes\n\t\t\t\n\t\t\t\t\n\t\t\n\t\t\n\n\t\t\n\t\t\n\t\t\n\n\t\t\n\t\t\n\t\t\t\n\t\t\tTwenty Twenty-Five\n\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\tDesigned with WordPress\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\n\t\n\n\n\n\n\n\t\t\n\t\t\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThe Events Calendar Context\nThe Events Calendar ContextPHP Render ContextKeyValueORM argReadsWritespost_id10post_id => 10yesnopermalink_structure/%postname%/permalink_structure => /%postname%/yesnoplain_permalinkplain_permalink => yesnoposts_per_page10posts_per_page => 10yesyesis_main_query1is_main_query => 1yesyespaged0paged => 0yesyespage0page => 0yesyesnamedateline-productionsname => dateline-productionsyesyespost_typetribe_organizerpost_type => tribe_organizeryesnosingle1single => 1yesnotaxonomyundefinedtaxonomy => yesnopost_tagpost_tag => yesnobulk_editundefinedbulk_edit => yesnoinline_saveundefinedinline_save => yesnoevent_displayorganizerevent_display => organizeryesyesviewo"
+    },
+    {
+      "path": "/events/list/?tribe_event_display=past",
+      "name": "frontend-030-past",
+      "desc": "Past events filter",
+      "title": "Past Events \u2013 Dateline Site A \u2013 TEC + Eventin",
+      "screenshot": "frontend-030-past.png",
+      "body_excerpt": "\n\n\t\t\n\n\t\t\n\n\n\t\n\t\n\t\t\n\t\t\n\t\t\tDateline Site A \u2013 TEC + Eventin\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\tEtn CategoryEtn Speaker CategoryEtn TagsSample Page\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\n\t\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\n\t\n\t\t\n\t\n\t\t0 events found.\t\n\t\n\t\t\n\t\t\n\t\t\n\t\n\n\n\t\t\n\t\t\n\n\t\t\n\t\t\n\n\t\n\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\tThere are no upcoming events.\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\n\t\n\n\t\n\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\tThere are no upcoming events.\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\n\t\n\n\t\n\t\n\t\n\n\t\n\t\tEvents Search and Views Navigation\t\n\n\t\t\t\n\t\n\t\n\t\tSearch\t\n\n\n\t\t\n\t\t\t\n\t\n\t\t\n\n\t\t\n\t\t\t\n\t\n\t\tEnter Keyword. Search for Events by Keyword.\t\n\t\n\t\n\n\t\t\n\n\t\t\n\tFind Events\n\t\n\n\t\t\n\t\n\t\n\t\n\t\tEvent Views Navigation\t\n\t\n\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\tList\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\n\t\t\t\t\t\n\t\n\t\t\n\t\t\t\n\t\t\n\t\t\n\t\t\tList\t\t\n\t\n\n\t\t\t\t\t\n\t\n\t\t\n\t\t\t\t\t\n\t\t\n\t\t\tMonth\t\t\n\t\n\n\t\t\t\t\t\n\t\n\t\t\n\t\t\t\t\t\n\t\t\n\t\t\tDay\t\t\n\t\n\n\t\t\t\t\t\n\t\n\t\t\n\t\t\t\n\t\t\n\t\t\n\t\t\tSummary\t\t\n\t\n\n\t\t\t\t\t\n\t\n\t\t\n\t\t\t\n\t\t\n\t\t\n\t\t\tPhoto\t\t\n\t\n\n\t\t\t\t\t\n\t\n\t\t\n\t\t\t\t\t\n\t\t\n\t\t\tWeek\t\t\n\t\n\n\t\t\t\t\t\n\t\n\t\t\n\t\t\t\t\t\n\t\t\n\t\t\tMap\t\t\n\t\n\n\t\t\t\n\n\t\n\n\n\n\n\t\n\t\n\n\t\n\t\n\t\t\n\t\n\t\t\n\t\n\n\n\t\t\n\t\n\t\t\n\t\n\n\t\n\n\n\t\n\tToday\n\n\t\n\t\n\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\tUpcoming\t\t\t\t\n\t\t\t\t\n\t\t\t\t\tUpcoming\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t \u2013 \n\t\t\t\n\t\t\t\t\n\t\t\t\t\t4/30/2026\t\t\t\t\n\t\t\t\t\n\t\t\t\t\tNow\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\n\t\n\t\tSelect date.\t\n\t\n\t\n\t\n\t\n\n\n\t\n\t\n\n\n\n\n\t\t\n\t\t\n\n\t\t\t\n\t\t\n\n\t\t\n\t\n\t\t\n\t\n\t\t\n\t\t\n\t\t\tPrevious Events\t\t\n\t\n\n\n\t\t\n\t\n\t\tToday\t\n\n\n\t\t\n\t\n\t\t\n\t\t\tNext Events\t\t\n\t\t\n\t\n\n\t\n\n\n\t\t\n\t\n\t\t\n\t\t\t\n\t\t\t\tSubscribe to calendar\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\t\t\n\t\t\t\t\t\t\t\t\t\n\n\t\n\t\tGoogle Calendar\t\n\n\t\t\t\t\t\t\t\t\t\n\n\t\n\t\tiCalendar\t\n\n\t\t\t\t\t\t\t\t\t\n\n\t\n\t\tOutlook 365\t\n\n\t\t\t\t\t\t\t\t\t\n\n\t\n\t\tOutlook Live\t\n\n\t\t\t\t\t\t\t\t\t\n\n\t\n\t\tExport .ics file\t\n\n\t\t\t\t\t\t\t\t\t\n\n\t\n\t\tExport Outlook .ics file\t\n\n\t\t\t"
+    },
+    {
+      "path": "/?ical=1&tribe_display=list",
+      "name": "frontend-040-ical",
+      "desc": "iCal export endpoint",
+      "title": "",
+      "screenshot": "frontend-040-ical.png",
+      "body_excerpt": ""
+    }
+  ],
+  "settings_tabs": [],
+  "metaboxes": [],
+  "tec_menus": [
+    {
+      "label": "Dashboard",
+      "href": "index.php",
+      "sublinks": [
+        {
+          "label": "Home",
+          "href": "index.php"
+        },
+        {
+          "label": "Updates 3",
+          "href": "update-core.php"
+        }
+      ]
+    },
+    {
+      "label": "Posts",
+      "href": "edit.php",
+      "sublinks": [
+        {
+          "label": "All Posts",
+          "href": "edit.php"
+        },
+        {
+          "label": "Add Post",
+          "href": "post-new.php"
+        },
+        {
+          "label": "Categories",
+          "href": "edit-tags.php?taxonomy=category"
+        },
+        {
+          "label": "Tags",
+          "href": "edit-tags.php?taxonomy=post_tag"
+        }
+      ]
+    },
+    {
+      "label": "Events",
+      "href": "edit.php?post_type=tribe_events",
+      "sublinks": [
+        {
+          "label": "Events",
+          "href": "edit.php?post_type=tribe_events"
+        },
+        {
+          "label": "Add New Event",
+          "href": "post-new.php?post_type=tribe_events"
+        },
+        {
+          "label": "Tags",
+          "href": "edit-tags.php?taxonomy=post_tag&post_type=tribe_events"
+        },
+        {
+          "label": "Event Categories",
+          "href": "edit-tags.php?taxonomy=tribe_events_cat&post_type=tribe_events"
+        },
+        {
+          "label": "Series",
+          "href": "edit.php?post_type=tribe_event_series"
+        },
+        {
+          "label": "Venues",
+          "href": "edit.php?post_type=tribe_venue"
+        },
+        {
+          "label": "\u21b3 Categories",
+          "href": "edit-tags.php?taxonomy=tec_venue_category&post_type=tribe_events"
+        },
+        {
+          "label": "Organizers",
+          "href": "edit.php?post_type=tribe_organizer"
+        },
+        {
+          "label": "\u21b3 Categories",
+          "href": "edit-tags.php?taxonomy=tec_organizer_category&post_type=tribe_events"
+        },
+        {
+          "label": "Import",
+          "href": "edit.php?post_type=tribe_events&page=aggregator"
+        },
+        {
+          "label": "Calendar Embeds",
+          "href": "edit.php?post_type=tec_calendar_embed"
+        },
+        {
+          "label": "Settings",
+          "href": "edit.php?post_type=tribe_events&page=tec-events-settings"
+        },
+        {
+          "label": "Help",
+          "href": "edit.php?post_type=tribe_events&page=tec-events-help-hub"
+        },
+        {
+          "label": "Troubleshooting",
+          "href": "edit.php?post_type=tribe_events&page=tec-troubleshooting"
+        },
+        {
+          "label": "Event Add-Ons",
+          "href": "edit.php?post_type=tribe_events&page=tribe-app-shop"
+        },
+        {
+          "label": "Setup Guide",
+          "href": "edit.php?post_type=tribe_events&page=first-time-setup"
+        }
+      ]
+    },
+    {
+      "label": "Media",
+      "href": "upload.php",
+      "sublinks": [
+        {
+          "label": "Library",
+          "href": "upload.php"
+        },
+        {
+          "label": "Add Media File",
+          "href": "media-new.php"
+        }
+      ]
+    },
+    {
+      "label": "Pages",
+      "href": "edit.php?post_type=page",
+      "sublinks": [
+        {
+          "label": "All Pages",
+          "href": "edit.php?post_type=page"
+        },
+        {
+          "label": "Add Page",
+          "href": "post-new.php?post_type=page"
+        }
+      ]
+    },
+    {
+      "label": "Comments 00 Comments in moderation",
+      "href": "edit-comments.php",
+      "sublinks": []
+    },
+    {
+      "label": "Appearance",
+      "href": "themes.php",
+      "sublinks": [
+        {
+          "label": "Themes 0",
+          "href": "themes.php"
+        },
+        {
+          "label": "Editor",
+          "href": "site-editor.php"
+        },
+        {
+          "label": "Customize",
+          "href": "customize.php?return=%2Fwp-admin%2F"
+        }
+      ]
+    },
+    {
+      "label": "Plugins 3",
+      "href": "plugins.php",
+      "sublinks": [
+        {
+          "label": "Installed Plugins",
+          "href": "plugins.php"
+        },
+        {
+          "label": "Add Plugin",
+          "href": "plugin-install.php"
+        }
+      ]
+    },
+    {
+      "label": "Users",
+      "href": "users.php",
+      "sublinks": [
+        {
+          "label": "All Users",
+          "href": "users.php"
+        },
+        {
+          "label": "Add User",
+          "href": "user-new.php"
+        },
+        {
+          "label": "Profile",
+          "href": "profile.php"
+        }
+      ]
+    },
+    {
+      "label": "Tools",
+      "href": "tools.php",
+      "sublinks": [
+        {
+          "label": "Available Tools",
+          "href": "tools.php"
+        },
+        {
+          "label": "Import",
+          "href": "import.php"
+        },
+        {
+          "label": "Export",
+          "href": "export.php"
+        },
+        {
+          "label": "Site Health 0",
+          "href": "site-health.php"
+        },
+        {
+          "label": "Export Personal Data",
+          "href": "export-personal-data.php"
+        },
+        {
+          "label": "Erase Personal Data",
+          "href": "erase-personal-data.php"
+        },
+        {
+          "label": "Scheduled Actions",
+          "href": "tools.php?page=action-scheduler"
+        },
+        {
+          "label": "Theme File Editor",
+          "href": "theme-editor.php"
+        },
+        {
+          "label": "Plugin File Editor",
+          "href": "plugin-editor.php"
+        }
+      ]
+    },
+    {
+      "label": "Settings",
+      "href": "options-general.php",
+      "sublinks": [
+        {
+          "label": "General",
+          "href": "options-general.php"
+        },
+        {
+          "label": "Writing",
+          "href": "options-writing.php"
+        },
+        {
+          "label": "Reading",
+          "href": "options-reading.php"
+        },
+        {
+          "label": "Discussion",
+          "href": "options-discussion.php"
+        },
+        {
+          "label": "Media",
+          "href": "options-media.php"
+        },
+        {
+          "label": "Permalinks",
+          "href": "options-permalink.php"
+        },
+        {
+          "label": "Privacy",
+          "href": "options-privacy.php"
+        }
+      ]
+    }
+  ],
+  "rest_api": []
+}
