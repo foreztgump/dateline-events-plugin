@@ -267,6 +267,25 @@ Beyond the legal guardrails above:
 
 ---
 
+## Progress Tracker
+
+### Phase 1: Static analysis — ✅ COMPLETE (2026-04-30)
+
+- ✅ P0 plugins (3): events-calendar-pro, eventin-pro, eventon — awaiting Phase 2
+- ✅ **P1 plugins (4): eventon-tickets, eventon-rsvp, eventon-seats, eventon-ticket-variations-options — PHASE 1 COMPLETE**
+  - 16 analysis documents created (4 plugins × 4 docs: overview, data-model, hooks, features)
+  - All docs include YAML front-matter with plugin, version, analyzed date, analyst, phase
+  - Clean-room methodology enforced: no verbatim PHP code, identifiers quoted, implementation paraphrased
+- ⏳ P2/P3 plugins (7): scheduled for Phase 1
+
+### Next Steps
+
+- Phase 2 (Feature inventory) for P0 plugins
+- Phase 3–4 (Edge cases & anti-patterns) for P0 plugins
+- Phase 5 (Cross-plugin synthesis) to produce `/research/synthesis/prd-inputs.md`
+
+---
+
 ## Definition of Done
 
 The PRD is fulfilled when `/research/synthesis/prd-inputs.md` exists, is reviewed by the developer, and is sufficient to write the Events Plugin PRD without further reference to the source plugins.
