@@ -1,0 +1,390 @@
+{
+  "admin_screens": [
+    {
+      "name": "admin-100-events-list",
+      "desc": "Events list \u2014 Seats WC-missing notice",
+      "url": "/wp-admin/edit.php?post_type=ajde_events",
+      "title": "Events \u2039 Dateline Site B - EventON + Add-ons \u2014 WordPress",
+      "screenshot": "admin-100-events-list.png",
+      "form_fields": [
+        {
+          "type": "input:checkbox",
+          "name": "event_location-hide",
+          "label": "Location",
+          "value": true
+        },
+        {
+          "type": "input:checkbox",
+          "name": "event_organizer-hide",
+          "label": "Organizer",
+          "value": true
+        },
+        {
+          "type": "input:checkbox",
+          "name": "event_type-hide",
+          "label": "Event Type",
+          "value": true
+        },
+        {
+          "type": "input:checkbox",
+          "name": "event_type_2-hide",
+          "label": "Event Type 2",
+          "value": true
+        },
+        {
+          "type": "input:checkbox",
+          "name": "event_start_date-hide",
+          "label": "Start Date",
+          "value": true
+        },
+        {
+          "type": "input:checkbox",
+          "name": "event_end_date-hide",
+          "label": "End Date",
+          "value": true
+        },
+        {
+          "type": "input:checkbox",
+          "name": "evo_featured-hide",
+          "label": "",
+          "value": true
+        },
+        {
+          "type": "input:checkbox",
+          "name": "author-hide",
+          "label": "Author",
+          "value": true
+        },
+        {
+          "type": "input:checkbox",
+          "name": "tags-hide",
+          "label": "Tags",
+          "value": true
+        },
+        {
+          "type": "input:checkbox",
+          "name": "likes-hide",
+          "label": "Likes",
+          "value": true
+        },
+        {
+          "type": "input:number",
+          "name": "wp_screen_options[value]",
+          "label": "Number of items per page:",
+          "value": "20"
+        },
+        {
+          "type": "input:hidden",
+          "name": "wp_screen_options[option]",
+          "label": "",
+          "value": "edit_ajde_events_per_page"
+        },
+        {
+          "type": "input:radio",
+          "name": "mode",
+          "label": "Compact view",
+          "value": "list"
+        },
+        {
+          "type": "input:radio",
+          "name": "mode",
+          "label": "Extended view",
+          "value": "excerpt"
+        },
+        {
+          "type": "input:submit",
+          "name": "screen-options-apply",
+          "label": "",
+          "value": "Apply"
+        },
+        {
+          "type": "input:hidden",
+          "name": "screenoptionnonce",
+          "label": "",
+          "value": "3020e23862"
+        },
+        {
+          "type": "input:search",
+          "name": "s",
+          "label": "Search Events:",
+          "value": ""
+        },
+        {
+          "type": "input:hidden",
+          "name": "post_status",
+          "label": "",
+          "value": "all"
+        },
+        {
+          "type": "input:hidden",
+          "name": "post_type",
+          "label": "",
+          "value": "ajde_events"
+        },
+        {
+          "type": "input:hidden",
+          "name": "_wpnonce",
+          "label": "",
+          "value": "bdd2fe03d7"
+        },
+        {
+          "type": "input:hidden",
+          "name": "_wp_http_referer",
+          "label": "",
+          "value": "/wp-admin/edit.php?post_type=ajde_events"
+        },
+        {
+          "type": "select:select-one",
+          "name": "action",
+          "label": "Select bulk action",
+          "value": "-1"
+        },
+        {
+          "type": "input:submit",
+          "name": "bulk_action",
+          "label": "",
+          "value": "Apply"
+        },
+        {
+          "type": "select:select-one",
+          "name": "event_date_type",
+          "label": "",
+          "value": "all"
+        },
+        {
+          "type": "select:select-one",
+          "name": "ev_month",
+          "label": "",
+          "value": "all"
+        },
+        {
+          "type": "input:submit",
+          "name": "filter_action",
+          "label": "",
+          "value": "Filter"
+        },
+        {
+          "type": "input:text",
+          "name": "paged",
+          "label": "Current Page",
+          "value": "1"
+        },
+        {
+          "type": "input:checkbox",
+          "name": "post[]",
+          "label": "Select Past Event \u2014 Last Friday Lunch",
+          "value": false
+        },
+        {
+          "type": "input:checkbox",
+          "name": "post[]",
+          "label": "Select API Architecture Roundtable",
+          "value": false
+        },
+        {
+          "type": "input:checkbox",
+          "name": "post[]",
+          "label": "Select Tomorrow Evening Demo",
+          "value": false
+        },
+        {
+          "type": "input:checkbox",
+          "name": "post[]",
+          "label": "Select Annual Tech Conference 2026",
+          "value": false
+        },
+        {
+          "type": "input:checkbox",
+          "name": "post[]",
+          "label": "Select Hands-on Kubernetes Workshop",
+          "value": false
+        },
+        {
+          "type": "input:checkbox",
+          "name": "post[]",
+          "label": "Select Weekly Developer Meetup",
+          "value": false
+        },
+        {
+          "type": "input:checkbox",
+          "name": "post[]",
+          "label": "Select Webinar: Modern WordPress Development",
+          "value": false
+        },
+        {
+          "type": "input:checkbox",
+          "name": "post[]",
+          "label": "Select Spring Hackathon (Cancelled)",
+          "value": false
+        },
+        {
+          "type": "select:select-one",
+          "name": "action2",
+          "label": "Select bulk action",
+          "value": "-1"
+        },
+        {
+          "type": "input:submit",
+          "name": "bulk_action",
+          "label": "",
+          "value": "Apply"
+        },
+        {
+          "type": "input:text",
+          "name": "post_title",
+          "label": "Title",
+          "value": ""
+        },
+        {
+          "type": "input:text",
+          "name": "post_name",
+          "label": "Slug",
+          "value": ""
+        },
+        {
+          "type": "select:select-one",
+          "name": "mm",
+          "label": "Month\n\t\t\t01-Jan\n\t\t\t02-Feb\n\t\t\t03-Mar\n\t\t\t04-Apr\n\t\t\t05-May\n\t\t\t06-Jun\n\t\t\t07-Jul\n\t\t\t08-Aug\n\t\t\t09-Sep\n\t\t\t10-Oct\n\t\t\t11-Nov\n\t\t\t12-Dec",
+          "value": "04"
+        },
+        {
+          "type": "input:text",
+          "name": "jj",
+          "label": "Day",
+          "value": "30"
+        },
+        {
+          "type": "input:text",
+          "name": "aa",
+          "label": "Year",
+          "value": "2026"
+        },
+        {
+          "type": "input:text",
+          "name": "hh",
+          "label": "Hour",
+          "value": "05"
+        },
+        {
+          "type": "input:text",
+          "name": "mn",
+          "label": "Minute",
+          "value": "06"
+        },
+        {
+          "type": "input:hidden",
+          "name": "ss",
+          "label": "",
+          "value": "39"
+        },
+        {
+          "type": "select:select-one",
+          "name": "post_author",
+          "label": "Author\n\tadmin (admin)",
+          "value": "1"
+        },
+        {
+          "type": "input:text",
+          "name": "post_password",
+          "label": "Password",
+          "value": ""
+        },
+        {
+          "type": "input:checkbox",
+          "name": "keep_private",
+          "label": "Private",
+          "value": false
+        },
+        {
+          "type": "input:hidden",
+          "name": "tax_input[event_type][]",
+          "label": "",
+          "value": "0"
+        },
+        {
+          "type": "input:checkbox",
+          "name": "tax_input[event_type][]",
+          "label": "Conferences",
+          "value": false
+        },
+        {
+          "type": "input:checkbox",
+          "name": "tax_input[event_type][]",
+          "label": "Meetups",
+          "value": false
+        },
+        {
+          "type": "input:checkbox",
+          "name": "tax_input[event_type][]",
+          "label": "Workshops",
+          "value": false
+        },
+        {
+          "type": "input:hidden",
+          "name": "tax_input[event_type_2][]",
+          "label": "",
+          "value": "0"
+        },
+        {
+          "type": "input:text",
+          "name": "menu_order",
+          "label": "Order",
+          "value": "0"
+        },
+        {
+          "type": "textarea:textarea",
+          "name": "tax_input[post_tag]",
+          "label": "Tags",
+          "value": ""
+        },
+        {
+          "type": "input:checkbox",
+          "name": "comment_status",
+          "label": "Allow Comments",
+          "value": false
+        },
+        {
+          "type": "select:select-one",
+          "name": "_status",
+          "label": "Status\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tPublished\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tScheduled\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tPending Review\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tDraft",
+          "value": "publish"
+        },
+        {
+          "type": "input:hidden",
+          "name": "_evo_date_format",
+          "label": "",
+          "value": ""
+        },
+        {
+          "type": "input:hidden",
+          "name": "_evo_time_format",
+          "label": "",
+          "value": ""
+        },
+        {
+          "type": "input:text",
+          "name": "evcal_start_date",
+          "label": "Start Date",
+          "value": ""
+        }
+      ],
+      "content_excerpt": "\n\n\n\n\n\n\n\nSkip to main content\nSkip to toolbar\n\n\n\n\n\n\t\t\n\n\t\t\n\n\n\n\t\t\n\t\t\t\t\n\t\t\t        \n\t        \n\nEvents\n\n Add New Event\nEventon Tickets needs WooCommerce plugin to function properly. Please install WooCommerceEventon Seats need Woocommerce plugin to function properly. Please install woocommerceEventon Ticket Variations & Options need Woocommerce plugin to function properly. Please install woocommerce\n\n\nFilter Events\n\tAll (8) |\n\tPublished (8)\n\n\n\n\n\tSearch Events:\n\t\n\t\t\n\t\t\n\n\n\n\n\n\t\n\n\t\t\t\t\n\t\t\tSelect bulk action\nBulk actions\n\tEdit\n\tMove to Trash\n\n\n\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\tPast and Future Events\n\t\t\t\t\tPast Events\n\t\t\t\t\tCurrent Events\n\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\tAll Months\n\t\t\t\t\t2025-052025-062025-072025-082025-092025-102025-112025-122026-012026-022026-032026-042026-052026-062026-072026-082026-092026-102026-112026-122027-012027-022027-032027-042027-05\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\t\n\t\t8 items\n\u00ab\n\u2039\nCurrent Page of 1\n\u203a\n\u00bb\n\t\t\n\t\n\t\tEvents list\n\t\t\t\n\t\n\t\t\n\t\t\tSelect AllEvent Name Sort ascending.LocationOrganizerEvent TypeEvent Type 2Start Date Sort ascending.End Date Sort ascending.AuthorTagsLikes\t\n\t\n\n\t\n\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\tSelect Past Event \u2014 Last Friday Lunch\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\u201cPast Event \u2014 Last Friday Lunch\u201d is locked\t\t\t\t\n\t\t\t\n\t\t\tpublishedPast Event \u2014 Last Friday LunchID: 33 | Edit | Quick\u00a0Edit | Trash | View | Duplicate\n\n\tPast Event \u2014 Last Friday Lunchpast-event-last-friday-lunch\n\t0\n\topen\n\tclosed\n\tpublish\n\t30\n\t04\n\t2026\n\t05\n\t06\n\t39\n\tdefault04published published2026/04/26700PM2026/04/26900PMY/m/d12hnpublishedAmerica/Los_Angeles0Edit | Quick\u00a0Edit | Trash | View | DuplicateShow more detailsSan FranciscoAcme EventsMeetups\u20132026/04/26 - 7:00PM2026/04/26 - 9:00PM\u2014(no author)\u2014No tags0\t\t\n\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\tSelect API Architecture Roundtable\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\u201cAPI Architecture Roundtable\u201d is locked\t\t\t\t\n\t\t\t\n\t\t\tpublishedAPI Architecture RoundtableID: 34 | Edit | Quick\u00a0Edit | Trash | View | Duplicate\n\n\tAPI Architecture Roundtableapi-architecture-roundtable\n\t0\n\topen\n\tclosed\n\tpublish\n\t30\n\t04\n\t2026\n\t05\n\t06\n\t39\n\tdefault04published published2026/05/01130AM2026/05/01330AMY/m/d12hnpublishedAmerica/Los_Angeles0Edit | Quick\u00a0Edit | Trash | View | DuplicateShow more detailsOnlineDateline ResearchMeetups\u20132026/05/01 - 1:30AM2026/05/01 - 3:30AM\u2014(no author)\u2014No tags0\t\t\n\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\tSelect Tomorrow Evening Demo\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\u201cTomorrow Evening Demo\u201d is locked\t\t\t\t\n\t\t\t\n\t\t\tpublishedTomorrow Evening DemoID: 28 | Edit | Quick\u00a0Edit | Trash | View | Duplicate\n\n\tTomorrow Evening Demotomorrow-evening-demo\n\t0\n\topen\n\tclosed\n\tpublish\n\t30\n\t04\n\t2026\n\t05\n\t01\n\t42\n\tdefault04published published2026/04/29900PM2026/04/301200AMyesY/m/d12hnpublishedAmerica/Los_Angeles0Edit | Quick\u00a0Edit | Trash | View | DuplicateShow more detailsSan FranciscoDateline ResearchMeetups\u20132026/04/29 - 9:00PM2026/04/30 - 12:00AM\u2014(no author)\u2014No tags0\t\t\n\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\tSelect Annual Tech Conference 2026\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\u201cAnnual Tech Conference 2026\u201d is locked\t\t\t\t\n\t\t\t\n\t\t\tpublishedAnnual Tech Conference 2026ID: 8 | Edit | Quick\u00a0Edit | Trash | View | Duplicate\n\n\tAnnual Tech Conference 2026annual-tech-conference-2026\n\t0\n\topen\n\tclosed\n\tpublish\n\t30\n\t04\n\t2026\n\t04\n\t53\n\t41\n\tdefault02published published2026/05/02400PM2026/05/03100AMyesY/m/d12hnpublishedAmerica/Los_Angeles0Edit | Quick\u00a0Edit | Trash | View | DuplicateShow more detailsSan FranciscoDateline ResearchConferences\u20132026/05/02 - 4:00PM2026/05/03 - 1:00AM\u2014(no author)\u2014No tags0\t\t\n\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\tSelect Hands-on Kubernetes Workshop\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\u201cHands-on Kubernetes Workshop\u201d is locked\t\t\t\t\n\t\t\t\n\t\t\tpublishedHands-on Kubernetes WorkshopID: 9 | Edit | Quick\u00a0Edit | Trash | View | Duplicate\n\n\tHands-on Kubernetes Workshophands-on-kubernetes-workshop\n\t0\n\topen\n\tclosed\n\tpublish\n\t30\n\t04\n\t2026\n\t04\n\t53\n\t41\n\tdefault03published published2026/05/09400PM2026/05/121200AMY/m/d12hnpublishedAmerica/New_York0Edit | Quick\u00a0Edit | Trash | View | DuplicateShow more detailsNew YorkAcme EventsWorkshops\u20132026/05/09 - 4:00PM2026/05/12 - 12:00AM\u2014(no author)\u2014No tags0\t\t\n\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\tSelect Weekly Developer Meetup\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\u201cWeekly Developer Meetup\u201d is locked\t\t\t\t\n\t\t\t\n\t\t\tpublishedWeekly Developer MeetupID: 10 | Edit | Quick\u00a0Edit | Trash | View | Duplicate\n\n\tWeekly Developer Meetupweekly-developer-meetup\n\t0\n\topen\n\tclosed\n\tpublish\n\t30\n\t04\n\t2026\n\t04\n\t53\n\t41\n\tdefault04published published2026/05/17100AM2026/05/17300AMY/m/d12hnpublishedAmerica/Los_Angeles0Edit | Quick\u00a0Edit | Trash | View | DuplicateShow more detailsSan FranciscoDateline ResearchMeetups\u20132026/05/17 - 1:00AM2026/05/17 - 3:00AM\u2014(no author)\u2014No tags0\t\t\n\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\tSelect Webinar: Modern WordPress Development\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\u201cWebinar: Modern WordPress Development\u201d is locked\t\t\t\t\n\t\t\t\n\t\t\tpublishedWebinar: Modern WordPress DevelopmentID: 11 | Edit | Quick\u00a0Edit | Trash | View | Duplicate\n\n\tWebinar: Modern WordPress Developmentwebinar-modern-wordpress-development\n\t0\n\topen\n\tclosed\n\tpublish\n\t30\n\t04\n\t2026\n\t04\n\t53\n\t41\n\tdefault03published published2026/"
+    }
+  ],
+  "frontend_screens": [],
+  "rest_api": [
+    {
+      "endpoint": "/wp-json/evonton/v2/seats",
+      "status": 404,
+      "sample": "{\"code\":\"rest_no_route\",\"message\":\"No route was found matching the URL and request method.\",\"data\":{\"status\":404}}"
+    },
+    {
+      "endpoint": "/wp-json/wp/v2/evo-seats",
+      "status": 404,
+      "sample": "{\"code\":\"rest_no_route\",\"message\":\"No route was found matching the URL and request method.\",\"data\":{\"status\":404}}"
+    }
+  ],
+  "metaboxes": [],
+  "settings_fields": [],
+  "js_globals": {}
+}

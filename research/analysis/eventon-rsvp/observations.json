@@ -1,0 +1,522 @@
+{
+  "admin_screens": [
+    {
+      "name": "admin-100-settings-rsvp",
+      "desc": "EventON Settings \u2014 RSVP tab",
+      "url": "/wp-admin/admin.php?page=eventon&tab=evcal_rs",
+      "title": "EventON - Event Calendar \u2039 Dateline Site B - EventON + Add-ons \u2014 WordPress",
+      "screenshot": "admin-100-settings-rsvp.png",
+      "form_fields": [
+        {
+          "type": "input:hidden",
+          "name": "option_page",
+          "label": "",
+          "value": "evors_field_group"
+        },
+        {
+          "type": "input:hidden",
+          "name": "action",
+          "label": "",
+          "value": "update"
+        },
+        {
+          "type": "input:hidden",
+          "name": "_wpnonce",
+          "label": "",
+          "value": "eae03a95f0"
+        },
+        {
+          "type": "input:hidden",
+          "name": "_wp_http_referer",
+          "label": "",
+          "value": "/wp-admin/admin.php?page=eventon&tab=evc"
+        },
+        {
+          "type": "input:hidden",
+          "name": "evcal_noncename",
+          "label": "",
+          "value": "1cf2b532f7"
+        },
+        {
+          "type": "input:hidden",
+          "name": "_wp_http_referer",
+          "label": "",
+          "value": "/wp-admin/admin.php?page=eventon&tab=evc"
+        },
+        {
+          "type": "input:hidden",
+          "name": "evors_onlylogu",
+          "label": "",
+          "value": "no"
+        },
+        {
+          "type": "input:checkbox",
+          "name": "evors_rsvp_roles[]",
+          "label": "Administrator",
+          "value": false
+        },
+        {
+          "type": "input:checkbox",
+          "name": "evors_rsvp_roles[]",
+          "label": "Editor",
+          "value": false
+        },
+        {
+          "type": "input:checkbox",
+          "name": "evors_rsvp_roles[]",
+          "label": "Author",
+          "value": false
+        },
+        {
+          "type": "input:checkbox",
+          "name": "evors_rsvp_roles[]",
+          "label": "Contributor",
+          "value": false
+        },
+        {
+          "type": "input:checkbox",
+          "name": "evors_rsvp_roles[]",
+          "label": "Subscriber",
+          "value": false
+        },
+        {
+          "type": "input:hidden",
+          "name": "evors_prefil",
+          "label": "",
+          "value": "no"
+        },
+        {
+          "type": "input:hidden",
+          "name": "evors_prefil_block",
+          "label": "",
+          "value": "no"
+        },
+        {
+          "type": "input:hidden",
+          "name": "evors_reg_user",
+          "label": "",
+          "value": "no"
+        },
+        {
+          "type": "select:select-one",
+          "name": "evors_orderby",
+          "label": "",
+          "value": "def"
+        },
+        {
+          "type": "select:select-one",
+          "name": "evors_guestlist",
+          "label": "",
+          "value": "def"
+        },
+        {
+          "type": "input:hidden",
+          "name": "evors_guest_link",
+          "label": "",
+          "value": "no"
+        },
+        {
+          "type": "input:text",
+          "name": "evors_profile_link_structure",
+          "label": "",
+          "value": ""
+        },
+        {
+          "type": "input:hidden",
+          "name": "evors_nonce_disable",
+          "label": "",
+          "value": "no"
+        },
+        {
+          "type": "input:hidden",
+          "name": "evors_incard_form",
+          "label": "",
+          "value": "no"
+        },
+        {
+          "type": "select:select-one",
+          "name": "evors_close_time",
+          "label": "",
+          "value": "start"
+        },
+        {
+          "type": "input:hidden",
+          "name": "evors_eventop_rsvp",
+          "label": "",
+          "value": "no"
+        },
+        {
+          "type": "input:hidden",
+          "name": "evors_eventop_attend_count",
+          "label": "",
+          "value": "no"
+        },
+        {
+          "type": "input:hidden",
+          "name": "evors_eventop_notattend_count",
+          "label": "",
+          "value": "no"
+        },
+        {
+          "type": "input:hidden",
+          "name": "evors_eventop_remaining_count",
+          "label": "",
+          "value": "no"
+        },
+        {
+          "type": "input:hidden",
+          "name": "evors_eventop_soldout_hide",
+          "label": "",
+          "value": "no"
+        },
+        {
+          "type": "input:hidden",
+          "name": "evorsau_csv_download",
+          "label": "",
+          "value": "no"
+        },
+        {
+          "type": "input:hidden",
+          "name": "evorsau_check_guest",
+          "label": "",
+          "value": "no"
+        },
+        {
+          "type": "input:hidden",
+          "name": "evorsau_add_to_notification",
+          "label": "",
+          "value": "no"
+        },
+        {
+          "type": "input:hidden",
+          "name": "evors_disable_emails",
+          "label": "",
+          "value": "no"
+        },
+        {
+          "type": "input:hidden",
+          "name": "evors_notif",
+          "label": "",
+          "value": "no"
+        },
+        {
+          "type": "input:text",
+          "name": "evors_notfiemailfromN",
+          "label": "",
+          "value": ""
+        },
+        {
+          "type": "input:text",
+          "name": "evors_notfiemailfrom",
+          "label": "",
+          "value": ""
+        },
+        {
+          "type": "input:text",
+          "name": "evors_notfiemailto",
+          "label": "",
+          "value": ""
+        },
+        {
+          "type": "input:text",
+          "name": "evors_notfiesubjest",
+          "label": "",
+          "value": ""
+        },
+        {
+          "type": "input:text",
+          "name": "evors_notfiesubjest_update",
+          "label": "",
+          "value": ""
+        },
+        {
+          "type": "input:hidden",
+          "name": "evors_digest",
+          "label": "",
+          "value": "no"
+        },
+        {
+          "type": "input:text",
+          "name": "evors_digestemail_fromN",
+          "label": "",
+          "value": ""
+        },
+        {
+          "type": "input:text",
+          "name": "evors_digestemail_from",
+          "label": "",
+          "value": ""
+        },
+        {
+          "type": "input:text",
+          "name": "evors_digestemail_to",
+          "label": "",
+          "value": ""
+        },
+        {
+          "type": "input:text",
+          "name": "evors_digestemail_subjest",
+          "label": "",
+          "value": ""
+        },
+        {
+          "type": "input:hidden",
+          "name": "evors_send_all_confirmations",
+          "label": "",
+          "value": "no"
+        },
+        {
+          "type": "input:hidden",
+          "name": "evors_disable_confirmation",
+          "label": "",
+          "value": "no"
+        },
+        {
+          "type": "input:hidden",
+          "name": "evors_disable_attendee_notifications",
+          "label": "",
+          "value": "no"
+        },
+        {
+          "type": "input:hidden",
+          "name": "evors_disable_user_pass",
+          "label": "",
+          "value": "no"
+        },
+        {
+          "type": "input:text",
+          "name": "evors_notfiemailfromN_e",
+          "label": "",
+          "value": ""
+        },
+        {
+          "type": "input:text",
+          "name": "evors_notfiemailfrom_e",
+          "label": "",
+          "value": ""
+        },
+        {
+          "type": "input:text",
+          "name": "evors_notfiesubjest_e",
+          "label": "",
+          "value": ""
+        },
+        {
+          "type": "input:text",
+          "name": "evors_notfi_update_subject",
+          "label": "",
+          "value": ""
+        },
+        {
+          "type": "input:text",
+          "name": "evors_email_subject_newuser",
+          "label": "",
+          "value": ""
+        },
+        {
+          "type": "input:text",
+          "name": "evors_contact_link",
+          "label": "",
+          "value": ""
+        },
+        {
+          "type": "input:hidden",
+          "name": "evors_dis_invitation_email",
+          "label": "",
+          "value": "no"
+        },
+        {
+          "type": "input:text",
+          "name": "evors_invitation_e_subject",
+          "label": "",
+          "value": ""
+        },
+        {
+          "type": "input:checkbox",
+          "name": "evors_selection[]",
+          "label": "Maybe",
+          "value": false
+        },
+        {
+          "type": "input:checkbox",
+          "name": "evors_selection[]",
+          "label": "No",
+          "value": false
+        },
+        {
+          "type": "input:checkbox",
+          "name": "evors_ffields[]",
+          "label": "Phone Number",
+          "value": false
+        },
+        {
+          "type": "input:checkbox",
+          "name": "evors_ffields[]",
+          "label": "RSVP Count -- (If unckecked system will count as 1 RSVP)",
+          "value": false
+        },
+        {
+          "type": "input:checkbox",
+          "name": "evors_ffields[]",
+          "label": "Receive Updates About Event -- (Acknowledge Checkbox field)",
+          "value": false
+        },
+        {
+          "type": "input:checkbox",
+          "name": "evors_ffields[]",
+          "label": "Other Guest Names -- (if RSVP count is more than 1)",
+          "value": false
+        }
+      ],
+      "content_excerpt": "\n\n\n\n\n\n\n\nSkip to main content\nSkip to toolbar\n\n\n\n\n\n\t\t\n\n\t\t\n\n\n\n\t\t\n\t\t\t\t\n\t\t\t        \n\t        \t\t\n\t\t\t\n\t\t\t\tEventON Settings (ver 4.8) \n\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\tSave Changes\n\t\t\t\t\t\n\t\t\t\tEventon Tickets needs WooCommerce plugin to function properly. Please install WooCommerceEventon Seats need Woocommerce plugin to function properly. Please install woocommerceEventon Ticket Variations & Options need Woocommerce plugin to function properly. Please install woocommerce\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\tSettingsLanguageLicensesStylesSupportRSVP\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\n\t\t\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\tGeneralEmailsRSVP Formwaitlist\t\t\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\tCollapse Menu\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\tLoading\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\t\t\t\tGeneral RSVP SettingsAllow only logged-in users to submit RSVPSelect only certain user roles with RSVPing capabilities (If not selected all logged-in users can RSVP)\n\t\t\t\t\t\t\t\tAdministrator\n\t\t\t\t\t\t\t\tEditor\n\t\t\t\t\t\t\t\tAuthor\n\t\t\t\t\t\t\t\tContributor\n\t\t\t\t\t\t\t\tSubscriberPre-fill fields  if user is already logged-in (eg. first name, last name, email)Activate uneditable pre-filled fieldsDisable creating new account for new RSVP userOrder Attendees by   Last Name First NameShow guest list as   Initials Full NameLink guests to matching user profileCustom Link structure for the guest user profile page link (This is appended to your base website URL)You can use {user_id}, {user_nicename} in your link structure, which will be replaced with dynamic value. The above link structure must not contain your base website URL.\n\t\t\t\t\t\t\tNOTE: If you are using buddypress profiles you do not need to fill custom link structure.Disable Nonce verification check upon new RSVP submissionShow RSVP form within EventCard instead of lightboxWhen to close RSVP to new RSVPs  When event starts Allow until event ends Never close RSVP, even after event endsEventTop Data for RSVP.Activate RSVPing with one-click from eventTop ONLY for logged-in usersShow attending guest countShow not attending guest countShow remaining spaces countDo NOT show eventtop \"RSVP Closed\" or \"No more spaces left\" tag above event title, when rsvps are closed.NOTE: You can download all RSVPs for an event as CSV file from the event edit page under RSVP settings box.RSVP TroubleshootActionUser Event Manager RSVP settingsAllow front-end download of attendees list as CSV fileAllow front-end checking guestsAuto add event submitter email to receive notification emails upon new RSVP\n\t\t\t\t\tEmail TemplatesSupported Email Subject Dynamic Tags: {event-name} {rsvp-id}Disable sending all emailsReceive email notifications upon new RSVP receiptNOTE: This will send email notification upon new RSVP to the email specified below. Furthermore, you can also set additional email addresses to receive notifications on each event edit page.\"From\" Name\"From\" Email Address\"To\" Email AddressEmail Subject lineEmail Subject line (update)HTML TemplateTo override and edit the email template copy \"eventon-rsvp/templates/notification_email.php\" to  \"yourtheme/eventon/templates/email/rsvp/notification_email.php.Receive daily digest emails for events (BETA)NOTE: You can set which events with RSVP to receive the digest emails for, from the event edit page itself. Important: the scheduled daily email will only get sent out once someone visit your website.\"From\" Name\"From\" Email Address\"To\" Email AddressEmail Subject lineHTML TemplateTo override and edit the email template copy \"eventon-rsvp/templates/digest_email.php\" to  \"yourtheme/eventon/templates/email/rsvp/digest_email.php.Send out RSVP email confirmations to attendeesSend out all confirmations to attendees who RSVP, for Yes, NO & MaybeDisable sending out confirmation email to attendees who RSVPDisable all attendee notificationsDisable sending out new user password in confirmation email\"From\" Name\"From\" Email AddressEmail Subject lineEmail Subject line (For RSVP updates email to attendee)Email Subject line (For new user pass)Contact for help linkHTML TemplateTo override and edit the email templates, copy default email templates from \"eventon-rsvp/templates/\" to  \"yourtheme/eventon/templates/email/rsvp/ folder.Invitation EmailsDisable sending out invitation emailEmail Subject Line (Invitation Email)\n\t\t\t\t\tRSVP Form SettingsSelect RSVP status options for selection. NOTE: Yes value is required. No value will show on change RSVP form regardless to allow users to cancel their reservation.\n\t\t\t\t\t\t\t\tMaybe\n\t\t\t\t\t\t\t\tNoSelect RSVP form fields to show in the form. (** First , Last names, and Email are required)\n\t\t\t\t\t\t\t\tPhone Number\n\t\t\t\t\t\t\t\tRSVP Count -- (If unckecked system will count as 1 RSVP)\n\t\t\t\t\t\t\t\tReceive Updates About Event -- (Acknowledge Checkbox field)\n\t\t\t\t\t\t\t\tOther Guest Names -- (if RSVP count is more than 1)\n\t\t\t\t\t\t\t\tAdditional Notes Field -- (visible only for YES option)\n\t\t\t\t\t\t\t\tVerification Code\n\t\t\t\t\t\t\t\tTwitter Handle\n\t\t\t\t\t\t\t\tInstagram Handle\n\t\t\t\t\t\t\t\tYoutube Handle\n\t\t\t\t\t\t\t\tTikTok HandleNOTE: \"Additional Notes Field\" wil"
+    },
+    {
+      "name": "admin-200-rsvp-records-list",
+      "desc": "RSVP CPT list (evo-rsvp)",
+      "url": "/wp-admin/edit.php?post_type=evo-rsvp",
+      "title": "Event RSVPs \u2039 Dateline Site B - EventON + Add-ons \u2014 WordPress",
+      "screenshot": "admin-200-rsvp-records-list.png",
+      "form_fields": [
+        {
+          "type": "input:checkbox",
+          "name": "rsvp_-hide",
+          "label": "Status",
+          "value": true
+        },
+        {
+          "type": "input:checkbox",
+          "name": "rsvp-hide",
+          "label": "RSVP",
+          "value": true
+        },
+        {
+          "type": "input:checkbox",
+          "name": "rsvp_status-hide",
+          "label": "RSVP Status",
+          "value": true
+        },
+        {
+          "type": "input:checkbox",
+          "name": "event-hide",
+          "label": "Event",
+          "value": true
+        },
+        {
+          "type": "input:checkbox",
+          "name": "count-hide",
+          "label": "Count",
+          "value": true
+        },
+        {
+          "type": "input:checkbox",
+          "name": "updates-hide",
+          "label": "Email Updates",
+          "value": true
+        },
+        {
+          "type": "input:number",
+          "name": "wp_screen_options[value]",
+          "label": "Number of items per page:",
+          "value": "20"
+        },
+        {
+          "type": "input:hidden",
+          "name": "wp_screen_options[option]",
+          "label": "",
+          "value": "edit_evo-rsvp_per_page"
+        },
+        {
+          "type": "input:radio",
+          "name": "mode",
+          "label": "Compact view",
+          "value": "list"
+        },
+        {
+          "type": "input:radio",
+          "name": "mode",
+          "label": "Extended view",
+          "value": "excerpt"
+        },
+        {
+          "type": "input:submit",
+          "name": "screen-options-apply",
+          "label": "",
+          "value": "Apply"
+        },
+        {
+          "type": "input:hidden",
+          "name": "screenoptionnonce",
+          "label": "",
+          "value": "3020e23862"
+        },
+        {
+          "type": "input:hidden",
+          "name": "post_status",
+          "label": "",
+          "value": "all"
+        },
+        {
+          "type": "input:hidden",
+          "name": "post_type",
+          "label": "",
+          "value": "evo-rsvp"
+        },
+        {
+          "type": "input:hidden",
+          "name": "_wpnonce",
+          "label": "",
+          "value": "bdd2fe03d7"
+        },
+        {
+          "type": "input:hidden",
+          "name": "_wp_http_referer",
+          "label": "",
+          "value": "/wp-admin/edit.php?post_type=evo-rsvp"
+        }
+      ],
+      "content_excerpt": "\n\n\n\n\n\n\n\nSkip to main content\nSkip to toolbar\n\n\n\n\n\n\t\t\n\n\t\t\n\n\n\n\t\t\n\t\t\t\t\n\t\t\t        \n\t        \n\nEvent RSVPs\n\n Add New Event RSVP\nEventon Tickets needs WooCommerce plugin to function properly. Please install WooCommerceEventon Seats need Woocommerce plugin to function properly. Please install woocommerceEventon Ticket Variations & Options need Woocommerce plugin to function properly. Please install woocommerce\n\n\nFilter posts list\n\tAll (0)\n\n\n\n\n\n\n\n\n\n\t\n\n\t\t\t\t\n\t\t\t\t\n\t\t\n\t\t\n\t\n\t\tPosts list\n\t\t\t\n\t\n\t\t\n\t\t\tSelect AllStatus Sort ascending.RSVPRSVP Status Sort ascending.EventCount Sort ascending.Email Updates\t\n\t\n\n\t\n\t\tNo Event RSVPs found\t\n\n\t\n\t\n\t\t\n\t\t\tSelect AllStatus Sort ascending.RSVPRSVP Status Sort ascending.EventCount Sort ascending.Email Updates\t\n\t\n\n\n\t\t\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\t\n\t\t\t\n\t\t\n\t\t\n\t\t\t\n\t\n\t\n\t\n\t\tClose dialog\t\n\t\t\t\n\t\t\t\n\t\tSession expired\n\t\tPlease log in again.\n\t\tThe login page will open in a new tab. After logging in you can close it and return to this page.\n\t\n\t\n\t\n\t\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNotifications"
+    }
+  ],
+  "frontend_screens": [
+    {
+      "name": "frontend-100-calendar",
+      "desc": "Calendar page (RSVP buttons visible?)",
+      "url": "/calendar/",
+      "title": "Calendar \u2013 Dateline Site B \u2013 EventON + Add-ons",
+      "screenshot": "frontend-100-calendar.png",
+      "content_excerpt": "\n\t\t\n\n\t\t\nSkip to content\n\n\t\n\t\n\t\t\n\t\t\n\t\t\tDateline Site B \u2013 EventON + Add-ons\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\tCalendarCheckinEvent ListEventsFull CalendarSample PageSearchSliderWeekly View (add_eventon_wv)\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\n\t\n\n\n\n\n\n\n\n\t\n\t\n\t\t\n\t\tCalendar\n\t\tCurrent Month April, 2026\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t    \t\n\t\t\t\t26apr12:00 pm2:00 pmPast Event \u2014 Last Friday Lunch\n\t\tEvent DetailsPast lunchtime event for testing past-event styling.\n\t\t\n\t\t\n\t\t\t\n\t\t\t\tEvent Details\n\t\t\t\t\n\t\t\t\tPast lunchtime event for testing past-event styling.\n\n\t\t\t\n\t\t\n\t\n\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\tTimeApril 26, 2026 12:00 pm - 2:00 pm(GMT-07:00)\n\t\t\n\t\n\t\t\n\t\t\t\n\t\t\tLocationSan FranciscoOther Events\n\t\t\n\t\n\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\tOrganizerAcme EventsLearn More\t\n\t\t\t\t    \t\n\t\t\t\t29apr2:00 pm5:00 pmTomorrow Evening Demo\n\t\tEvent DetailsA demo event scheduled for tomorrow evening so the calendar\u2019s default month view shows content.\n\t\t\n\t\t\n\t\t\t\n\t\t\t\tEvent Details\n\t\t\t\t\n\t\t\t\tA demo event scheduled for tomorrow evening so the calendar\u2019s default month view shows content.\n\n\t\t\t\n\t\t\n\t\n\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\tTimeApril 29, 2026 2:00 pm - 5:00 pm(GMT-07:00)\n\t\t\n\t\n\t\t\n\t\t\t\n\t\t\tLocationSan FranciscoOther Events\n\t\t\n\t\n\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\tOrganizerDateline ResearchLearn More\t\n\t\t\t\t\n\t\t\t\n\t\t\t\t\t \t\n\t\t \t\t\n\t\t \t\t\n\t\t \t\n\t\t\t\t\n\t\t\t\n\t\t\t\t\t\t\n\t\t\t\n\n\t\n\t\n\n\n\n\n\n\t\n\t\n\t\t\n\n\t\t\n\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\tDateline Site B \u2013 EventON + Add-ons\n\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\n\n\t\t\t\n\t\t\t\n\t\t\t\tBlogAboutFAQsAuthors\n\n\t\t\t\tEventsShopPatternsThemes\n\t\t\t\n\t\t\t\t\n\t\t\n\t\t\n\n\t\t\n\t\t\n\t\t\n\n\t\t\n\t\t\n\t\t\t\n\t\t\tTwenty Twenty-Five\n\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\tDesigned with WordPress\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\n\t\n\n\n\n\n\n\t\t\t\t\n\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\tX\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t \n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\tX\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t \n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\tX\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t \n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
+    },
+    {
+      "name": "frontend-110-rsvp-manager",
+      "desc": "RSVP manager page [evo_rsvp_manager]",
+      "url": "/rsvp-manager/",
+      "title": "Page not found \u2013 Dateline Site B \u2013 EventON + Add-ons",
+      "screenshot": "frontend-110-rsvp-manager.png",
+      "content_excerpt": "\n\t\t\n\n\t\t\nSkip to content\n\n\t\n\t\n\t\t\n\t\t\n\t\t\tDateline Site B \u2013 EventON + Add-ons\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\tCalendarCheckinEvent ListEventsFull CalendarSample PageSearchSliderWeekly View (add_eventon_wv)\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\n\t\n\n\n\n\n\n\n\n\t\n\n\t\n\t\n\t\t\n\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\tPage not found\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\tThe page you are looking for doesn't exist, or it has been moved. Please try searching using the form below.\n\t\t\t\t\n\t\t\t\t\nSearchSearch\n\n\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\n\t\n\n\n\n\n\n\n\n\n\t\n\t\n\t\t\n\n\t\t\n\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\tDateline Site B \u2013 EventON + Add-ons\n\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\n\n\t\t\t\n\t\t\t\n\t\t\t\tBlogAboutFAQsAuthors\n\n\t\t\t\tEventsShopPatternsThemes\n\t\t\t\n\t\t\t\t\n\t\t\n\t\t\n\n\t\t\n\t\t\n\t\t\n\n\t\t\n\t\t\n\t\t\t\n\t\t\tTwenty Twenty-Five\n\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\tDesigned with WordPress\t\t\t\n\t\t\t\n\t\t\n\t\t\n\t\n\t\n\n\n\n\n\n\t\t\t\t\n\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\tX\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t \n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\tX\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t \n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\tX\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t \n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
+    }
+  ],
+  "rest_api": [
+    {
+      "endpoint": "/wp-json/eventon/v2/rsvp",
+      "status": 404,
+      "sample": "{\"code\":\"rest_no_route\",\"message\":\"No route was found matching the URL and request method.\",\"data\":{\"status\":404}}"
+    },
+    {
+      "endpoint": "/wp-json/eventon/v1/rsvp",
+      "status": 404,
+      "sample": "{\"code\":\"rest_no_route\",\"message\":\"No route was found matching the URL and request method.\",\"data\":{\"status\":404}}"
+    },
+    {
+      "endpoint": "/wp-json/wp/v2/evo-rsvp",
+      "status": 404,
+      "sample": "{\"code\":\"rest_no_route\",\"message\":\"No route was found matching the URL and request method.\",\"data\":{\"status\":404}}"
+    }
+  ],
+  "metaboxes": [],
+  "settings_fields": [
+    {
+      "rsvp_sections": []
+    }
+  ],
+  "js_globals": {}
+}
