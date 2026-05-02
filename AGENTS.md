@@ -18,8 +18,8 @@ strategic programming. See CODE_PRINCIPLES.md for full details.
 <!-- Project-specific gotchas (Dateline + EmDash + Cloudflare Workers) -->
 - EmDash plugins on Cloudflare Workers MUST use `ctx.waitUntil(promise)` or the `after()` helper for any async work that continues past the response. Bare promises silently cancel — Issue #710. This breaks fire-and-forget patterns.
 - Sandboxed plugins are capped at **50ms CPU + 10 subrequests per invocation**. Heavy work belongs in native plugins or deferred via `ctx.waitUntil`. Validate every sandboxed handler against the budget in CI.
-- Capability naming is **action-first**: `read:content`, `write:content`, `network:fetch` (per docs.emdashcms.com and the Cloudflare blog). The legacy SKILL.md `content:read` style is wrong — do not use it.
-- Block Kit gotchas: Stats block uses `items` not `stats`; Buttons use `label` not `text`; Section text has no markdown parser (use `children` with marks). Plugin routes return `{ blocks, toast? }` — no redirects, no raw `Response`. Use `@dateline/blocks` typed builders + `validateBlocks()` in CI.
+- Capability naming is **resource:verb** (`content:read`, `content:write`, `network:request`) per emdash@0.9.0 PR #816. The Cloudflare blog `read:content` / `network:fetch` style is deprecated — `emdash plugin publish` rejects manifests using it. Source: `research/synthesis/emdash-platform-research.md` Q1.
+- Block Kit gotchas: Stats block uses `stats` (NOT `items`); Buttons use `text` (NOT `label`); Section `text` is plain string for simple text (use `children` with marks for rich content). Plugin routes return `{ blocks, toast? }` — no redirects, no raw `Response`. Use `@emdash-cms/blocks` typed builders + `validateBlocks()` in CI.
 - Native-format plugins (`admin.entry` set) cannot ship through marketplace auto-install — distribution is npm + CLI installer (`npx dateline-<name> install`). They run as TRUSTED code, not sandboxed.
 - Cloudflare Free plan disables Dynamic Workers; plugins run as trusted there. Sandbox isolation pitch only valid on Paid plan. Document at install time.
 - Cloudflare WAF / Bot Fight Mode is known to block Stripe webhook deliveries. Add a documented carve-out in the install guide; use Cloudflare GraphQL `firewallEventsAdaptive` to debug.
@@ -30,8 +30,8 @@ strategic programming. See CODE_PRINCIPLES.md for full details.
 - Recurring event materialization is LAZY: compute occurrences on read with a 2-year forward cap; cache per-range hash in KV (TTL 1 hr). Never eagerly materialize past 2 years.
 - `ctx.kv` is automatically plugin-scoped — do not declare a capability for it. Cross-plugin KV access is structurally impossible.
 - `ctx.content` is the only data access layer. No raw SQL. No D1 access. EmDash routes content through Kysely internally — plugins never see this.
-- EmDash 0.8.x exposes `cron` hook + `ctx.cron.schedule()` — use it for time-based status transitions and hold-expiry sweeps. Prior PRD assumed this didn't exist.
-- Custom MCP tool registration API in 0.8.x is UNVERIFIED. Until confirmed, ship REST routes + a standalone `@dateline/mcp` wrapper as the interim path.
+- EmDash 0.8.x+ exposes `cron` hook + `ctx.cron.schedule()` — confirmed present since 0.6.0 (documented in hooks.md). Use for time-based status transitions and hold-expiry sweeps. Source: `research/synthesis/emdash-platform-research.md` Q3.
+- Custom MCP tool registration API does NOT exist. Issue #41 is open and unassigned — no upstream ETA. Ship REST routes + standalone `@dateline/mcp` wrapper as the interim path. Monitor issue #41 for migration opportunity. Source: `research/synthesis/emdash-platform-research.md` Q2.
 - Source PRD was authored from clean-room analysis of 14 GPL WordPress plugins. Architecture is not copyrightable; specific code is. NEVER copy PHP source into TypeScript. The PHP→TypeScript language change is a deliberate guardrail.
 - This is a multi-package family with 11 plugins. When adding behavior that touches multiple packages, declare dependency direction explicitly in the change proposal — `@dateline/core` is the root; everything else depends on it.
 
