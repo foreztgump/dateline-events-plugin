@@ -1,8 +1,8 @@
 # PRD: Dateline — Events, Calendar & Ticketing for EmDash
 
-> **Status:** Draft v0.2 (EmDash-optimized rewrite) · **Owner:** Claudeflare
-> **Last updated:** 2026-04-29
-> **EmDash target:** v0.6.x (current at PRD time; verify before lock)
+> **Status:** Draft v0.3 (EmDash 0.9.0 lock-in) · **Owner:** Claudeflare
+> **Last updated:** 2026-05-02
+> **EmDash target:** ^0.9.0 (locked per `research/synthesis/emdash-platform-research.md`)
 > **Companion docs:** `PRD-WP-Events-Plugin-Analysis.md`
 > **Replaces:** Dateline PRD v0.1 (contained invented capability names — superseded)
 
@@ -18,7 +18,7 @@ The prior PRD used invented EmDash primitives (`mcp:register-tools`, `webhook:re
 - **A real-world plugin postmortem** ([Dashstro: EmDash Plugin Pitfalls](https://dashstro.com/learn/emdash-plugin-pitfalls)) — Block Kit gotchas
 - **Issue #710** — `ctx.waitUntil` / `after()` requirement for async-after-response work
 
-A known issue: **capability names are inconsistent across EmDash docs.** The Cloudflare blog uses `read:content` / `write:content` / `network:fetch`. The repo's SKILL.md uses `content:read` / `content:write` / `network:request`. The contributor guide lists 11 capabilities matching the Cloudflare blog naming. **This PRD uses the Cloudflare-blog naming as canonical** and flags the dual-style for plugin authors. Lock against actual EmDash docs at PRD finalization.
+Capability naming is **locked**: emdash@0.9.0 (PR #816) unified under `<resource>[:<sub-resource>]:<verb>[:<qualifier>]` (`content:read`, `content:write`, `network:request`, `network:request:unrestricted`). Old forms (`read:content`, `network:fetch`) are deprecated — `emdash plugin publish` rejects manifests using them. Source: `research/synthesis/emdash-platform-research.md` Q1.
 
 ---
 
@@ -83,10 +83,10 @@ Per [Issue #710](https://github.com/emdash-cms/emdash/issues/710): on Cloudflare
 
 ### 4. Block Kit gotchas
 
-Per Dashstro:
-- Stats block uses `items`, not `stats`
-- Buttons use `label`, not `text`
-- Section text has no markdown parser — use `children` with marks for rich content
+Per EmDash 0.9.0 `block-kit.md` reference (supersedes Dashstro):
+- Stats block uses `stats` key (NOT `items`)
+- Buttons use `text` (NOT `label`)
+- Section `text` accepts plain string for simple text; use `children` with marks for rich content
 - Plugin routes return `BlockResponse = { blocks, toast? }` — no redirect support, no raw `Response`
 - Authoring guard: ship `validateBlocks()` against typed builders in CI
 
@@ -132,25 +132,25 @@ x402 micropayments are built into EmDash core ([Cloudflare blog](https://blog.cl
 
 ## Capability Manifest System
 
-Per the contributor guide, EmDash has 11 fixed capabilities. Naming inconsistency between sources noted; this PRD uses Cloudflare-blog canonical:
+Per emdash@0.9.0 canonical capability list (PR #816 — `<resource>[:<sub-resource>]:<verb>[:<qualifier>]`):
 
 | Capability | Grants | `ctx` binding |
 |---|---|---|
-| `read:content` | `ctx.content.get()`, `ctx.content.list()` | `ctx.content` |
-| `write:content` | `ctx.content.create()`, `ctx.content.update()`, `ctx.content.delete()` | `ctx.content` |
-| `read:media` | `ctx.media.get()`, `ctx.media.list()` | `ctx.media` |
-| `write:media` | `ctx.media.getUploadUrl()`, `ctx.media.delete()` | `ctx.media` |
-| `network:fetch` | `ctx.http.fetch()` restricted to `allowedHosts` | `ctx.http` |
-| `network:fetch:any` | `ctx.http.fetch()` unrestricted (caution flag) | `ctx.http` |
-| `read:users` | `ctx.users.get()`, `ctx.users.list()`, `ctx.users.getByEmail()` | `ctx.users` |
+| `content:read` | `ctx.content.get()`, `ctx.content.list()` | `ctx.content` |
+| `content:write` | `ctx.content.create()`, `ctx.content.update()`, `ctx.content.delete()` | `ctx.content` |
+| `media:read` | `ctx.media.get()`, `ctx.media.list()` | `ctx.media` |
+| `media:write` | `ctx.media.getUploadUrl()`, `ctx.media.delete()` | `ctx.media` |
+| `network:request` | `ctx.http.fetch()` restricted to `allowedHosts` | `ctx.http` |
+| `network:request:unrestricted` | `ctx.http.fetch()` unrestricted (caution flag) | `ctx.http` |
+| `users:read` | `ctx.users.get()`, `ctx.users.list()`, `ctx.users.getByEmail()` | `ctx.users` |
 | `email:send` | `ctx.email.send()` via core mail pipeline | `ctx.email` |
-| `email:provide` | Register an email transport for the site | hooks |
-| `email:intercept` | Hook `email:beforeSend` / `email:afterSend` | hooks |
-| `page:inject` | Register page fragments injected into rendered pages | hooks |
+| `hooks.email-transport:register` | Register an email transport for the site | hooks |
+| `hooks.email-events:register` | Hook `email:beforeSend` / `email:afterSend` | hooks |
+| `hooks.page-fragments:register` | Register page fragments injected into rendered pages | hooks |
 
-Always granted (no capability declaration needed): `ctx.kv`, `ctx.log`. Hooks and routes are declared in the manifest but not capability-gated.
+Always granted (no capability declaration needed): `ctx.kv`, `ctx.log`. Hooks and routes are declared in the manifest but not capability-gated. Verify names before shipping — `emdash plugin publish` rejects deprecated forms.
 
-> **Note for plugin authors:** declare the minimum needed. `network:fetch:any`, `read:users`, and `email:intercept` add a caution signal in the marketplace.
+> **Note for plugin authors:** declare the minimum needed. `network:request:unrestricted`, `users:read`, and `hooks.email-events:register` add a caution signal in the marketplace. Source: `research/synthesis/emdash-platform-research.md` Q1.
 
 ---
 
@@ -199,7 +199,7 @@ import { definePlugin } from "emdash";
 export default () => definePlugin({
   id: "dateline-core",
   version: "0.1.0",
-  capabilities: ["read:content", "write:content", "read:media"],
+  capabilities: ["content:read", "content:write", "media:read"],
   // No external network: core is fully self-contained
   hooks: {
     "content:beforeSave": async (event, ctx) => {
@@ -231,7 +231,7 @@ export default () => definePlugin({
 export default () => definePlugin({
   id: "dateline-rsvp",
   version: "0.1.0",
-  capabilities: ["read:content", "write:content", "email:send"],
+  capabilities: ["content:read", "content:write", "email:send"],
   hooks: {
     "content:afterSave": async (event, ctx) => {
       if (event.collection !== "dateline_attendees") return;
@@ -255,7 +255,7 @@ export default () => definePlugin({
 export default () => definePlugin({
   id: "dateline-tickets-backend",
   version: "0.1.0",
-  capabilities: ["read:content", "write:content", "email:send", "network:fetch"],
+  capabilities: ["content:read", "content:write", "email:send", "network:request"],
   allowedHosts: ["api.stripe.com", "checkout.stripe.com"],
   hooks: {
     "content:afterSave": async (event, ctx) => {
@@ -286,7 +286,7 @@ export default () => definePlugin({
 export default () => definePlugin({
   id: "dateline-virtual",
   version: "0.1.0",
-  capabilities: ["read:content", "write:content", "network:fetch"],
+  capabilities: ["content:read", "content:write", "network:request"],
   allowedHosts: ["api.zoom.us", "meet.googleapis.com"],
   hooks: {
     "content:afterSave": async (event, ctx) => {
@@ -305,7 +305,7 @@ export default () => definePlugin({
 export default () => definePlugin({
   id: "dateline-ai",
   version: "0.1.0",
-  capabilities: ["read:content", "write:content", "network:fetch"],
+  capabilities: ["content:read", "content:write", "network:request"],
   allowedHosts: [
     "api.anthropic.com",
     "api.openai.com",
@@ -507,11 +507,11 @@ Dateline subscribes only to canonical EmDash hooks. The 20-hook list is fixed; w
 - `content:afterSave` — provision Zoom/Meet meeting, store join URL/ID/passcode
 
 ### Status transitions (scheduled → live → past)
-**Open question:** confirm EmDash's hook surface for time-based triggers. The repo's SKILL.md does not list a `cron:*` hook in the canonical 20; Jorijn's blog mentions `cron:schedule` as a capability, but the contributor guide's 11-capability list does not include it. Two implementation paths:
-1. If a scheduled-event hook exists in 0.6.x, use it.
-2. If not, status transitions are computed at read time (`status = startsAt > now ? "scheduled" : endsAt < now ? "past" : "live"`) and rendered live without persistence.
+**Locked.** EmDash 0.8.x+ exposes the `cron` hook and `ctx.cron.schedule()` (confirmed in hooks.md). Two paths remain valid:
+1. Use `ctx.cron.schedule()` for time-based status transitions and hold-expiry sweeps.
+2. Compute status at read time (`status = startsAt > now ? "scheduled" : endsAt < now ? "past" : "live"`) for simpler views that don't need indexed status.
 
-Path 2 is simpler and avoids the question entirely. **Recommend path 2 for v0.1**, revisit if persisted status is required for indexing/search.
+**Recommend:** Path 2 for rendering; use `cron` hook for hold-expiry sweeps and scheduled batch operations (e.g. promoting waitlist entries when a tier opens). Source: `research/synthesis/emdash-platform-research.md` Q3.
 
 ---
 
@@ -738,7 +738,7 @@ Each tool ships with JSON Schema, examples, and natural-language descriptions.
 
 A persistent panel inside the EmDash admin (when `@dateline/ai` installed):
 - BYO API key per workspace (Anthropic, OpenAI, Gemini)
-- Calls go through `network:fetch` allowlist to declared LLM hostnames
+- Calls go through `network:request` allowlist to declared LLM hostnames
 - Chat history in plugin KV scoped per user, retention-capped (default 30 days)
 - All write actions show diff preview + confirm UI before execution
 - Per-tool "auto-approve" flag for trusted users
@@ -795,7 +795,7 @@ Per-field "✨ AI" buttons in the event editor:
 | `@dateline/core` | none | (none) |
 | `@dateline/rsvp` | core mail pipeline only | (none — uses `email:send`) |
 | `@dateline/recurring` | none | (none) |
-| `@dateline/importer` | iCal source URLs | user-configured (caution: `network:fetch:any` candidate) |
+| `@dateline/importer` | iCal source URLs | user-configured (caution: `network:request:unrestricted` candidate) |
 | `@dateline/tickets-backend` | Stripe | `api.stripe.com`, `checkout.stripe.com` |
 | `@dateline/virtual` | Zoom / Meet / Jitsi | per-provider |
 | `@dateline/ai` | LLM provider | `api.anthropic.com`, `api.openai.com`, `generativelanguage.googleapis.com` |
@@ -910,20 +910,22 @@ Out of scope:
 
 ---
 
-## Open Questions
+## Decisions Locked (2026-05-02)
 
-1. **Capability naming source of truth.** Cloudflare blog vs SKILL.md vs contributor guide use different styles (`read:content` vs `content:read`). Lock with EmDash maintainers before publishing PRD or shipping any code.
-2. **Custom MCP tool registration.** Confirm 0.6.x API for plugins to register MCP tools. If absent, file upstream feature request and ship REST + standalone MCP wrapper as interim.
-3. **Time-based hooks.** Confirm whether EmDash exposes a `cron:*` hook for scheduled work. If not, status transitions are computed at read time (recommended path).
-4. **Cloudflare Queues exposure.** Are plugins allowed to enqueue jobs to a Worker queue for >50ms work? If yes, simplifies post-webhook processing significantly.
-5. **Free tier messaging.** How prominently to surface "sandboxing requires paid Cloudflare" — in install dialog, in marketplace listing, in marketing? Recommend all three.
-6. **Native plugin distribution.** Native-format plugins can't ship through marketplace's auto-install flow (require local registration). Distribution = npm + CLI installer (`npx dateline-ai install`). Confirm this is acceptable UX.
-7. **Tickets backend/admin split.** Two packages or one? Splitting lets sandboxed backend be isolated while admin uses native React. Coupling reduces install friction. Recommend **split with bundled price**: backend is the SKU; admin ships free as a peer dependency.
-8. **Pricing tiers.** Verify against EventON ($500-800 bundle) and TEC Pro bundle ($399/yr). Recommend $399/yr suite, $999 lifetime, with EventON-import discount (proof-of-purchase = 50% off year one).
-9. **Recurring event materialization.** Lazy compute (recommended) vs eager. Lazy is cleaner; eager is simpler for search and indexing. Cache lazy results in KV (TTL 1hr) — best of both.
-10. **`network:fetch:any` for importer.** iCal import accepts arbitrary URLs. Use the unrestricted capability with marketplace caution flag, OR require user to whitelist sources in plugin settings (more friction, more security). Recommend the latter for v0.1, relax in v0.2 if friction is high.
-11. **GDPR / right-to-erasure.** Required from day one. Treat as MVP — Dateline ships data export and erasure handlers in v0.1. Reuse EmDash core privacy primitives if available.
-12. **Plugin name.** "Dateline" cleared in events plugin space. Confirm final lock.
+All answers sourced from `research/synthesis/emdash-platform-research.md`. Each locks a prior open question.
+
+1. **Capability naming (Q1).** `content:read` (resource:verb) is canonical. emdash@0.9.0 PR #816 unified naming; `emdash plugin publish` rejects old forms. All Dateline manifests must ship with resource:verb naming.
+2. **Custom MCP tool registration (Q2).** Does NOT exist. Issue #41 is open and unassigned — no upstream ETA. **Interim:** REST routes + standalone `@dateline/mcp` wrapper. Monitor issue #41; migrate if upstream ships before v1.0.
+3. **Cron scheduling (Q3).** CONFIRMED. `cron` hook + `ctx.cron.schedule()` available since 0.6.0, documented in hooks.md. Use for hold-expiry sweeps and time-based status transitions.
+4. **Cloudflare Queues (Q4).** No `ctx.queue` binding exists. Plugins cannot enqueue to Worker queues. For >50ms work: use `ctx.waitUntil` (within same invocation), or call a separate Worker via `ctx.http.fetch()`. **Document this in every webhook handler.**
+5. **Free tier messaging (Q5).** Dynamic Workers require paid Cloudflare plan. On Free, plugins run as trusted (in-process). Document in: install dialog, marketplace listing, README, and marketing. Source: Issue #149.
+6. **Native plugin distribution (Q6).** Confirmed: npm + `astro.config.mjs` registration. No official CLI installer pattern exists in EmDash; `npx dateline-<name> install` is a convention we can adopt but is not upstream-supported.
+7. **Tickets backend/admin split (Q7).** Decision stands: split with bundled price. Backend (sandboxed) is the SKU; admin (native React) ships as a workspace dependency.
+8. **Pricing tiers (Q8).** No research update — retain $399/yr suite / $999 lifetime / EventON-import discount.
+9. **Recurring event materialization (Q9).** Lazy compute with KV cache (TTL 1hr) stays. 2-year forward cap confirmed correct.
+10. **`network:request:unrestricted` for importer (Q10).** Recommendation stays: whitelist user-configured iCal sources. Only escalate to unrestricted if friction data says so.
+11. **GDPR / right-to-erasure (Q11).** No core privacy hooks exist in EmDash. Dateline MUST build its own GDPR primitives using `content:beforeDelete` / `content:afterDelete`. Plugin-owned; no upstream feature to wait on.
+12. **Plugin name (Q12).** "Dateline" — no conflicts found. Locked.
 
 ---
 
