@@ -6,7 +6,7 @@
 
 set -uo pipefail
 
-if ! command -v jq &>/dev/null; then
+if ! command -v jq >/dev/null; then
   exit 0
 fi
 
@@ -37,22 +37,22 @@ detect_and_format() {
   while [[ "$dir" != "/" ]]; do
     # Biome
     if [[ -f "$dir/biome.json" ]] || [[ -f "$dir/biome.jsonc" ]]; then
-      if command -v npx &>/dev/null; then
+      if command -v npx >/dev/null; then
         npx --yes biome format --write "$FILE_PATH" 2>/dev/null && return 0
       fi
     fi
 
     # Prettier
-    if ls "$dir"/.prettierrc* 1>/dev/null 2>&1 || \
+    if compgen -G "$dir/.prettierrc*" >/dev/null || \
        ([ -f "$dir/package.json" ] && grep -q '"prettier"' "$dir/package.json" 2>/dev/null); then
-      if command -v npx &>/dev/null; then
+      if command -v npx >/dev/null; then
         npx --yes prettier --write "$FILE_PATH" 2>/dev/null && return 0
       fi
     fi
 
     # Rust (rustfmt)
     if [[ "$FILE_EXT" == "rs" ]]; then
-      if command -v rustfmt &>/dev/null; then
+      if command -v rustfmt >/dev/null; then
         rustfmt "$FILE_PATH" 2>/dev/null && return 0
       fi
     fi
@@ -60,7 +60,7 @@ detect_and_format() {
     # Python (ruff)
     if [[ "$FILE_EXT" == "py" ]]; then
       if [[ -f "$dir/pyproject.toml" ]] && grep -q 'ruff' "$dir/pyproject.toml" 2>/dev/null; then
-        if command -v ruff &>/dev/null; then
+        if command -v ruff >/dev/null; then
           ruff format "$FILE_PATH" 2>/dev/null && return 0
         fi
       fi
@@ -69,7 +69,7 @@ detect_and_format() {
     # C/C++ (clang-format)
     if [[ "$FILE_EXT" =~ ^(c|cpp|cc|cxx|h|hpp|hxx)$ ]]; then
       if [[ -f "$dir/.clang-format" ]]; then
-        if command -v clang-format &>/dev/null; then
+        if command -v clang-format >/dev/null; then
           clang-format -i "$FILE_PATH" 2>/dev/null && return 0
         fi
       fi
@@ -77,14 +77,14 @@ detect_and_format() {
 
     # Go (gofmt)
     if [[ "$FILE_EXT" == "go" ]]; then
-      if command -v gofmt &>/dev/null; then
+      if command -v gofmt >/dev/null; then
         gofmt -w "$FILE_PATH" 2>/dev/null && return 0
       fi
     fi
 
     # C# (dotnet format)
     if [[ "$FILE_EXT" == "cs" ]]; then
-      if [[ -f "$dir/.editorconfig" ]] && command -v dotnet &>/dev/null; then
+      if [[ -f "$dir/.editorconfig" ]] && command -v dotnet >/dev/null; then
         dotnet format whitespace --include "$FILE_PATH" 2>/dev/null && return 0
       fi
     fi

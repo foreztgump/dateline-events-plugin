@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "files": [],
+  "references": [
+    { "path": "./packages/blocks" },
+    { "path": "./packages/core" },
+    { "path": "./packages/rsvp" },
+    { "path": "./packages/recurring" },
+    { "path": "./packages/importer" },
+    { "path": "./packages/views" },
+    { "path": "./examples/reference-site" }
+  ]
+}

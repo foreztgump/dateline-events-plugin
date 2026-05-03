@@ -5,7 +5,7 @@
 
 set -uo pipefail
 
-if ! command -v jq &>/dev/null; then
+if ! command -v jq >/dev/null; then
   echo "WARNING: jq not found, hook skipped" >&2
   exit 0
 fi
