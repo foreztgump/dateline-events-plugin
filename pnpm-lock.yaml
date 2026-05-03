@@ -102,6 +102,9 @@ importers:
       '@types/node':
         specifier: ^20.19.39
         version: 20.19.39
+      eslint:
+        specifier: ^9.27.0
+        version: 9.39.4
       rimraf:
         specifier: ^6.0.1
         version: 6.1.3
