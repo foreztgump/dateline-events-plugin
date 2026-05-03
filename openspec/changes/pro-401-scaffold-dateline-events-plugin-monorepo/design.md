@@ -69,7 +69,7 @@ Per-package source (src/index.ts — placeholder export)
         │
         ▼
 Per-package tests (src/index.test.ts — asserts the placeholder)
-```text
+```
 
 No package depends on another package's internals at scaffold time. The `workspace:*` protocol is wired in `package.json` only where a real cross-package import will exist later (e.g., `@dateline/core` will eventually depend on `@dateline/blocks`); at scaffold time, **no internal dependencies are declared** because none are needed by smoke tests. This avoids creating false coupling that would have to be unwound when real implementation begins.
 
@@ -130,6 +130,6 @@ GitHub PR                Actions runner               pnpm/tsc/eslint/vitest    
     |                          |                              |--- vitest projects ----->|
     |                          |                              |<-- 7 passing tests ------|
     |<-- check passes ---------|                              |                          |
-```text
+```
 
 The pipeline is entirely synchronous and entirely root-driven. Per-package work happens because the root scripts fan out (`-r`), not because any package owns its own pipeline.

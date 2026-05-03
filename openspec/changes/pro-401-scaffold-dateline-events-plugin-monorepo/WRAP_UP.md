@@ -15,19 +15,12 @@
 - [ ] Worktree removed: /home/cownose/projects/Dateline-pro-401-scaffold-dateline-events-plugin-monorepo
 
 ## CodeRabbit Triage
-**CR Run ID:** 4ac01676-a654-4fff-bab1-78a96d008130
-**Comments Posted:** 10
+**CR Run ID:** 21ade942-504f-4373-bc84-3254e5cced1c
+**Comments Posted:** 2
 
-- [Actionable] `.github/workflows/ci.yml`: pin GitHub Actions to immutable SHAs — Fixed in working tree.
-- [Actionable] `eslint.config.js`: replace `import.meta.dirname` with URL/file-path resolution — Fixed in working tree.
-- [Actionable] `examples/reference-site/package.json`: clean script should remove `*.tsbuildinfo` — Fixed in working tree.
-- [Actionable] `openspec/changes/pro-401-scaffold-dateline-events-plugin-monorepo/design.md`: add fenced-code language tags — Fixed in working tree.
-- [Actionable] `openspec/changes/pro-401-scaffold-dateline-events-plugin-monorepo/tasks.md`: remove host-specific absolute path — Fixed in working tree.
-- [Actionable] `package.json`: make root `lint:fix` tolerate missing workspace scripts — Fixed in working tree.
-- [Actionable] `package.json`: bump `@typescript-eslint/*` for TS 6 compatibility — Fixed in working tree.
-- [Actionable] `packages/*/package.json`: make clean scripts cross-platform via `rimraf` — Fixed in working tree.
-- [Actionable] `packages/*/package.json`: align shared tooling versions across package manifests — Partially addressed by normalizing versions; `workspace:*` was not applied because pnpm cannot resolve external packages via the workspace protocol in this repo shape.
-- [Actionable] `packages/*/package.json`: add missing `lint:fix` scripts — Fixed in working tree.
+- [Actionable] `openspec/changes/pro-401-scaffold-dateline-events-plugin-monorepo/design.md`: restore plain closing code fences after adding `text` language tags — Fixed in working tree.
+- [Actionable] `openspec/changes/pro-401-scaffold-dateline-events-plugin-monorepo/WRAP_UP.md`: add blank lines before top-level headings — Fixed in working tree.
+- [Actionable] `packages/{blocks,core,importer,recurring,rsvp,views}/package.json`: declare `rimraf` in package devDependencies to match the clean script — Fixed in working tree.
 
 ## Follow-Up Items
 - Replace placeholder exports with real package implementations in follow-on issues.
