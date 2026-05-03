@@ -53,3 +53,8 @@ wrangler.toml.bak
 *.swp
 *.swo
 .cache/
+
+# Factory agent state — local only, never tracked
+.factory-state
+
+.eslintcache
