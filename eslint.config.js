@@ -1,3 +1,4 @@
+import { fileURLToPath } from "node:url";
 import tseslint from "@typescript-eslint/eslint-plugin";
 import tsParser from "@typescript-eslint/parser";
 
@@ -6,6 +7,7 @@ const MAX_PARAMS = 3;
 const MAX_DEPTH = 3;
 const MAX_COMPLEXITY = 10;
 const MAGIC_NUMBERS_IGNORE = [-1, 0, 1, 2];
+const ESLINT_CONFIG_DIRECTORY = fileURLToPath(new URL(".", import.meta.url));
 
 const IGNORED_PATHS = [
   "**/dist/**",
@@ -25,7 +27,7 @@ export default [
       parser: tsParser,
       parserOptions: {
         project: "./tsconfig.eslint.json",
-        tsconfigRootDir: import.meta.dirname,
+        tsconfigRootDir: ESLINT_CONFIG_DIRECTORY,
       },
     },
     plugins: {

@@ -1,6 +1,6 @@
 # Tasks: PRO-401 — Scaffold dateline-events-plugin Monorepo
 
-All file paths are relative to the change worktree root: `/home/cownose/projects/Dateline-pro-401-scaffold-dateline-events-plugin-monorepo/`.
+All file paths are relative to the change worktree root: `./`.
 
 **Cross-cutting CODE_PRINCIPLES.md rules that apply to every task:**
 - Hard Rule **#2 No Magic Values** — version strings, ports, paths get named constants in scripts; literal versions in `package.json` are necessarily literal.
