@@ -1,6 +1,6 @@
 # Tasks: PRO-401 — Scaffold dateline-events-plugin Monorepo
 
-All file paths are relative to the change worktree root: `./`.
+All file paths are relative to the change worktree root: `/home/cownose/projects/Dateline-pro-401-scaffold-dateline-events-plugin-monorepo/`.
 
 **Cross-cutting CODE_PRINCIPLES.md rules that apply to every task:**
 - Hard Rule **#2 No Magic Values** — version strings, ports, paths get named constants in scripts; literal versions in `package.json` are necessarily literal.
@@ -22,12 +22,12 @@ All file paths are relative to the change worktree root: `./`.
 - `.nvmrc`
 
 **Acceptance criteria**
-- [x] Root `package.json` declares `"private": true`, `"type": "module"`, `"packageManager": "pnpm@10.33.2"`, and the script set: `build`, `typecheck`, `lint`, `lint:fix`, `test`, `test:watch`, `clean`, `changeset`, `version-packages`, `release`.
-- [x] All `-r` aware scripts use `pnpm -r run <script>`; `clean` removes every package's `dist/` and `node_modules/.cache/`.
-- [x] `pnpm-workspace.yaml` declares `packages: ["packages/*", "examples/*"]` and nothing else.
-- [x] `.npmrc` sets `auto-install-peers=true` and `strict-peer-dependencies=false` (Cloudflare Workers types are routinely peer-only).
-- [x] `.nvmrc` pins the Node version used by CI (20.x LTS or whatever `openspec/config.yaml` references).
-- [x] No `package-lock.json` or `yarn.lock` is created.
+- [ ] Root `package.json` declares `"private": true`, `"type": "module"`, `"packageManager": "pnpm@10.33.2"`, and the script set: `build`, `typecheck`, `lint`, `lint:fix`, `test`, `test:watch`, `clean`, `changeset`, `version-packages`, `release`.
+- [ ] All `-r` aware scripts use `pnpm -r run <script>`; `clean` removes every package's `dist/` and `node_modules/.cache/`.
+- [ ] `pnpm-workspace.yaml` declares `packages: ["packages/*", "examples/*"]` and nothing else.
+- [ ] `.npmrc` sets `auto-install-peers=true` and `strict-peer-dependencies=false` (Cloudflare Workers types are routinely peer-only).
+- [ ] `.nvmrc` pins the Node version used by CI (20.x LTS or whatever `openspec/config.yaml` references).
+- [ ] No `package-lock.json` or `yarn.lock` is created.
 
 **Test files:** none for this task — verified by Task 9 (`pnpm install` clean run).
 
@@ -41,9 +41,9 @@ All file paths are relative to the change worktree root: `./`.
 - `tsconfig.eslint.json`
 
 **Acceptance criteria**
-- [x] `tsconfig.base.json` sets `strict: true`, `noUncheckedIndexedAccess: true`, `noImplicitOverride: true`, `target: "ES2022"`, `module: "ESNext"`, `moduleResolution: "Bundler"`, `lib: ["ES2022"]`, `composite: true`, `declaration: true`, `declarationMap: true`, `sourceMap: true`, `esModuleInterop: true`, `forceConsistentCasingInFileNames: true`, `skipLibCheck: true`.
-- [x] Root `tsconfig.json` has `references: [...]` for all seven scaffolded packages and `files: []`.
-- [x] `tsconfig.eslint.json` extends the base and adds `include: ["packages/**/*", "examples/**/*"]` plus `exclude: ["**/dist/**", "**/node_modules/**"]` so type-aware linting only sees source.
+- [ ] `tsconfig.base.json` sets `strict: true`, `noUncheckedIndexedAccess: true`, `noImplicitOverride: true`, `target: "ES2022"`, `module: "ESNext"`, `moduleResolution: "Bundler"`, `lib: ["ES2022"]`, `composite: true`, `declaration: true`, `declarationMap: true`, `sourceMap: true`, `esModuleInterop: true`, `forceConsistentCasingInFileNames: true`, `skipLibCheck: true`.
+- [ ] Root `tsconfig.json` has `references: [...]` for all seven scaffolded packages and `files: []`.
+- [ ] `tsconfig.eslint.json` extends the base and adds `include: ["packages/**/*", "examples/**/*"]` plus `exclude: ["**/dist/**", "**/node_modules/**"]` so type-aware linting only sees source.
 
 **Test files:** none — verified by Task 9 (`pnpm -r typecheck`).
 
@@ -58,11 +58,11 @@ All file paths are relative to the change worktree root: `./`.
 - `package.json` (root) — confirm `lint` and `lint:fix` scripts wired to `eslint . --cache` and `eslint . --cache --fix`.
 
 **Acceptance criteria**
-- [x] Config uses ESLint 9 flat-config form (array of objects, no `extends:` strings).
-- [x] Includes `@typescript-eslint/recommended-type-checked` rules with `parserOptions.project: "./tsconfig.eslint.json"`.
-- [x] Enforces (named constants for thresholds inside the config file): `max-lines-per-function: 40`, `max-params: 3`, `max-depth: 3`, `complexity: 10`, `no-magic-numbers` with `ignore: [-1, 0, 1, 2]` and `ignoreEnums: true`, `no-console: ["error", { allow: ["warn", "error"] }]`.
-- [x] Test files (`**/*.test.ts`) are excepted from `max-lines-per-function` and `no-magic-numbers` (test inputs are deliberately literal).
-- [x] `dist/`, `node_modules/`, `.wrangler/`, `.factory-state/` are globally ignored.
+- [ ] Config uses ESLint 9 flat-config form (array of objects, no `extends:` strings).
+- [ ] Includes `@typescript-eslint/recommended-type-checked` rules with `parserOptions.project: "./tsconfig.eslint.json"`.
+- [ ] Enforces (named constants for thresholds inside the config file): `max-lines-per-function: 40`, `max-params: 3`, `max-depth: 3`, `complexity: 10`, `no-magic-numbers` with `ignore: [-1, 0, 1, 2]` and `ignoreEnums: true`, `no-console: ["error", { allow: ["warn", "error"] }]`.
+- [ ] Test files (`**/*.test.ts`) are excepted from `max-lines-per-function` and `no-magic-numbers` (test inputs are deliberately literal).
+- [ ] `dist/`, `node_modules/`, `.wrangler/`, `.factory-state/` are globally ignored.
 
 **Error handling:** Lint failures are treated as build failures — no `--no-error-on-unmatched-pattern`. The script uses `--cache` to keep CI fast.
 
@@ -76,10 +76,10 @@ All file paths are relative to the change worktree root: `./`.
 - `vitest.config.ts`
 
 **Acceptance criteria**
-- [x] Config uses `defineConfig({ test: { projects: [...] } })` from `vitest/config` — NOT `defineWorkspace` and NOT a `vitest.workspace.ts` file (deprecated in v4).
-- [x] `projects` lists each scaffolded package by glob: `packages/*`, `examples/reference-site`.
-- [x] Root reporter is `"default"`; coverage is configured (provider `v8`) but with no enforced thresholds at scaffold time (deferred until packages have real code).
-- [x] `test` and `test:watch` scripts at the root run `vitest run` and `vitest`.
+- [ ] Config uses `defineConfig({ test: { projects: [...] } })` from `vitest/config` — NOT `defineWorkspace` and NOT a `vitest.workspace.ts` file (deprecated in v4).
+- [ ] `projects` lists each scaffolded package by glob: `packages/*`, `examples/reference-site`.
+- [ ] Root reporter is `"default"`; coverage is configured (provider `v8`) but with no enforced thresholds at scaffold time (deferred until packages have real code).
+- [ ] `test` and `test:watch` scripts at the root run `vitest run` and `vitest`.
 
 **Test files:** none directly — Task 5 adds the per-package smoke tests this config will collect. Verified end-to-end by Task 9 (`pnpm -r test`).
 
@@ -112,32 +112,32 @@ For each of `packages/blocks`, `packages/core`, `packages/rsvp`, `packages/recur
 | `examples/reference-site`  | `@dateline/reference-site` (private, `"private": true`) | MIT |
 
 **Per-package `package.json` acceptance criteria**
-- [x] `name` matches the table above; `version` is `0.0.0`.
-- [x] `type: "module"`, `main: "./dist/index.js"`, `types: "./dist/index.d.ts"`, `exports: { ".": { "import": "./dist/index.js", "types": "./dist/index.d.ts" } }`.
-- [x] `files: ["dist", "README.md"]` on publishable packages; reference-site is `"private": true` and omits `files`.
-- [x] `scripts`: `build: "tsc -b"`, `typecheck: "tsc -b --noEmit"`, `lint: "eslint src --cache"`, `test: "vitest run"`, `clean: "rm -rf dist .turbo node_modules/.cache"`.
-- [x] All six `packages/*` declare `peerDependencies: { "emdash": "^0.9.0" }` and do **not** list emdash under `dependencies`.
-- [x] `examples/reference-site/package.json` declares `dependencies: { "emdash": "^0.9.0" }` (no peer-dep) and `astro` (version per `openspec/config.yaml`).
-- [x] `devDependencies` on each package: `typescript`, `vitest`, `@types/node`. No other deps at scaffold time.
+- [ ] `name` matches the table above; `version` is `0.0.0`.
+- [ ] `type: "module"`, `main: "./dist/index.js"`, `types: "./dist/index.d.ts"`, `exports: { ".": { "import": "./dist/index.js", "types": "./dist/index.d.ts" } }`.
+- [ ] `files: ["dist", "README.md"]` on publishable packages; reference-site is `"private": true` and omits `files`.
+- [ ] `scripts`: `build: "tsc -b"`, `typecheck: "tsc -b --noEmit"`, `lint: "eslint src --cache"`, `test: "vitest run"`, `clean: "rm -rf dist .turbo node_modules/.cache"`.
+- [ ] All six `packages/*` declare `peerDependencies: { "emdash": "^0.9.0" }` and do **not** list emdash under `dependencies`.
+- [ ] `examples/reference-site/package.json` declares `dependencies: { "emdash": "^0.9.0" }` (no peer-dep) and `astro` (version per `openspec/config.yaml`).
+- [ ] `devDependencies` on each package: `typescript`, `vitest`, `@types/node`. No other deps at scaffold time.
 
 **Per-package `tsconfig.json` acceptance criteria**
-- [x] `extends: "../../tsconfig.base.json"` (adjust path for `examples/reference-site`).
-- [x] `compilerOptions: { outDir: "dist", rootDir: "src" }`.
-- [x] `include: ["src"]`.
-- [x] No `references` between packages at scaffold time (no internal imports exist yet — see design.md "Dependency Direction").
+- [ ] `extends: "../../tsconfig.base.json"` (adjust path for `examples/reference-site`).
+- [ ] `compilerOptions: { outDir: "dist", rootDir: "src" }`.
+- [ ] `include: ["src"]`.
+- [ ] No `references` between packages at scaffold time (no internal imports exist yet — see design.md "Dependency Direction").
 
 **Per-package `src/index.ts` acceptance criteria**
-- [x] Exports exactly one named constant: `export const PACKAGE_NAME = "@dateline/<role>";` matching the npm name.
-- [x] No imports, no side effects, no other exports.
+- [ ] Exports exactly one named constant: `export const PACKAGE_NAME = "@dateline/<role>";` matching the npm name.
+- [ ] No imports, no side effects, no other exports.
 
 **Per-package `src/index.test.ts` acceptance criteria** (AAA structure, Hard Rule #10)
-- [x] Imports `describe, it, expect` from `vitest`.
-- [x] Imports `PACKAGE_NAME` from `./index`.
-- [x] One test: `it("exports its npm package name", () => { expect(PACKAGE_NAME).toBe("@dateline/<role>"); });`.
-- [x] No fixtures, no mocks, no `beforeEach`.
+- [ ] Imports `describe, it, expect` from `vitest`.
+- [ ] Imports `PACKAGE_NAME` from `./index`.
+- [ ] One test: `it("exports its npm package name", () => { expect(PACKAGE_NAME).toBe("@dateline/<role>"); });`.
+- [ ] No fixtures, no mocks, no `beforeEach`.
 
 **Per-package `README.md` acceptance criteria**
-- [x] One paragraph stating the package's role per `openspec/config.yaml` `Structure (monorepo)` section. Three sentences max.
+- [ ] One paragraph stating the package's role per `openspec/config.yaml` `Structure (monorepo)` section. Three sentences max.
 
 **Error handling:** Smoke tests have nothing external to catch. The placeholder `src/index.ts` has no boundaries to wrap. Hard Rule #4 applies once real code lands — not in this task.
 
@@ -150,11 +150,11 @@ For each of `packages/blocks`, `packages/core`, `packages/rsvp`, `packages/recur
 - `.changeset/README.md` (the standard Changesets-generated stub)
 
 **Acceptance criteria**
-- [x] `config.json` sets `"$schema": "https://unpkg.com/@changesets/config@<latest>/schema.json"` (literal version pinned to whatever pnpm install resolves).
-- [x] `"changelog": ["@changesets/changelog-github", { "repo": "<owner>/<repo>" }]` — operator fills `<owner>/<repo>` to the actual GitHub coords for the project.
-- [x] `"commit": false`, `"fixed": []`, `"linked": []`, `"access": "public"`, `"baseBranch": "main"` (matches `openspec/config.yaml` default branch).
-- [x] `"updateInternalDependencies": "patch"`, `"ignore": []`.
-- [x] Root `package.json` adds `@changesets/cli` and `@changesets/changelog-github` to `devDependencies`.
+- [ ] `config.json` sets `"$schema": "https://unpkg.com/@changesets/config@<latest>/schema.json"` (literal version pinned to whatever pnpm install resolves).
+- [ ] `"changelog": ["@changesets/changelog-github", { "repo": "<owner>/<repo>" }]` — operator fills `<owner>/<repo>` to the actual GitHub coords for the project.
+- [ ] `"commit": false`, `"fixed": []`, `"linked": []`, `"access": "public"`, `"baseBranch": "main"` (matches `openspec/config.yaml` default branch).
+- [ ] `"updateInternalDependencies": "patch"`, `"ignore": []`.
+- [ ] Root `package.json` adds `@changesets/cli` and `@changesets/changelog-github` to `devDependencies`.
 
 **Test files:** none — verified by `pnpm changeset --help` exiting 0 in CI.
 
@@ -166,12 +166,12 @@ For each of `packages/blocks`, `packages/core`, `packages/rsvp`, `packages/recur
 - `.github/workflows/ci.yml`
 
 **Acceptance criteria**
-- [x] Workflow named `CI`; triggers on `pull_request` against `main` and on `push` to `main`.
-- [x] Single job `verify` running on `ubuntu-latest`.
-- [x] Steps in order: `actions/checkout@v4`, `pnpm/action-setup@v4` (version pinned to `10.33.2`), `actions/setup-node@v4` with `node-version-file: .nvmrc` and `cache: pnpm`, `pnpm install --frozen-lockfile`, `pnpm -r typecheck`, `pnpm -r lint`, `pnpm -r build`, `pnpm -r test`.
-- [x] Workflow has `permissions: contents: read` (least privilege; release workflow that needs write is deferred).
-- [x] Concurrency group: `${{ github.workflow }}-${{ github.ref }}` with `cancel-in-progress: true`.
-- [x] No secrets referenced — release secrets land in a separate workflow once publishing begins.
+- [ ] Workflow named `CI`; triggers on `pull_request` against `main` and on `push` to `main`.
+- [ ] Single job `verify` running on `ubuntu-latest`.
+- [ ] Steps in order: `actions/checkout@v4`, `pnpm/action-setup@v4` (version pinned to `10.33.2`), `actions/setup-node@v4` with `node-version-file: .nvmrc` and `cache: pnpm`, `pnpm install --frozen-lockfile`, `pnpm -r typecheck`, `pnpm -r lint`, `pnpm -r build`, `pnpm -r test`.
+- [ ] Workflow has `permissions: contents: read` (least privilege; release workflow that needs write is deferred).
+- [ ] Concurrency group: `${{ github.workflow }}-${{ github.ref }}` with `cancel-in-progress: true`.
+- [ ] No secrets referenced — release secrets land in a separate workflow once publishing begins.
 
 **Error handling:** Each shell step uses default `set -e`; non-zero exits fail the job. No `continue-on-error` anywhere.
 
@@ -185,9 +185,9 @@ For each of `packages/blocks`, `packages/core`, `packages/rsvp`, `packages/recur
 - `.gitignore` (extend the existing file)
 
 **Acceptance criteria**
-- [x] Lines present (one per line, trailing newline): `node_modules`, `dist`, `.wrangler`, `.factory-state`.
-- [x] Existing `.gitignore` content (e.g., `.DS_Store`, OS noise) is preserved.
-- [x] After committing, `git status` from a clean install shows none of the four ignored paths as untracked or modified.
+- [ ] Lines present (one per line, trailing newline): `node_modules`, `dist`, `.wrangler`, `.factory-state`.
+- [ ] Existing `.gitignore` content (e.g., `.DS_Store`, OS noise) is preserved.
+- [ ] After committing, `git status` from a clean install shows none of the four ignored paths as untracked or modified.
 
 **Test files:** none — verified manually by running `pnpm install` then `git status` clean.
 
@@ -199,14 +199,14 @@ For each of `packages/blocks`, `packages/core`, `packages/rsvp`, `packages/recur
 
 **Acceptance criteria** (run from the worktree root, in this order):
 
-- [x] `pnpm install --frozen-lockfile` exits 0 with no warnings about peer-dep mismatches or workspace protocol issues.
-- [x] `pnpm -r typecheck` exits 0; output shows 7 packages compiled.
-- [x] `pnpm -r lint` exits 0; output shows 7 packages linted with 0 errors and 0 warnings.
-- [x] `pnpm -r build` exits 0; every `packages/*/dist/index.js` and `packages/*/dist/index.d.ts` exists; `examples/reference-site/dist/index.js` exists.
-- [x] `pnpm -r test` exits 0; reporter shows exactly 7 passing tests, one per package.
-- [x] `pnpm changeset --help` exits 0 (CLI installed).
-- [x] `git status` is clean (no generated artifacts tracked or pending).
-- [x] CI workflow file passes `actionlint` if available (best-effort; the GitHub Actions runner is the authoritative validator).
+- [ ] `pnpm install --frozen-lockfile` exits 0 with no warnings about peer-dep mismatches or workspace protocol issues.
+- [ ] `pnpm -r typecheck` exits 0; output shows 7 packages compiled.
+- [ ] `pnpm -r lint` exits 0; output shows 7 packages linted with 0 errors and 0 warnings.
+- [ ] `pnpm -r build` exits 0; every `packages/*/dist/index.js` and `packages/*/dist/index.d.ts` exists; `examples/reference-site/dist/index.js` exists.
+- [ ] `pnpm -r test` exits 0; reporter shows exactly 7 passing tests, one per package.
+- [ ] `pnpm changeset --help` exits 0 (CLI installed).
+- [ ] `git status` is clean (no generated artifacts tracked or pending).
+- [ ] CI workflow file passes `actionlint` if available (best-effort; the GitHub Actions runner is the authoritative validator).
 
 **Error handling:** Any failure here means an earlier task is incomplete — do not proceed to opening a PR. Fix the failing tool config in the owning task's files; do not paper over with `--ignore-scripts` or per-package overrides.
 

@@ -58,7 +58,7 @@ Same workspace, but Turborepo orchestrates `build`/`test`/`lint` with task cachi
 
 The arrow runs **outside-in**:
 
-```text
+```
 Root config (tsconfig.base, eslint, vitest, changesets, CI workflow)
         │
         ▼
@@ -107,7 +107,7 @@ If we need to **abandon** the scaffold (unlikely), the rollback is a single reve
 
 ## Sequence Diagram — Scaffold-Verification CI Run
 
-```text
+```
 GitHub PR                Actions runner               pnpm/tsc/eslint/vitest        Workspace
     |                          |                              |                          |
     |--- open PR ------------->|                              |                          |

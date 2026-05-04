@@ -5,20 +5,21 @@ context: |
 
   Overview: A modular plugin family that brings WordPress-grade events, calendar, and ticketing to EmDash. Standard-format (sandboxed) plugins handle backend logic — events, RSVPs, recurring rules, Stripe-backed ticketing, virtual meeting provisioning. Native-format plugins ship React admin UIs — seat-map designer, AI chat panel, check-in PWA, ticket admin. Frontend rendering is an Astro component package (@dateline/views) consumed by EmDash themes. AI-native by design: every Dateline operation is reachable via EmDash's built-in MCP server through ctx.content.
 
-  Stack:
+  Stack (versions verified 2026-05-03 via npm registry, GitHub releases, Cloudflare docs):
     - Runtime: Cloudflare Workers (Paid plan; required for Dynamic Worker sandbox)
-    - Language: TypeScript 6.0.3 (strict mode, project references)
+    - Node.js: 22.x minimum (Wrangler ≥4.87 dropped Node 20 support)
+    - Language: TypeScript 6.0.3 (strict mode, project references; defaults to module=esnext, target=es2025)
     - Package manager: pnpm 10.33.2 workspaces
-    - CMS host: EmDash 0.8.0 (plugin SDK via `emdash` npm package; Astro 6.1.10 frontend host)
-    - Cloudflare adapter: @astrojs/cloudflare 13.2.2
-    - Build/deploy: Wrangler 4.86.0 (JSONC config, nodejs_compat flag, compatibility_date pinned)
-    - Testing: Vitest 4.1.5 (unit) + @playwright/test 1.59.1 (E2E + visual)
-    - Validation: Zod 6.0.3 (manifest, payload, Block Kit response shapes)
-    - Payments: Stripe Node SDK 19.2.5 (API 2026-01-28; constructEvent for webhook signature)
-    - Recurrence: rrule 2.8.1 (RFC 5545, IANA tzid)
+    - CMS host: EmDash 0.9.0 (plugin SDK via `emdash` npm package; published 2026-05-01). Breaking from 0.8.x: manifest cache eliminated — `locals.emdashManifest`, `locals.emdash.invalidateManifest`, and `EmDashRuntime.invalidateManifest()` are removed; use `getManifest()` directly. EmDash 1.0 has NOT shipped (verified 2026-05-03 via npm/GitHub).
+    - Astro: 6.1.10 + @astrojs/cloudflare 13.3.0 (workerd runtime at all stages — use the `cloudflare:workers` module for bindings, not `Astro.locals.runtime`)
+    - Build/deploy: Wrangler 4.87.0+ (JSONC config, nodejs_compat flag, compatibility_date pinned within 90 days)
+    - Testing: Vitest 4.1.x (unit) + @cloudflare/vitest-pool-workers (KV-bound tests) + @playwright/test 1.59.1 (E2E + visual)
+    - Validation: Zod 4.4.2 (current major is v4 — root import `zod`, tree-shakeable `zod/mini`, legacy compat `zod/v3`. NOT v6 — earlier docs were wrong.)
+    - Payments: Stripe Node SDK ~22.x (API version 2026-04-22.dahlia — breaking from 2026-01-28.clover: transaction categories restructured, `return` flow split into reversal-typed events, new `stripe_fee_tax`). Use `constructEvent` for webhook signature verification.
+    - Recurrence: rrule 2.8.1 (RFC 5545, IANA tzid; package stable but dormant — no commits in 6+ months)
     - iCal: ical-generator 10.2.0
-    - Content blocks: @portabletext/types 4.0.2 + @portabletext/toolkit 4.4.0
-    - React 19.2.5 (native-format admin UIs only — @dateline/ai, @dateline/seats, @dateline/checkin, @dateline/tickets-admin)
+    - Content blocks: @portabletext/types 4.0.2 + @portabletext/toolkit (verify package name + version against npm registry before install — search did not confirm 4.4.0)
+    - React 19.2.3+ (native-format admin UIs only — @dateline/ai, @dateline/seats, @dateline/checkin, @dateline/tickets-admin). MUST be ≥19.2.3 per CVE-2025-55182 (React2Shell RCE in React 19.0.0–19.2.2). React Compiler v1.0 is now stable.
 
   Standards:
     - EmDash plugin SDK: definePlugin({ id, version, capabilities, allowedHosts, storage, hooks, routes, admin })
@@ -28,8 +29,8 @@ context: |
     - ctx.waitUntil(promise) MANDATORY for async-after-response on Workers — bare promises silently cancel (EmDash Issue #710)
     - Block Kit JSON only for sandboxed admin UIs (no arbitrary HTML/JS); use validateBlocks() against typed builders in CI
     - ctx.kv and ctx.log always granted (no capability declaration)
-    - cron hook + ctx.cron.schedule() available in 0.8.x for time-based triggers (status transitions, hold expiry sweeps)
-    - Custom MCP tool registration: API not yet verified in 0.8.x — interim path is REST routes + standalone @dateline/mcp wrapper. Confirm or file upstream feature request before v0.4 (AI release).
+    - cron hook + ctx.cron.schedule() — UNVERIFIED for 0.9.x via web search; Cloudflare Workers natively support Scheduled events. Confirm against EmDash plugin SDK source/docs before relying on this API.
+    - Custom MCP tool registration: API still UNVERIFIED in 0.9.x. EmDash core has MCP tools (`content_publish`, `content_update`) but no plugin-facing registration API confirmed. Interim path: REST routes + standalone @dateline/mcp wrapper. File upstream feature request before v0.4 (AI release).
     - x402 micropayments handled by EmDash core; plugins set price metadata only
 
   Structure (monorepo):
