@@ -47,7 +47,7 @@ Linear IS connected for Dateline (workspace prefix `PRO`). Commits and PR titles
 - **Research**: Context7 (`resolve-library-id` → `query-docs`) → Tavily (`tavily_search`, `tavily_extract`, `tavily_research`, `tavily_crawl`, `tavily_map`) → OpenMemory (`openmemory query`). Never use built-in WebSearch / WebFetch.
 - **Spec**: `/opsx:new` → `/opsx:ff` → review → implement → `/opsx:verify` → `/opsx:archive`.
 - **Plan & Execute**: `/superpowers:brainstorming` → `/superpowers:writing-plans` → `/superpowers:executing-plans`.
-- **Review**: Local review droid before every commit. `coderabbit:code-review` for PR-level review. `npx ecc-agentshield scan` for `.claude/` and `.factory/` config security.
+- **Review**: Local review droid before every commit. `pr-agent-runner` skill for PR-level review (replaces CodeRabbit). `npx ecc-agentshield scan` for `.claude/` and `.factory/` config security.
 - **Navigate**: LSP (`goToDefinition`, `findReferences`, `documentSymbol`, `workspaceSymbol`) — prefer over grep. Requires `ENABLE_LSP_TOOL=1`.
 - **Test**: Playwright for E2E and visual validation. `@cloudflare/vitest-pool-workers` for tests that need real KV bindings.
 
