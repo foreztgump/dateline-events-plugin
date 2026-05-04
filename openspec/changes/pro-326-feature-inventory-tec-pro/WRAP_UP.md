@@ -12,9 +12,9 @@
 - [x] PR open: https://github.com/foreztgump/dateline-events-plugin/pull/3
 - [x] Linear updated: In Progress → (will be set to Done after PR merge)
 - [x] OpenMemory saved
-- [ ] PR merged
-- [ ] Branch deleted: feature/pro-326-feature-inventory-tec-pro
-- [ ] Worktree removed: /home/cownose/projects/Dateline-pro-326-feature-inventory-tec-pro
+- [x] PR merged: #3 (2026-04-30T05:46:58Z)
+- [x] Branch deleted: feature/pro-326-feature-inventory-tec-pro
+- [x] Worktree removed: /home/cownose/projects/Dateline-pro-326-feature-inventory-tec-pro
 
 ## Setup gotchas (worth preserving)
 
