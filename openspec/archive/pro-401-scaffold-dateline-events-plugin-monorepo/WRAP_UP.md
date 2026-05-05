@@ -8,12 +8,12 @@
 - [x] Docs updated
 - [x] Committed and pushed
 - [x] PR open: https://github.com/foreztgump/dateline-events-plugin/pull/14
-- [ ] OpenSpec archived
+- [x] OpenSpec archived (moved to `openspec/archive/pro-401-scaffold-dateline-events-plugin-monorepo` 2026-05-05)
 - [x] Linear updated
 - [x] OpenMemory saved
-- [ ] PR merged
-- [ ] Branch deleted: feature/pro-401-scaffold-dateline-events-plugin-monorepo
-- [ ] Worktree removed: /home/cownose/projects/Dateline-pro-401-scaffold-dateline-events-plugin-monorepo
+- [x] PR merged (commit `9fbe5ab`, merged 2026-05-03)
+- [x] Branch deleted: feature/pro-401-scaffold-dateline-events-plugin-monorepo (deleted 2026-05-05)
+- [x] Worktree removed (no worktree was created — confirmed via `git worktree list` 2026-05-05)
 
 ## CodeRabbit Triage
 
