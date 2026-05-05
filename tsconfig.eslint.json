@@ -6,7 +6,8 @@
   },
   "include": [
     "packages/**/*",
-    "examples/**/*"
+    "examples/**/*",
+    "tools/**/*"
   ],
   "exclude": [
     "**/dist/**",

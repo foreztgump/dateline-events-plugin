@@ -8,6 +8,8 @@
     { "path": "./packages/recurring" },
     { "path": "./packages/importer" },
     { "path": "./packages/views" },
-    { "path": "./examples/reference-site" }
+    { "path": "./examples/reference-site" },
+    { "path": "./tools/eslint-plugin-dateline" },
+    { "path": "./tools/sandbox-profiler" }
   ]
 }

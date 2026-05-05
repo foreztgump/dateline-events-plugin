@@ -1,6 +1,7 @@
 import { fileURLToPath } from "node:url";
 import tseslint from "@typescript-eslint/eslint-plugin";
 import tsParser from "@typescript-eslint/parser";
+import datelinePlugin from "./tools/eslint-plugin-dateline/src/runtime-plugin.js";
 
 const MAX_LINES_PER_FUNCTION = 40;
 const MAX_PARAMS = 3;
@@ -22,7 +23,7 @@ export default [
     ignores: IGNORED_PATHS,
   },
   {
-    files: ["packages/**/*.ts", "examples/**/*.ts"],
+    files: ["packages/**/*.ts", "examples/**/*.ts", "tools/**/*.ts"],
     languageOptions: {
       parser: tsParser,
       parserOptions: {
@@ -32,9 +33,11 @@ export default [
     },
     plugins: {
       "@typescript-eslint": tseslint,
+      dateline: datelinePlugin,
     },
     rules: {
       ...tseslint.configs["recommended-type-checked"].rules,
+      "dateline/no-bare-promises-in-hooks": "error",
       "max-lines-per-function": ["error", { max: MAX_LINES_PER_FUNCTION, skipBlankLines: true, skipComments: true }],
       "max-params": ["error", { max: MAX_PARAMS }],
       "max-depth": ["error", { max: MAX_DEPTH }],
@@ -52,7 +55,7 @@ export default [
     },
   },
   {
-    files: ["packages/**/*.test.ts", "examples/**/*.test.ts"],
+    files: ["packages/**/*.test.ts", "examples/**/*.test.ts", "tools/**/*.test.ts"],
     rules: {
       "max-lines-per-function": "off",
       "no-magic-numbers": "off",
