@@ -5,6 +5,7 @@ export default defineConfig({
     projects: [
       "packages/*",
       "examples/reference-site",
+      "tools/*",
     ],
     reporter: "default",
     coverage: {

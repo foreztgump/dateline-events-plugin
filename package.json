@@ -9,6 +9,8 @@
     "lint": "pnpm -r run lint",
     "lint:fix": "pnpm -r --if-present run lint:fix",
     "test": "pnpm -r run test",
+    "sandbox:profile": "pnpm --filter @dateline/sandbox-profiler run profile",
+    "test:sandbox": "pnpm sandbox:profile",
     "test:watch": "vitest",
     "clean": "pnpm -r run clean",
     "changeset": "changeset",
@@ -18,12 +20,13 @@
   "devDependencies": {
     "@changesets/changelog-github": "^0.5.1",
     "@changesets/cli": "^2.27.12",
+    "@types/node": "^20.19.39",
     "@typescript-eslint/eslint-plugin": "^8.58.0",
     "@typescript-eslint/parser": "^8.58.0",
+    "@typescript-eslint/utils": "^8.59.1",
     "eslint": "^9.27.0",
+    "rimraf": "^6.0.1",
     "typescript": "^6.0.3",
-    "vitest": "^4.1.5",
-    "@types/node": "^20.19.39",
-    "rimraf": "^6.0.1"
+    "vitest": "^4.1.5"
   }
 }

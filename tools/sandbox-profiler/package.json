@@ -1,0 +1,26 @@
+{
+  "name": "@dateline/sandbox-profiler",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "./dist/src/index.js",
+  "types": "./dist/src/index.d.ts",
+  "bin": {
+    "sandbox-profiler": "./dist/bin/sandbox-profiler.js"
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "typecheck": "tsc -b --noEmit",
+    "lint": "eslint src bin --cache",
+    "test": "vitest run",
+    "profile": "node dist/bin/sandbox-profiler.js",
+    "clean": "rimraf dist .turbo node_modules/.cache *.tsbuildinfo",
+    "lint:fix": "eslint src bin --cache --fix"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.39",
+    "rimraf": "^6.0.1",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.5"
+  }
+}
