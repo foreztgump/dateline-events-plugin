@@ -19,6 +19,10 @@ jobs:
   ci:
     name: ci
     runs-on: ubuntu-latest
+    env:
+      # Pin TZ to make timezone-sensitive tests host-independent. Tests assume
+      # UTC unless they explicitly stub Intl with a target tzid.
+      TZ: UTC
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
 
@@ -34,14 +38,14 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Build
+        run: pnpm -r build
+
       - name: Typecheck
         run: pnpm -r typecheck
 
       - name: Lint
         run: pnpm -r lint
-
-      - name: Build
-        run: pnpm -r build
 
       - name: Test
         run: pnpm -r test

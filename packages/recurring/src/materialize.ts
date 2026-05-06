@@ -3,7 +3,6 @@ import { z } from "zod";
 import { createCacheKey, readCachedOccurrences, writeCachedOccurrences } from "./cache.js";
 import {
   DATE_VALUE_INDEX,
-  DTSTART_TZID_PREFIX,
   FORWARD_CAP_YEARS,
   ISO_DATE_SEPARATOR,
   LOCAL_BASIC_LENGTH,
@@ -69,9 +68,15 @@ function mergeDates(
 }
 
 function parseRuleForMaterialization(input: MaterializeOccurrencesInput): ReturnType<typeof rrulestr> {
-  const dtstart = `${DTSTART_TZID_PREFIX}${input.tzid}:${isoToBasicWallTime(input.dtstart, input.tzid)}`;
+  // DTSTART is emitted as a floating UTC value (basic wall-time + Z). Combined with omitting
+  // the `tzid` option below, this makes rrule produce host-independent floating dates whose
+  // UTC fields encode the wall-clock time in `input.tzid`. We then convert wall→UTC ourselves
+  // via `floatingDateToUtcIso`, which uses Intl and is host-agnostic. Passing `tzid` to rrule
+  // would route through `dateInTimeZone()`, whose offset depends on the host process timezone
+  // (rrule.js dateutil.js — see Issue #501), breaking CI runners not in the target tzid.
+  const dtstart = `DTSTART:${isoToBasicWallTime(input.dtstart, input.tzid)}Z`;
   try {
-    return rrulestr(`${dtstart}\nRRULE:${extractRRuleLine(input.rule)}`, { forceset: true, tzid: input.tzid });
+    return rrulestr(`${dtstart}\nRRULE:${extractRRuleLine(input.rule)}`, { forceset: true });
   } catch (error) {
     throw new Error(`Failed to parse RRULE for materialization: ${errorMessage(error)}`);
   }
