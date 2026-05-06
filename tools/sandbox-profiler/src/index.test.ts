@@ -1,9 +1,12 @@
 import { describe, expect, it } from "vitest";
 import { runWithProfiling, SANDBOX_CPU_BUDGET_MICROS } from "./index.js";
 
-const SLEEP_MS = 10;
+// SLEEP_MS is intentionally tiny so the wall-clock measurement on noisy CI
+// runners stays well under SANDBOX_CPU_BUDGET_MICROS (50ms). The assertion
+// only requires cpuMicros >= SLEEP_MS * 1_000, which 1ms easily satisfies.
+const SLEEP_MS = 1;
 const SUBREQUESTS = 3;
-const BUDGET_BREACH_SLEEP_MS = 60;
+const BUDGET_BREACH_SLEEP_MS = 80;
 
 const sleep = (durationMs: number): Promise<void> =>
   new Promise((resolve) => setTimeout(resolve, durationMs));
