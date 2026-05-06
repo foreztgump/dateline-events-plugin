@@ -262,10 +262,11 @@ async function handleStripeWebhook(req, ctx) {
   // Verify signature
   let event;
   try {
+    // On Cloudflare Workers, secrets come from ctx.env (not process.env)
     event = stripe.webhooks.constructEvent(
       body,
       signature,
-      process.env.STRIPE_WEBHOOK_SECRET
+      ctx.env.STRIPE_WEBHOOK_SECRET
     );
   } catch (err) {
     return new Response("Invalid signature", { status: 403 });
@@ -461,15 +462,18 @@ if (!event) {
 Instead of looping `ctx.http.fetch()`:
 
 ```ts
-// ❌ Slow: 10+ subrequests
+// ❌ Slow: sequential, one at a time
 for (const url of urls) {
   await ctx.http.fetch(url);
 }
 
-// ✅ Fast: 1 subrequest per batch
+// ✅ Faster (parallel) but still N subrequests — same budget impact
 const responses = await Promise.all(
   urls.map(url => ctx.http.fetch(url))
 );
+
+// If you need fewer subrequests, batch via a single backend endpoint, not Promise.all.
+// Remember: Cloudflare Workers counts each fetch separately (10 subrequest sandbox cap).
 ```
 
 ### 3. Defer heavy work
@@ -493,14 +497,20 @@ pnpm sandbox:profile -- --pkg @your/plugin
 
 ### RSVP with capacity
 
+> ⚠️ **Do not roll your own counter.** A `get` → parse → `put` sequence is a
+> read-modify-write race: two concurrent invocations both read the same value
+> and overwrite each other, silently undercounting attendees. Always use
+> `ctx.kv.atomicIncrement` / `ctx.kv.atomicDecrement`. The canonical
+> race-safe implementation lives in
+> [`packages/rsvp/src/capacity.ts`](../packages/rsvp/src/capacity.ts).
+
 ```ts
 // In afterSave hook for dateline_attendees:
 async function updateCapacity(event, ctx) {
   const eventId = event.content.event;
-  
-  // Atomically increment capacity counter
-  const current = parseInt(await ctx.kv.get(`capacity:${eventId}`) || "0", 10);
-  await ctx.kv.put(`capacity:${eventId}`, String(current + 1));
+
+  // Atomically increment capacity counter — race-safe across concurrent invocations.
+  await ctx.kv.atomicIncrement(`capacity:${eventId}`);
 }
 ```
 

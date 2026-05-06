@@ -57,8 +57,8 @@ Update your `wrangler.jsonc` to declare plugin capabilities. Each sandboxed plug
       ],
       "vars": {
         "ENVIRONMENT": "production",
-        "DATELINE_PLUGIN_CORE": "{\"id\": \"dateline-core\", \"version\": \"0.1.0\", \"capabilities\": [\"content:read\", \"content:write\", \"media:read\"]}",
-        "DATELINE_PLUGIN_RSVP": "{\"id\": \"dateline-rsvp\", \"version\": \"0.1.0\", \"capabilities\": [\"content:read\", \"content:write\", \"email:send\"]}"
+        "EMDASH_PLUGIN_MANIFEST_CORE": "{\"id\": \"dateline-core\", \"version\": \"0.1.0\", \"capabilities\": [\"content:read\", \"content:write\", \"media:read\"]}",
+        "EMDASH_PLUGIN_MANIFEST_RSVP": "{\"id\": \"dateline-rsvp\", \"version\": \"0.1.0\", \"capabilities\": [\"content:read\", \"content:write\", \"email:send\"]}"
       }
     }
   }
@@ -191,26 +191,14 @@ Sandbox isolation and security benefits are available only on Paid plans.
 When you install `@dateline/tickets-backend` in v0.2+, you'll need Stripe credentials:
 
 1. Get your Stripe API key from the [Stripe Dashboard](https://dashboard.stripe.com/apikeys)
-2. Add to your `wrangler.jsonc`:
-
-```jsonc
-{
-  "env": {
-    "production": {
-      "vars": {
-        "STRIPE_SECRET_KEY": "sk_live_...",
-        "STRIPE_WEBHOOK_SECRET": "whsec_..."
-      }
-    }
-  }
-}
-```
-
-**Warning:** Never commit secrets to git. Use wrangler's secret management:
+2. **Never commit secrets to git.** Use wrangler's secret management exclusively:
 
 ```bash
 npx wrangler secret put STRIPE_SECRET_KEY
+npx wrangler secret put STRIPE_WEBHOOK_SECRET
 ```
+
+Your `wrangler.jsonc` should NOT contain plaintext secret values. If you need to reference them in code, access them via `ctx.env.STRIPE_SECRET_KEY` (in plugins) or the `env` binding parameter (in routes).
 
 ### Cloudflare WAF carve-out
 
@@ -251,7 +239,7 @@ This demonstrates:
 
 **Error:** `Plugin dateline-core declares unknown capabilities: ["content:read"]`
 
-**Solution:** Ensure your `wrangler.jsonc` has the `DATELINE_PLUGIN_*` variables with correct JSON. Check that the capability names match exactly (e.g., `content:read`, not `read:content`).
+**Solution:** Ensure your `wrangler.jsonc` has the `EMDASH_PLUGIN_MANIFEST_*` variables with correct JSON. Check that the capability names match exactly (e.g., `content:read`, not `read:content`).
 
 ### "ctx.waitUntil is undefined"
 

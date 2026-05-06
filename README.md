@@ -92,7 +92,7 @@ export default {
 
 ### 3. Add capabilities to your `wrangler.jsonc`
 
-Dateline plugins need explicit capability declarations. Add to your Cloudflare Workers bindings:
+Dateline plugins need explicit capability declarations. Add to your Cloudflare Workers bindings using the `EMDASH_PLUGIN_MANIFEST_<PLUGIN_ID>` naming convention:
 
 ```jsonc
 {
