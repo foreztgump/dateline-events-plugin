@@ -62,6 +62,16 @@ describe("formatEventTimeRange", () => {
     expect(result).toBe("6:00 PM – 8:00 PM");
   });
 
+  it("falls back to UTC when event.timezone is invalid", () => {
+    // Arrange
+    const event = buildEvent({ timezone: "America/Not_A_Place" });
+    const utcEvent = buildEvent({ timezone: "UTC" });
+
+    // Act / Assert
+    expect(() => formatEventTimeRange(event)).not.toThrow();
+    expect(formatEventTimeRange(event)).toBe(formatEventTimeRange(utcEvent));
+  });
+
   it("returns 'All day' when event.allDay is true", () => {
     // Arrange
     const event = buildEvent({ allDay: true });
@@ -112,5 +122,15 @@ describe("formatEventDateTime", () => {
 
     // Assert
     expect(result).toBe("May 15, 2026, 6:00 PM");
+  });
+
+  it("falls back to UTC when event.timezone is invalid", () => {
+    // Arrange
+    const event = buildEvent({ timezone: "America/Not_A_Place" });
+    const utcEvent = buildEvent({ timezone: "UTC" });
+
+    // Act / Assert
+    expect(() => formatEventDateTime(event)).not.toThrow();
+    expect(formatEventDateTime(event)).toBe(formatEventDateTime(utcEvent));
   });
 });

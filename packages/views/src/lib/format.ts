@@ -4,20 +4,26 @@ const DATE_TIME_FORMAT: Intl.DateTimeFormatOptions = { dateStyle: "medium", time
 const TIME_FORMAT: Intl.DateTimeFormatOptions = { timeStyle: "short" };
 const FALLBACK_TIMEZONE = "UTC";
 
-function eventTimeZone(event: DatelineViewEvent): string {
-  // WHY: default to UTC (not host TZ) so an unset timezone never leaks the
-  // server's local zone into rendered times — see PRO-479.
-  return event.timezone || FALLBACK_TIMEZONE;
+function safeTimeZone(tz: string | undefined): string {
+  // WHY: default to UTC (not host TZ) so an unset or invalid CMS-stored
+  // timezone never leaks the server's local zone or crashes rendering.
+  if (!tz) return FALLBACK_TIMEZONE;
+  try {
+    new Intl.DateTimeFormat("en", { timeZone: tz });
+    return tz;
+  } catch {
+    return FALLBACK_TIMEZONE;
+  }
 }
 
 export function formatEventTimeRange(event: DatelineViewEvent): string {
   if (event.allDay) return "All day";
-  const formatter = new Intl.DateTimeFormat("en", { ...TIME_FORMAT, timeZone: eventTimeZone(event) });
+  const formatter = new Intl.DateTimeFormat("en", { ...TIME_FORMAT, timeZone: safeTimeZone(event.timezone) });
   return `${formatter.format(new Date(event.startsAt))} – ${formatter.format(new Date(event.endsAt))}`;
 }
 
 export function formatEventDateTime(event: DatelineViewEvent): string {
-  const formatter = new Intl.DateTimeFormat("en", { ...DATE_TIME_FORMAT, timeZone: eventTimeZone(event) });
+  const formatter = new Intl.DateTimeFormat("en", { ...DATE_TIME_FORMAT, timeZone: safeTimeZone(event.timezone) });
   return formatter.format(new Date(event.startsAt));
 }
 
