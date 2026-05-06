@@ -4,7 +4,7 @@ import { GET } from "./events.ics.js";
 describe("events.ics", () => {
   it("returns an RFC 5545 calendar generated through the core iCal route", async () => {
     // Arrange / Act
-    const response = await GET();
+    const response = GET();
     const body = await response.text();
 
     // Assert
