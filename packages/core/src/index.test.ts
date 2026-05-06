@@ -13,6 +13,7 @@ import createCorePlugin, {
   privacyExport,
 } from "./index.js";
 import type { DatelineEvent } from "./index.js";
+import { invalidateEventCaches } from "./cache.js";
 
 const eventFixture: DatelineEvent = {
   id: "evt_1",
@@ -89,7 +90,10 @@ describe("content hooks", () => {
 
 describe("routes", () => {
   it("returns an iCal feed with TZID and RRULE", async () => {
-    const response = await iCalFeed({ ctx: listContext([eventFixture]) });
+    const response = await iCalFeed({
+      request: new Request("https://example.com/ical-feed?range=2026-03-01..2026-03-31"),
+      ctx: listContext([eventFixture]),
+    });
     const body = await response.text();
 
     expect(body).toContain("BEGIN:VCALENDAR");
@@ -138,6 +142,158 @@ describe("schema.org helper", () => {
     });
   });
 });
+
+describe("privacy field selection (PRO-478)", () => {
+  it("filters events by contactEmail and attendees by email", async () => {
+    const list = vi
+      .fn()
+      .mockResolvedValueOnce({ items: [{ id: "att_1", email: "a@example.com" }] })
+      .mockResolvedValueOnce({ items: [{ id: "evt_1", contactEmail: "a@example.com" }] });
+    const ctx = { content: { list } };
+
+    await privacyExport({ request: new Request("https://example.com/privacy/export?email=a@example.com"), ctx });
+
+    expect(list).toHaveBeenNthCalledWith(1, "dateline_attendees", { filter: { email: "a@example.com" } });
+    expect(list).toHaveBeenNthCalledWith(2, "dateline_events", { filter: { contactEmail: "a@example.com" } });
+  });
+
+  it("uses contactEmail filter for events on erase as well", async () => {
+    const list = vi
+      .fn()
+      .mockResolvedValueOnce({ items: [] })
+      .mockResolvedValueOnce({ items: [] });
+    const ctx = {
+      content: {
+        list,
+        delete: vi.fn().mockResolvedValue(undefined),
+        update: vi.fn().mockResolvedValue(undefined),
+      },
+    };
+
+    await privacyErase({ request: new Request("https://example.com/privacy/erase?email=b@example.com"), ctx });
+
+    expect(list.mock.calls[1]).toEqual(["dateline_events", { filter: { contactEmail: "b@example.com" } }]);
+  });
+});
+
+describe("cache invalidation via inverted index (PRO-480)", () => {
+  it("filters range-keyed iCal output and indexes only rendered events (PRO-492)", async () => {
+    const janEvent = { ...eventFixture, id: "evt_jan", title: "January Event", startsAt: "2026-01-15T10:00:00Z", endsAt: "2026-01-15T11:00:00Z", recurrenceRule: undefined };
+    const futureEvent = { ...eventFixture, id: "evt_future", title: "Future Event", startsAt: "2027-06-01T10:00:00Z", endsAt: "2027-06-01T11:00:00Z", recurrenceRule: undefined };
+    const ctx = kvBackedContext([janEvent, futureEvent]);
+    const response = await iCalFeed({ request: new Request("https://example.com/ical-feed?range=2026-01-01..2026-01-31"), ctx });
+    const body = await response.text();
+
+    expect(body).toContain("UID:evt_jan@dateline");
+    expect(body).toContain("SUMMARY:January Event");
+    expect(body).not.toContain("UID:evt_future@dateline");
+    expect(body).not.toContain("SUMMARY:Future Event");
+    expect(await ctx.kv.get("event-cache-index:ical:evt_jan")).toBe("[\"ical-feed:2026-01-01..2026-01-31\"]");
+    expect(await ctx.kv.get("event-cache-index:ical:evt_future")).toBeNull();
+  });
+
+  it("returns both iCal events when no range is provided (PRO-492)", async () => {
+    const janEvent = { ...eventFixture, id: "evt_jan", title: "January Event", startsAt: "2026-01-15T10:00:00Z", endsAt: "2026-01-15T11:00:00Z", recurrenceRule: undefined };
+    const futureEvent = { ...eventFixture, id: "evt_future", title: "Future Event", startsAt: "2027-06-01T10:00:00Z", endsAt: "2027-06-01T11:00:00Z", recurrenceRule: undefined };
+
+    const response = await iCalFeed({ request: new Request("https://example.com/ical-feed"), ctx: listContext([janEvent, futureEvent]) });
+    const body = await response.text();
+
+    expect(body).toContain("UID:evt_jan@dateline");
+    expect(body).toContain("UID:evt_future@dateline");
+  });
+
+  it("invalidates a cached calendar feed entry after a matching event is saved", async () => {
+    const ctx = kvBackedContext([eventFixture]);
+    const request = new Request("https://example.com/calendar-feed?range=2026-03-01..2026-03-31");
+
+    await calendarFeed({ request, ctx });
+
+    const cacheKey = "dateline_events:calendar:2026-03-01..2026-03-31";
+    expect(await ctx.kv.get(cacheKey)).not.toBeNull();
+
+    await invalidateEventCaches(ctx, "evt_1");
+
+    expect(await ctx.kv.get(cacheKey)).toBeNull();
+  });
+
+  it("invalidates a cached iCal feed entry after a matching event is saved", async () => {
+    const ctx = kvBackedContext([eventFixture]);
+    const request = new Request("https://example.com/ical?range=2026-03-01..2026-03-31");
+
+    await iCalFeed({ request, ctx });
+
+    const cacheKey = "ical-feed:2026-03-01..2026-03-31";
+    expect(await ctx.kv.get(cacheKey)).not.toBeNull();
+
+    await invalidateEventCaches(ctx, "evt_1");
+
+    expect(await ctx.kv.get(cacheKey)).toBeNull();
+  });
+});
+
+describe("recurring occurrence range filtering (PRO-481)", () => {
+  it("matches a week-4 occurrence whose end is derived from the per-occurrence duration", async () => {
+    // Weekly 2-hour event starting Monday 2026-03-02 10:00 America/Los_Angeles.
+    // Series ends on the first occurrence (10:00–12:00 PT). Week-4 occurrence is 2026-03-23 10:00–12:00 PT.
+    const recurringEvent: DatelineEvent = {
+      ...eventFixture,
+      id: "evt_recurring",
+      startsAt: "2026-03-02T10:00:00-08:00",
+      endsAt: "2026-03-02T12:00:00-08:00",
+      timezone: "America/Los_Angeles",
+      recurrenceRule: "FREQ=WEEKLY;COUNT=6",
+    };
+    const week4Range = "2026-03-23..2026-03-23";
+
+    const response = await calendarFeed({
+      request: new Request(`https://example.com/calendar-feed?range=${week4Range}`),
+      ctx: listContext([recurringEvent]),
+    });
+
+    await expect(response.json()).resolves.toMatchObject({
+      events: [expect.objectContaining({ id: "evt_recurring" })],
+    });
+  });
+
+  it("treats negative recurrence duration as zero for range matching (PRO-492)", async () => {
+    const invertedDurationEvent: DatelineEvent = {
+      ...eventFixture,
+      id: "evt_inverted_duration",
+      startsAt: "2026-03-02T10:00:00-08:00",
+      endsAt: "2026-03-01T10:00:00-08:00",
+      timezone: "America/Los_Angeles",
+      recurrenceRule: "FREQ=WEEKLY;COUNT=2",
+    };
+
+    const response = await calendarFeed({
+      request: new Request("https://example.com/calendar-feed?range=2026-03-09..2026-03-09"),
+      ctx: listContext([invertedDurationEvent]),
+    });
+
+    await expect(response.json()).resolves.toMatchObject({
+      events: [expect.objectContaining({ id: "evt_inverted_duration" })],
+    });
+  });
+});
+
+function kvBackedContext(events: unknown[]) {
+  const store = new Map<string, string>();
+  return {
+    content: { list: vi.fn().mockResolvedValue({ items: events }) },
+    kv: {
+      get: vi.fn((key: string) => Promise.resolve(store.get(key) ?? null)),
+      put: vi.fn((key: string, value: string) => {
+        store.set(key, value);
+        return Promise.resolve();
+      }),
+      delete: vi.fn((key: string) => {
+        store.delete(key);
+        return Promise.resolve();
+      }),
+    },
+  };
+}
 
 function listContext(events: unknown[]) {
   return {
