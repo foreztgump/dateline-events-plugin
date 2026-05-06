@@ -1,0 +1,8 @@
+---
+import type { VenueMapProps } from "./component-props.js";
+const { venue } = Astro.props as VenueMapProps;
+const coordinates = venue?.geo ? `${venue.geo.lat},${venue.geo.lng}` : undefined;
+---
+<section class="dt-venue-map rounded border p-4" data-dateline-component="VenueMap">
+  {venue ? <><h3 class="font-semibold">{venue.name}</h3>{coordinates && <p data-coordinates={coordinates}>Map coordinates: {coordinates}</p>}{venue.website && <a class="underline" href={venue.website}>Venue website</a>}</> : <p>Venue details unavailable.</p>}
+</section>

@@ -1,0 +1,10 @@
+---
+import { buildWeekDays, eventsOnDate } from "../lib/calendar.js";
+import { eventHref, formatEventTimeRange } from "../lib/format.js";
+import type { CalendarWeekProps } from "./component-props.js";
+const { events, weekStart } = Astro.props as CalendarWeekProps;
+const days = buildWeekDays(weekStart);
+---
+<section aria-label={`Events for week of ${weekStart}`} data-dateline-component="CalendarWeekHeadless">
+  {days.map((date) => <article data-date={date}><h3><time datetime={date}>{date}</time></h3>{eventsOnDate(events, date).map((event) => <a href={eventHref(event)}>{event.title}<span>{formatEventTimeRange(event)}</span></a>)}</article>)}
+</section>

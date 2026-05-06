@@ -1,0 +1,33 @@
+---
+import { buildMonthCells, monthLabel, WEEKDAY_LABELS } from "../lib/calendar.js";
+import type { CalendarMonthProps } from "./component-props.js";
+
+const { events, month } = Astro.props as CalendarMonthProps;
+const cells = buildMonthCells(events, month);
+const label = monthLabel(month);
+---
+<table class="dt-calendar dt-calendar-month w-full border-collapse" aria-label={`Events calendar for ${label}`} data-dateline-component="CalendarMonth">
+  <caption class="dt-calendar__caption text-left text-xl font-semibold">{label}</caption>
+  <thead>
+    <tr class="dt-calendar__weekdays">{WEEKDAY_LABELS.map((day) => <th class="p-2 text-left" scope="col">{day}</th>)}</tr>
+  </thead>
+  <tbody>
+    {Array.from({ length: 6 }, (_, weekIndex) => (
+      <tr class="dt-calendar__week">
+        {cells.slice(weekIndex * 7, weekIndex * 7 + 7).map((cell) => (
+          <td class:list={["dt-calendar__day h-28 align-top border p-2", !cell.inMonth && "dt-calendar__day--muted text-slate-400"]} data-date={cell.date} aria-label={`Events on ${cell.date}`}>
+            <time class="dt-calendar__date font-medium" datetime={cell.date}>{cell.dayNumber}</time>
+            <ul class="dt-calendar__events mt-1 space-y-1">
+              {cell.events.map((placement) => (
+                <li class="dt-calendar__event rounded bg-blue-100 px-2 py-1 text-sm text-blue-950" data-event-id={placement.event.id} data-span-days={placement.spanDays}>
+                  <a href={`/events/${placement.event.slug ?? placement.event.id}`}>{placement.event.title}</a>
+                </li>
+              ))}
+            </ul>
+            {cell.hiddenCount > 0 && <a class="dt-calendar__overflow text-sm underline" href={`/events?date=${cell.date}`}>+{cell.hiddenCount} more</a>}
+          </td>
+        ))}
+      </tr>
+    ))}
+  </tbody>
+</table>

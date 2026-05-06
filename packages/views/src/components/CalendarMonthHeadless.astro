@@ -1,0 +1,29 @@
+---
+import { buildMonthCells, monthLabel, WEEKDAY_LABELS } from "../lib/calendar.js";
+import type { CalendarMonthProps } from "./component-props.js";
+
+const { events, month } = Astro.props as CalendarMonthProps;
+const cells = buildMonthCells(events, month);
+const label = monthLabel(month);
+---
+<table aria-label={`Events calendar for ${label}`} data-dateline-component="CalendarMonthHeadless">
+  <caption>{label}</caption>
+  <thead>
+    <tr>{WEEKDAY_LABELS.map((day) => <th scope="col">{day}</th>)}</tr>
+  </thead>
+  <tbody>
+    {Array.from({ length: 6 }, (_, weekIndex) => (
+      <tr>
+        {cells.slice(weekIndex * 7, weekIndex * 7 + 7).map((cell) => (
+          <td data-date={cell.date} data-in-month={String(cell.inMonth)} aria-label={`Events on ${cell.date}`}>
+            <time datetime={cell.date}>{cell.dayNumber}</time>
+            <ul>
+              {cell.events.map((placement) => <li data-event-id={placement.event.id} data-span-days={placement.spanDays}><a href={`/events/${placement.event.slug ?? placement.event.id}`}>{placement.event.title}</a></li>)}
+            </ul>
+            {cell.hiddenCount > 0 && <a href={`/events?date=${cell.date}`}>+{cell.hiddenCount} more</a>}
+          </td>
+        ))}
+      </tr>
+    ))}
+  </tbody>
+</table>

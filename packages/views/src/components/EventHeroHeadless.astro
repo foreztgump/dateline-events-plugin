@@ -1,0 +1,11 @@
+---
+import { formatEventDateTime } from "../lib/format.js";
+import type { EventHeroProps } from "./component-props.js";
+const { event } = Astro.props as EventHeroProps;
+---
+<header data-dateline-component="EventHeroHeadless">
+  {event.featuredImage && <img src={event.featuredImage} alt="" />}
+  <p>{formatEventDateTime(event)}</p>
+  <h1>{event.title}</h1>
+  {event.shortDescription && <p>{event.shortDescription}</p>}
+</header>
