@@ -121,7 +121,7 @@ function extractTzidParam(rawProperty: string): string | undefined {
   // Walk all params instead of a naive `split(TZID=)` so trailing params like
   // `;VALUE=DATE-TIME` cannot pollute the tzid value (PRO-489).
   for (const segment of rawProperty.split(ICAL_PARAM_SEPARATOR)) {
-    if (segment.startsWith(TZID_PARAM_PREFIX)) return segment.slice(TZID_PARAM_PREFIX.length);
+    if (segment.toUpperCase().startsWith(TZID_PARAM_PREFIX)) return segment.slice(TZID_PARAM_PREFIX.length);
   }
   return undefined;
 }

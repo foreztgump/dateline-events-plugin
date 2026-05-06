@@ -146,6 +146,106 @@ describe("@dateline/recurring", () => {
     ]);
   });
 
+  it("matches lowercase TZID param names on EXDATE lines (PRO-494)", async () => {
+    // Arrange
+    const input = {
+      rule: [
+        "RRULE:FREQ=WEEKLY;BYDAY=TH;COUNT=3",
+        "EXDATE;tzid=America/Los_Angeles:20260514T090000",
+      ].join("\n"),
+      dtstart: "2026-05-07T16:00:00.000Z",
+      tzid: "UTC",
+      range: {
+        start: "2026-05-01T00:00:00.000Z",
+        end: "2026-06-01T00:00:00.000Z",
+      },
+    };
+
+    // Act
+    const occurrences = await materializeOccurrences(input);
+
+    // Assert
+    expect(occurrences.map((occurrence) => occurrence.startsAt)).toEqual([
+      "2026-05-07T16:00:00.000Z",
+      "2026-05-21T16:00:00.000Z",
+    ]);
+  });
+
+  it("matches mixed-case TZID param names on EXDATE lines (PRO-494)", async () => {
+    // Arrange
+    const input = {
+      rule: [
+        "RRULE:FREQ=WEEKLY;BYDAY=TH;COUNT=3",
+        "EXDATE;Tzid=America/Los_Angeles:20260514T090000",
+      ].join("\n"),
+      dtstart: "2026-05-07T16:00:00.000Z",
+      tzid: "UTC",
+      range: {
+        start: "2026-05-01T00:00:00.000Z",
+        end: "2026-06-01T00:00:00.000Z",
+      },
+    };
+
+    // Act
+    const occurrences = await materializeOccurrences(input);
+
+    // Assert
+    expect(occurrences.map((occurrence) => occurrence.startsAt)).toEqual([
+      "2026-05-07T16:00:00.000Z",
+      "2026-05-21T16:00:00.000Z",
+    ]);
+  });
+
+  it("continues matching uppercase TZID param names on EXDATE lines (PRO-494)", async () => {
+    // Arrange
+    const input = {
+      rule: [
+        "RRULE:FREQ=WEEKLY;BYDAY=TH;COUNT=3",
+        "EXDATE;TZID=America/Los_Angeles:20260514T090000",
+      ].join("\n"),
+      dtstart: "2026-05-07T16:00:00.000Z",
+      tzid: "UTC",
+      range: {
+        start: "2026-05-01T00:00:00.000Z",
+        end: "2026-06-01T00:00:00.000Z",
+      },
+    };
+
+    // Act
+    const occurrences = await materializeOccurrences(input);
+
+    // Assert
+    expect(occurrences.map((occurrence) => occurrence.startsAt)).toEqual([
+      "2026-05-07T16:00:00.000Z",
+      "2026-05-21T16:00:00.000Z",
+    ]);
+  });
+
+  it("matches mixed-case TZID param names when other EXDATE params precede them (PRO-494)", async () => {
+    // Arrange
+    const input = {
+      rule: [
+        "RRULE:FREQ=WEEKLY;BYDAY=WE;COUNT=3",
+        "EXDATE;VALUE=DATE-TIME;Tzid=Europe/Paris:20260520T100000",
+      ].join("\n"),
+      dtstart: "2026-05-06T08:00:00.000Z",
+      tzid: "UTC",
+      range: {
+        start: "2026-05-01T00:00:00.000Z",
+        end: "2026-06-01T00:00:00.000Z",
+      },
+    };
+
+    // Act
+    const occurrences = await materializeOccurrences(input);
+
+    // Assert
+    expect(occurrences.map((occurrence) => occurrence.startsAt)).toEqual([
+      "2026-05-06T08:00:00.000Z",
+      "2026-05-13T08:00:00.000Z",
+    ]);
+  });
+
   it("preserves wall-clock time across Los Angeles spring-forward DST", async () => {
     // Arrange
     const input = {
