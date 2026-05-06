@@ -1,6 +1,6 @@
 # @dateline/blocks
 
-Internal Block Kit builder library for Dateline. Provides typed builders and validators for EmDash Block Kit JSON, ensuring that all admin UI responses produced by Dateline sandboxed plugins conform to the Block Kit schema. Used by other Dateline packages to construct settings screens, detail views, and action buttons without hand-authoring Block Kit JSON.
+Internal Block Kit builder library for Dateline. Provides typed builders and validators for EmDash Block Kit JSON, ensuring all admin UI responses from sandboxed plugins conform to the Block Kit schema. Used by other Dateline packages to construct settings screens, detail views, and action buttons without hand-authoring JSON.
 
 ## Usage
 
@@ -45,3 +45,7 @@ elements.button("save", "Save");
 ### Plugin route responses return only `{ blocks, toast? }`
 
 `assertResponse()` rejects `redirect`, `body`, `headers`, `status`, and any other non-Block Kit keys. Dateline plugin routes should validate responses before returning them to EmDash.
+
+## See also
+
+- [Plugin development](/docs/plugin-development.md) — Block Kit patterns and best practices
