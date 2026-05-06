@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { releaseCapacity, reserveCapacity } from "./capacity.js";
+import { __capacityLocksSize, releaseCapacity, reserveCapacity } from "./capacity.js";
 import type { RsvpContext } from "./types.js";
 
 describe("capacity fallback (non-atomic KV)", () => {
@@ -15,6 +15,22 @@ describe("capacity fallback (non-atomic KV)", () => {
     await Promise.all(operations);
 
     expect(Number(store.get("capacity:evt_1"))).toBe(initial);
+  });
+
+  it("cleans up locks after concurrent reserve/release cycles across events", async () => {
+    const initial = 100;
+    const eventIds = ["evt_1", "evt_2", "evt_3", "evt_4"];
+    const { ctx } = fallbackContext(
+      Object.fromEntries(eventIds.map((eventId) => [`capacity:${eventId}`, initial])),
+    );
+
+    const operations = eventIds.flatMap((eventId) =>
+      Array.from({ length: 100 }, () => [reserveCapacity(ctx, eventId), releaseCapacity(ctx, eventId)]).flat(),
+    );
+
+    await Promise.all(operations);
+
+    expect(__capacityLocksSize()).toBe(0);
   });
 });
 

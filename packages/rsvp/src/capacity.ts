@@ -4,6 +4,15 @@ import type { RsvpContext } from "./types.js";
 
 const capacityLocks = new Map<string, Promise<void>>();
 
+/**
+ * Test-only capacity lock introspection. Do not call from product code.
+ *
+ * @internal
+ */
+export function __capacityLocksSize(): number {
+  return capacityLocks.size;
+}
+
 export async function reserveCapacity(ctx: RsvpContext, eventId: string): Promise<void> {
   const remaining = await decrementCapacity(ctx, eventId);
   if (remaining >= 0) return;
@@ -55,12 +64,13 @@ async function withCapacityLock<T>(eventId: string, operation: () => Promise<T>)
   const previous = capacityLocks.get(lockKey) ?? Promise.resolve();
   let releaseCurrentLock: () => void = () => undefined;
   const current = new Promise<void>((resolve) => { releaseCurrentLock = resolve; });
-  capacityLocks.set(lockKey, previous.then(() => current));
+  const chained = previous.then(() => current);
+  capacityLocks.set(lockKey, chained);
   await previous;
   try {
     return await operation();
   } finally {
     releaseCurrentLock();
-    if (capacityLocks.get(lockKey) === current) capacityLocks.delete(lockKey);
+    if (capacityLocks.get(lockKey) === chained) capacityLocks.delete(lockKey);
   }
 }
