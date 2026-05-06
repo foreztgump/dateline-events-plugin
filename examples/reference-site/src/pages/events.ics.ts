@@ -1,5 +1,5 @@
 import { renderReferenceICal } from "../lib/ical.js";
 
-export async function GET(): Promise<Response> {
+export function GET(): Response {
   return renderReferenceICal();
 }
