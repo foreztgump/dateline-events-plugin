@@ -26,9 +26,10 @@ export async function iCalFeed(input: RouteInput): Promise<Response> {
   const cached = await readCachedResponse(input.ctx, cacheKey);
   if (cached) return new Response(cached, { headers: ICAL_HEADERS });
   const events = await listEvents(input.ctx);
-  const body = renderICal(events);
+  const rangedEvents = await eventsInRange(events, parseRange(range));
+  const body = renderICal(rangedEvents);
   await writeCachedResponse(input.ctx, cacheKey, body);
-  await indexCacheKeyForEvents(input.ctx, { kind: "ical", eventIds: events.map(eventId), cacheKey });
+  await indexCacheKeyForEvents(input.ctx, { kind: "ical", eventIds: rangedEvents.map(eventId), cacheKey });
   return new Response(body, { headers: ICAL_HEADERS });
 }
 
@@ -62,7 +63,7 @@ async function eventMatchesRange(event: DatelineEvent, range: { start: string; e
   const occurrences = await materializeOccurrences({ rule: event.recurrenceRule, dtstart: event.startsAt, tzid: event.timezone, range });
   // PRO-481: derive each occurrence's end from the event's duration. Using event.endsAt
   // for every occurrence anchors range filtering to the original series end.
-  const durationMs = new Date(event.endsAt).getTime() - new Date(event.startsAt).getTime();
+  const durationMs = Math.max(0, (new Date(event.endsAt).getTime() - new Date(event.startsAt).getTime()) || 0);
   return occurrences.some((occurrence) => overlapsRange(occurrence.startsAt, addMillisIso(occurrence.startsAt, durationMs), range));
 }
 
