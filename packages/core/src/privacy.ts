@@ -25,8 +25,11 @@ function readEmail(request?: Request): string {
 }
 
 async function listByEmail(ctx: CoreContext, collection: string, email: string): Promise<Record<string, unknown>[]> {
+  // Events store the GDPR-relevant address as `contactEmail`; attendees use `email`.
+  // Filtering events by `email` would silently miss every event record (PRO-478).
+  const filter = collection === EVENTS_COLLECTION ? { contactEmail: email } : { email };
   try {
-    const response = await ctx.content?.list(collection, { filter: { email } });
+    const response = await ctx.content?.list(collection, { filter });
     return (response?.items ?? response?.entries ?? []) as Record<string, unknown>[];
   } catch (error) {
     throw boundaryError(`ctx.content.list(${collection})`, error);

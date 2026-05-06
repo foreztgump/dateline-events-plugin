@@ -1,5 +1,5 @@
 import { materializeOccurrences } from "@dateline/recurring";
-import { calendarCacheKey, readCachedResponse, writeCachedResponse } from "./cache.js";
+import { calendarCacheKey, iCalCacheKey, indexCacheKeyForEvents, readCachedResponse, writeCachedResponse } from "./cache.js";
 import { EVENTS_COLLECTION, ICAL_HEADERS, JSON_HEADERS } from "./constants.js";
 import { boundaryError, DatelineCoreError } from "./errors.js";
 import { renderICal } from "./ical.js";
@@ -16,12 +16,20 @@ export async function calendarFeed(input: RouteInput): Promise<Response> {
   const rangedEvents = await eventsInRange(events, parseRange(range));
   const body = JSON.stringify({ events: rangedEvents });
   await writeCachedResponse(input.ctx, cacheKey, body);
+  await indexCacheKeyForEvents(input.ctx, { kind: "calendar", eventIds: rangedEvents.map(eventId), cacheKey });
   return new Response(body, { headers: JSON_HEADERS });
 }
 
 export async function iCalFeed(input: RouteInput): Promise<Response> {
+  const range = readRange(input.request);
+  const cacheKey = iCalCacheKey(range);
+  const cached = await readCachedResponse(input.ctx, cacheKey);
+  if (cached) return new Response(cached, { headers: ICAL_HEADERS });
   const events = await listEvents(input.ctx);
-  return new Response(renderICal(events), { headers: ICAL_HEADERS });
+  const body = renderICal(events);
+  await writeCachedResponse(input.ctx, cacheKey, body);
+  await indexCacheKeyForEvents(input.ctx, { kind: "ical", eventIds: events.map(eventId), cacheKey });
+  return new Response(body, { headers: ICAL_HEADERS });
 }
 
 export async function listEvents(ctx: CoreContext): Promise<DatelineEvent[]> {
@@ -52,7 +60,10 @@ async function eventsInRange(events: DatelineEvent[], range: { start: string; en
 async function eventMatchesRange(event: DatelineEvent, range: { start: string; end: string }): Promise<boolean> {
   if (!event.recurrenceRule) return overlapsRange(event.startsAt, event.endsAt, range);
   const occurrences = await materializeOccurrences({ rule: event.recurrenceRule, dtstart: event.startsAt, tzid: event.timezone, range });
-  return occurrences.some((occurrence) => overlapsRange(occurrence.startsAt, event.endsAt, range));
+  // PRO-481: derive each occurrence's end from the event's duration. Using event.endsAt
+  // for every occurrence anchors range filtering to the original series end.
+  const durationMs = new Date(event.endsAt).getTime() - new Date(event.startsAt).getTime();
+  return occurrences.some((occurrence) => overlapsRange(occurrence.startsAt, addMillisIso(occurrence.startsAt, durationMs), range));
 }
 
 function overlapsRange(startsAt: string, endsAt: string, range: { start: string; end: string }): boolean {
@@ -71,4 +82,12 @@ function startOfDay(date: string): string {
 
 function endOfDay(date: string): string {
   return date.includes("T") ? date : `${date}T23:59:59.999Z`;
+}
+
+function addMillisIso(isoStart: string, durationMs: number): string {
+  return new Date(new Date(isoStart).getTime() + durationMs).toISOString();
+}
+
+function eventId(event: DatelineEvent): string {
+  return event.id;
 }
