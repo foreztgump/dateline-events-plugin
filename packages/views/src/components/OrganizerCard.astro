@@ -1,10 +1,12 @@
 ---
 import type { OrganizerCardProps } from "./component-props.js";
+import { safeHref } from "../lib/url.js";
 const { organizer } = Astro.props as OrganizerCardProps;
+const websiteHref = safeHref(organizer.website);
 ---
 <article class="dt-organizer-card rounded border p-4" data-dateline-component="OrganizerCard">
   {organizer.avatar && <img class="dt-organizer-card__avatar" src={organizer.avatar} alt="" />}
   <h3 class="font-semibold">{organizer.name}</h3>
-  {organizer.website && <a class="underline" href={organizer.website}>Website</a>}
+  {websiteHref && <a class="underline" href={websiteHref}>Website</a>}
   {organizer.email && <a class="underline" href={`mailto:${organizer.email}`}>Email</a>}
 </article>
