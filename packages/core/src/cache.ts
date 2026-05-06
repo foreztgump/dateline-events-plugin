@@ -66,6 +66,11 @@ async function invalidateByIndex(ctx: CoreContext, kind: CacheKind, eventId: str
 }
 
 async function appendToIndex(ctx: CoreContext, indexKeyName: string, cacheKey: string): Promise<void> {
+  // Read-modify-write is not atomic on Cloudflare KV (no CAS). If two writers
+  // race on the same index key, one append can be lost — that cache entry
+  // then escapes invalidation until its TTL expires (CACHE_TTL_SECONDS).
+  // Bounded staleness is acceptable for v0.1.1; a CAS-free design is tracked
+  // for v0.1.2 as PRO-495.
   const existing = await readIndex(ctx, indexKeyName);
   if (existing.includes(cacheKey)) return;
   const updated = [...existing, cacheKey].slice(-MAX_INDEX_ENTRIES);
