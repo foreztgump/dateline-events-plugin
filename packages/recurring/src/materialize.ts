@@ -2,16 +2,23 @@ import rrulePackage from "rrule";
 import { z } from "zod";
 import { createCacheKey, readCachedOccurrences, writeCachedOccurrences } from "./cache.js";
 import {
-  DATE_VALUE_INDEX,
   FORWARD_CAP_YEARS,
   ISO_DATE_SEPARATOR,
+  ISO_EXTENDED_LOCAL_LENGTH,
   LOCAL_BASIC_LENGTH,
   MONTH_INDEX_OFFSET,
   TZID_PARAM_PREFIX,
   UTC_BASIC_LENGTH,
 } from "./constants.js";
 import { errorMessage, extractRRuleLine } from "./rrule-utils.js";
-import { floatingDateToUtcIso, isoToBasicWallTime, parseLocalBasicDate, toFloatingDate, wallTimeToUtc } from "./timezone.js";
+import {
+  floatingDateToUtcIso,
+  isoToBasicWallTime,
+  parseExtendedIsoLocalDate,
+  parseLocalBasicDate,
+  toFloatingDate,
+  wallTimeToUtc,
+} from "./timezone.js";
 import type { MaterializeOccurrencesInput, Occurrence, OccurrenceCache } from "./types.js";
 import { validateRRule } from "./validate.js";
 
@@ -95,20 +102,43 @@ function extractDateLines(rule: string, propertyName: "EXDATE" | "RDATE", fallba
     .flatMap((line) => parseDateLine(line, fallbackTzid));
 }
 
+// RFC5545 property params are `;`-separated; a TZID= segment may appear in any position.
+const ICAL_PARAM_SEPARATOR = ";";
+// Matches an explicit UTC offset on an extended-format ISO 8601 string: `Z`, `+HH:MM`, or `-HH:MM`.
+const ISO_OFFSET_PATTERN = /(Z|[+-]\d{2}:\d{2})$/;
+
 function parseDateLine(line: string, fallbackTzid: string): string[] {
   const colonIndex = line.indexOf(":");
   const rawProperty = colonIndex >= 0 ? line.slice(0, colonIndex) : "";
   const rawDates = colonIndex >= 0 ? line.slice(colonIndex + MONTH_INDEX_OFFSET) : "";
   if (!rawProperty || !rawDates) return [];
 
-  const tzid = rawProperty.includes(TZID_PARAM_PREFIX) ? rawProperty.split(TZID_PARAM_PREFIX)[DATE_VALUE_INDEX] : fallbackTzid;
-  return rawDates.split(",").map((rawDate) => parseDateValue(rawDate.trim(), tzid ?? fallbackTzid));
+  const tzid = extractTzidParam(rawProperty) ?? fallbackTzid;
+  return rawDates.split(",").map((rawDate) => parseDateValue(rawDate.trim(), tzid));
+}
+
+function extractTzidParam(rawProperty: string): string | undefined {
+  // Walk all params instead of a naive `split(TZID=)` so trailing params like
+  // `;VALUE=DATE-TIME` cannot pollute the tzid value (PRO-489).
+  for (const segment of rawProperty.split(ICAL_PARAM_SEPARATOR)) {
+    if (segment.toUpperCase().startsWith(TZID_PARAM_PREFIX)) return segment.slice(TZID_PARAM_PREFIX.length);
+  }
+  return undefined;
 }
 
 function parseDateValue(rawDate: string, tzid: string): string {
-  if (rawDate.includes(ISO_DATE_SEPARATOR)) return new Date(rawDate).toISOString();
+  if (rawDate.includes(ISO_DATE_SEPARATOR)) return parseIsoDateValue(rawDate, tzid);
   if (rawDate.endsWith("Z") && rawDate.length === UTC_BASIC_LENGTH) return parseUtcBasicDate(rawDate).toISOString();
   if (rawDate.length === LOCAL_BASIC_LENGTH) return wallTimeToUtc(parseLocalBasicDate(rawDate), tzid).toISOString();
+  throw new Error(`Unsupported recurrence date value: ${rawDate}`);
+}
+
+function parseIsoDateValue(rawDate: string, tzid: string): string {
+  // Offset-less extended ISO (`YYYY-MM-DDTHH:MM:SS`) must be interpreted as wall
+  // time in `tzid`; delegating to `new Date(rawDate)` would use the host process
+  // timezone — same family as the rrule.js host-tz determinism bug (PRO-483).
+  if (ISO_OFFSET_PATTERN.test(rawDate)) return new Date(rawDate).toISOString();
+  if (rawDate.length === ISO_EXTENDED_LOCAL_LENGTH) return wallTimeToUtc(parseExtendedIsoLocalDate(rawDate), tzid).toISOString();
   throw new Error(`Unsupported recurrence date value: ${rawDate}`);
 }
 
