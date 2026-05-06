@@ -1,0 +1,10 @@
+---
+import type { OrganizerCardProps } from "./component-props.js";
+const { organizer } = Astro.props as OrganizerCardProps;
+---
+<article class="dt-organizer-card rounded border p-4" data-dateline-component="OrganizerCard">
+  {organizer.avatar && <img class="dt-organizer-card__avatar" src={organizer.avatar} alt="" />}
+  <h3 class="font-semibold">{organizer.name}</h3>
+  {organizer.website && <a class="underline" href={organizer.website}>Website</a>}
+  {organizer.email && <a class="underline" href={`mailto:${organizer.email}`}>Email</a>}
+</article>

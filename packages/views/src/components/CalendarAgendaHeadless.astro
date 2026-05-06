@@ -1,0 +1,10 @@
+---
+import { agendaEvents } from "../lib/calendar.js";
+import { formatEventTimeRange, eventHref } from "../lib/format.js";
+import type { CalendarAgendaProps } from "./component-props.js";
+const { events, limit } = Astro.props as CalendarAgendaProps;
+const visibleEvents = agendaEvents(events, limit);
+---
+<ol data-dateline-component="CalendarAgendaHeadless">
+  {visibleEvents.map((event) => <li><time datetime={event.startsAt}>{formatEventTimeRange(event)}</time><a href={eventHref(event)}>{event.title}</a></li>)}
+</ol>

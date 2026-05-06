@@ -1,0 +1,13 @@
+---
+import { eventHref, formatEventDateTime, formatEventTimeRange } from "../lib/format.js";
+import type { EventCardProps } from "./component-props.js";
+
+const { event, expanded = false, venue, organizers = [] } = Astro.props as EventCardProps;
+---
+<article data-dateline-component="EventCardHeadless" data-event-id={event.id}>
+  <a href={eventHref(event)} aria-expanded={String(expanded)}>
+    <time datetime={event.startsAt}>{formatEventDateTime(event)}</time>
+    <h3>{event.title}</h3>
+  </a>
+  {expanded && <div><p>{event.shortDescription}</p><p>Time: {formatEventTimeRange(event)}</p>{venue && <p>Location: {venue.name}</p>}{organizers.length > 0 && <p>Organizer: {organizers.map((organizer) => organizer.name).join(", ")}</p>}</div>}
+</article>

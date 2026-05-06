@@ -1,0 +1,11 @@
+---
+import type { RsvpFormProps } from "./component-props.js";
+const { event, action = "/_emdash/api/plugins/dateline-rsvp/rsvp-submit" } = Astro.props as RsvpFormProps;
+---
+<form method="post" action={action} data-dateline-component="RsvpFormHeadless">
+  <input type="hidden" name="event" value={event.id} />
+  <label>Name<input name="name" required /></label>
+  <label>Email<input name="email" type="email" required /></label>
+  <label>Guests<input name="guests" type="number" min="1" value="1" /></label>
+  <button type="submit">Submit RSVP</button>
+</form>

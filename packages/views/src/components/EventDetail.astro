@@ -1,0 +1,29 @@
+---
+import { eventToJsonLd } from "@dateline/core";
+import EventHero from "./EventHero.astro";
+import OrganizerCard from "./OrganizerCard.astro";
+import VenueMap from "./VenueMap.astro";
+import RsvpForm from "./RsvpForm.astro";
+import { formatEventTimeRange, plainPortableText } from "../lib/format.js";
+import type { EventDetailProps } from "./component-props.js";
+
+const { event, venue, organizers = [] } = Astro.props as EventDetailProps;
+const coordinates = venue ? venue.geo : undefined;
+const schemaVenue = venue ? { name: venue.name, address: venue.address, lat: coordinates?.lat, lng: coordinates?.lng } : undefined;
+const schemaOrganizers = organizers.map((organizer) => ({ name: organizer.name, url: organizer.website }));
+const jsonLd = eventToJsonLd(event, schemaVenue, schemaOrganizers);
+const description = plainPortableText(event.description);
+---
+<article class="dt-event-detail grid gap-6" data-dateline-component="EventDetail">
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <EventHero event={event} />
+  <section class="dt-event-detail__meta rounded border p-4">
+    <p><strong>Time:</strong> {formatEventTimeRange(event)}</p>
+    <p><strong>Timezone:</strong> {event.timezone}</p>
+    {venue && <p><strong>Venue:</strong> {venue.name}</p>}
+  </section>
+  {description && <section class="dt-event-detail__description whitespace-pre-line">{description}</section>}
+  {venue && <VenueMap venue={venue} />}
+  {organizers.length > 0 && <section class="dt-event-detail__organizers grid gap-3">{organizers.map((organizer) => <OrganizerCard organizer={organizer} />)}</section>}
+  {event.rsvpRequired && <RsvpForm event={event} />}
+</article>

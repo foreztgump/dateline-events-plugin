@@ -1,0 +1,11 @@
+---
+import EventCardHeadless from "./EventCardHeadless.astro";
+import { eventsOnDate } from "../lib/calendar.js";
+import type { CalendarDayProps } from "./component-props.js";
+const { events, date } = Astro.props as CalendarDayProps;
+const dayEvents = eventsOnDate(events, date);
+---
+<section aria-label={`Events on ${date}`} data-dateline-component="CalendarDayHeadless">
+  <h2><time datetime={date}>{date}</time></h2>
+  {dayEvents.map((event) => <EventCardHeadless event={event} expanded />)}
+</section>

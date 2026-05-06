@@ -1,0 +1,25 @@
+---
+import { eventToJsonLd } from "@dateline/core";
+import EventHeroHeadless from "./EventHeroHeadless.astro";
+import OrganizerCardHeadless from "./OrganizerCardHeadless.astro";
+import VenueMapHeadless from "./VenueMapHeadless.astro";
+import RsvpFormHeadless from "./RsvpFormHeadless.astro";
+import { formatEventTimeRange, plainPortableText } from "../lib/format.js";
+import type { EventDetailProps } from "./component-props.js";
+
+const { event, venue, organizers = [] } = Astro.props as EventDetailProps;
+const coordinates = venue ? venue.geo : undefined;
+const schemaVenue = venue ? { name: venue.name, address: venue.address, lat: coordinates?.lat, lng: coordinates?.lng } : undefined;
+const schemaOrganizers = organizers.map((organizer) => ({ name: organizer.name, url: organizer.website }));
+const jsonLd = eventToJsonLd(event, schemaVenue, schemaOrganizers);
+const description = plainPortableText(event.description);
+---
+<article data-dateline-component="EventDetailHeadless">
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <EventHeroHeadless event={event} />
+  <section><p>Time: {formatEventTimeRange(event)}</p><p>Timezone: {event.timezone}</p>{venue && <p>Venue: {venue.name}</p>}</section>
+  {description && <section>{description}</section>}
+  {venue && <VenueMapHeadless venue={venue} />}
+  {organizers.length > 0 && <section>{organizers.map((organizer) => <OrganizerCardHeadless organizer={organizer} />)}</section>}
+  {event.rsvpRequired && <RsvpFormHeadless event={event} />}
+</article>

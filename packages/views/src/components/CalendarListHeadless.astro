@@ -1,0 +1,10 @@
+---
+import EventCardHeadless from "./EventCardHeadless.astro";
+import { groupEventsByDate } from "../lib/calendar.js";
+import type { CalendarListProps } from "./component-props.js";
+const { events } = Astro.props as CalendarListProps;
+const groups = groupEventsByDate(events);
+---
+<section data-dateline-component="CalendarListHeadless">
+  {groups.map((group) => <section><h2><time datetime={group.date}>{group.date}</time></h2>{group.events.map((event) => <EventCardHeadless event={event} />)}</section>)}
+</section>
