@@ -28,9 +28,15 @@
   },
   "devDependencies": {
     "@types/node": "^20.19.39",
-    "typescript": "^6.0.3",
-    "vitest": "^4.1.5",
+    "eslint": "^9.27.0",
     "rimraf": "^6.0.1",
-    "eslint": "^9.27.0"
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.5"
+  },
+  "dependencies": {
+    "@dateline/blocks": "workspace:*",
+    "@dateline/core": "workspace:*",
+    "ical.js": "2.2.1",
+    "zod": "4.4.2"
   }
 }
