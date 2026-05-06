@@ -52,12 +52,19 @@ describe("@dateline/importer", () => {
     expect(importedEvents.rows).toHaveLength(1);
     expect(importedEvents.rows[0]?.event).toMatchObject({
       title: "Dateline Launch",
-      startsAt: "2026-03-08T17:00:00.000Z",
-      endsAt: "2026-03-08T18:00:00.000Z",
+      startsAt: "2026-03-08T16:00:00.000Z",
+      endsAt: "2026-03-08T17:00:00.000Z",
       timezone: "America/Los_Angeles",
       recurrenceRule: "FREQ=WEEKLY;COUNT=3",
       recurrenceExceptions: ["2026-03-15T16:00:00.000Z"],
     });
+  });
+
+  it("keeps valid iCalendar rows when another VEVENT is malformed", () => {
+    const importedEvents = parseICal(icsFixtureWithMalformedEvent());
+
+    expect(importedEvents.rows).toHaveLength(1);
+    expect(importedEvents.errors).toEqual([{ row: 2, sourceId: "ical:broken@example.com", message: "Error: VEVENT missing dtstart." }]);
   });
 
   it("parses CSV rows through explicit mapping and keeps row errors partial", () => {
@@ -130,21 +137,52 @@ function icsFixture(): string {
   ].join("\r\n");
 }
 
+function icsFixtureWithMalformedEvent(): string {
+  return [
+    "BEGIN:VCALENDAR",
+    "VERSION:2.0",
+    "BEGIN:VEVENT",
+    "UID:launch@example.com",
+    "SUMMARY:Dateline Launch",
+    "DTSTART:20260501T170000Z",
+    "DTEND:20260501T180000Z",
+    "END:VEVENT",
+    "BEGIN:VEVENT",
+    "UID:broken@example.com",
+    "SUMMARY:Broken Event",
+    "DTEND:20260502T180000Z",
+    "END:VEVENT",
+    "END:VCALENDAR",
+  ].join("\r\n");
+}
+
 function eventDraft(sourceId: string, title: string) {
-  return { sourceId, title, startsAt: "2026-05-01T17:00:00.000Z", endsAt: "2026-05-01T18:00:00.000Z", timezone: "UTC" };
+  return {
+    sourceId,
+    title,
+    startsAt: "2026-05-01T17:00:00.000Z",
+    endsAt: "2026-05-01T18:00:00.000Z",
+    timezone: "UTC",
+    status: "published",
+    allDay: false,
+    locationType: "physical" as const,
+    organizers: [],
+    categories: [],
+    tags: [],
+  };
 }
 
 function contentContext() {
   const createdSourceIds = new Set<string>();
   return {
     content: {
-      list: vi.fn(async (_collection: string, options?: unknown) => {
+      list: vi.fn((_collection: string, options?: unknown) => {
         const sourceId = (options as { filter?: { sourceId?: string } } | undefined)?.filter?.sourceId;
-        return { items: sourceId && createdSourceIds.has(sourceId) ? [{ id: "existing", sourceId }] : [] };
+        return Promise.resolve({ items: sourceId && createdSourceIds.has(sourceId) ? [{ id: "existing", sourceId }] : [] });
       }),
-      create: vi.fn(async (_collection: string, value: unknown) => {
+      create: vi.fn((_collection: string, value: unknown) => {
         createdSourceIds.add((value as { sourceId: string }).sourceId);
-        return { id: "created" };
+        return Promise.resolve({ id: "created" });
       }),
     },
   };
