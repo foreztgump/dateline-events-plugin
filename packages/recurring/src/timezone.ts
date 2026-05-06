@@ -68,6 +68,22 @@ export function parseLocalBasicDate(rawDate: string): WallTimeParts {
   };
 }
 
+export function parseExtendedIsoLocalDate(rawDate: string): WallTimeParts {
+  // `YYYY-MM-DDTHH:MM:SS` — extended ISO 8601 form without a UTC offset. Pure
+  // string slicing keeps this host-tz independent (PRO-483).
+  const [datePart = "", timePart = ""] = rawDate.split("T");
+  const [year, month, day] = datePart.split("-");
+  const [hour, minute, second] = timePart.split(":");
+  return {
+    year: Number(year),
+    month: Number(month),
+    day: Number(day),
+    hour: Number(hour),
+    minute: Number(minute),
+    second: Number(second),
+  };
+}
+
 function getOffsetMilliseconds(date: Date, tzid: string): number {
   const parts = getWallTimeParts(date, tzid);
   const wallTime = Date.UTC(parts.year, parts.month - MONTH_INDEX_OFFSET, parts.day, parts.hour, parts.minute, parts.second);
