@@ -1,0 +1,14 @@
+export const PLUGIN_ID = "dateline-rsvp";
+export const PLUGIN_VERSION = "0.1.0";
+export const ATTENDEES_COLLECTION = "dateline_attendees";
+export const CAPACITY_FULL_MESSAGE = "capacity full";
+export const RSVP_SWEEP_NAME = "dateline-rsvp-waitlist-sweep";
+export const RSVP_SWEEP_CRON = "*/5 * * * *";
+export const RATE_LIMIT_TTL_SECONDS = 60;
+export const HOLD_TTL_SECONDS = 600;
+export const HTTP_OK = 200;
+export const HTTP_BAD_REQUEST = 400;
+export const HTTP_TOO_MANY_REQUESTS = 429;
+export const HTTP_CAPACITY_FULL = 409;
+export const MAX_CRON_PROMOTIONS = 3;
+export const JSON_HEADERS = { "content-type": "application/json; charset=utf-8" };
