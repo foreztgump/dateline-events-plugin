@@ -2,7 +2,13 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "dist",
-    "rootDir": "src"
+    "rootDir": ".",
+    "jsx": "preserve",
+    "jsxImportSource": "astro",
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "types": ["astro/client"]
   },
-  "include": ["src"]
+  "include": ["src", "seed/**/*.json", "astro.config.mjs"],
+  "exclude": ["dist"]
 }

@@ -1,0 +1,27 @@
+---
+import EventDetail from "@dateline/views/components/EventDetail.astro";
+import RsvpForm from "@dateline/views/components/RsvpForm.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { eventBySlug, organizersForEvent, seedEvents, venueForEvent } from "../../lib/fixtures.js";
+import type { DatelineViewEvent } from "../../lib/fixtures.js";
+
+export const prerender = true;
+type StaticEventPath = { params: { slug: string }; props: { event: DatelineViewEvent } };
+
+export function getStaticPaths(): StaticEventPath[] {
+  return seedEvents.flatMap((event) => event.slug ? [{ params: { slug: event.slug }, props: { event } }] : []);
+}
+
+const slug = Astro.params.slug ?? "";
+const event = (Astro.props.event ?? eventBySlug(slug)) as DatelineViewEvent | undefined;
+if (!event) return Astro.redirect("/events", 302);
+const detailEvent = { ...event, rsvpRequired: false };
+const venue = venueForEvent(event);
+const organizers = organizersForEvent(event);
+---
+<BaseLayout title={`${event.title} — Dateline`}>
+  <section class="grid-stack">
+    <EventDetail event={detailEvent} venue={venue} organizers={organizers} />
+    {event.rsvpRequired && <RsvpForm event={event} action="/api/rsvp" />}
+  </section>
+</BaseLayout>

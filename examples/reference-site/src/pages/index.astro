@@ -1,0 +1,31 @@
+---
+import CalendarAgenda from "@dateline/views/components/CalendarAgenda.astro";
+import CalendarDay from "@dateline/views/components/CalendarDay.astro";
+import CalendarMonth from "@dateline/views/components/CalendarMonth.astro";
+import CalendarWeek from "@dateline/views/components/CalendarWeek.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { displayEvents, referenceDay, referenceMonth, referenceWeekStart } from "../lib/fixtures.js";
+---
+<BaseLayout title="Dateline Reference Site">
+  <section class="hero grid-stack">
+    <p>Dateline v0.1 release showcase</p>
+    <h1>Astro + EmDash reference calendar</h1>
+    <p>Seeded events demonstrate calendar, week, day, agenda, list/detail, RSVP, recurrence, venues, organizers, x402 metadata, and iCal output.</p>
+    <a class="button-link" href="/events">Browse all events</a>
+  </section>
+  <section class="grid-stack" aria-labelledby="month-heading">
+    <h2 id="month-heading">Month view</h2>
+    <CalendarMonth events={displayEvents} month={referenceMonth} />
+  </section>
+  <section class="two-column" aria-label="Additional calendar views">
+    <div class="panel grid-stack">
+      <h2>Week view</h2>
+      <CalendarWeek events={displayEvents} weekStart={referenceWeekStart} />
+    </div>
+    <div class="panel grid-stack">
+      <h2>Day + agenda</h2>
+      <CalendarDay events={displayEvents} date={referenceDay} />
+      <CalendarAgenda events={displayEvents} limit={5} />
+    </div>
+  </section>
+</BaseLayout>

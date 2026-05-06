@@ -9,6 +9,18 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
+    },
+    "./schema-org": {
+      "types": "./dist/schema-org.d.ts",
+      "import": "./dist/schema-org.js"
+    },
+    "./routes": {
+      "types": "./dist/routes.d.ts",
+      "import": "./dist/routes.js"
+    },
+    "./ical": {
+      "types": "./dist/ical.d.ts",
+      "import": "./dist/ical.js"
     }
   },
   "files": [

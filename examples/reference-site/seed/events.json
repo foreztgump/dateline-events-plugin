@@ -1,0 +1,429 @@
+{
+  "venues": [
+    {
+      "id": "venue-harbor-hall",
+      "slug": "harbor-hall",
+      "name": "Harbor Hall",
+      "address": {
+        "line1": "100 Pier Ave",
+        "city": "Oakland",
+        "region": "CA",
+        "postalCode": "94607",
+        "country": "US"
+      },
+      "geo": {
+        "lat": 37.7955,
+        "lng": -122.277
+      },
+      "website": "https://example.com/harbor-hall"
+    },
+    {
+      "id": "venue-civic-lab",
+      "slug": "civic-lab",
+      "name": "Civic Lab",
+      "address": {
+        "line1": "42 Market St",
+        "city": "San Francisco",
+        "region": "CA",
+        "postalCode": "94105",
+        "country": "US"
+      },
+      "geo": {
+        "lat": 37.789,
+        "lng": -122.394
+      }
+    },
+    {
+      "id": "venue-online",
+      "slug": "online",
+      "name": "Online"
+    }
+  ],
+  "organizers": [
+    {
+      "id": "org-dateline",
+      "slug": "dateline-community",
+      "name": "Dateline Community",
+      "email": "hello@dateline.dev",
+      "website": "https://dateline.dev"
+    },
+    {
+      "id": "org-reef",
+      "slug": "reef-network",
+      "name": "Reef Network",
+      "email": "events@reef.example",
+      "website": "https://reef.example"
+    },
+    {
+      "id": "org-city",
+      "slug": "city-arts",
+      "name": "City Arts Collective",
+      "website": "https://cityarts.example"
+    }
+  ],
+  "events": [
+    {
+      "id": "evt-friday-meetup",
+      "slug": "friday-meetup",
+      "status": "published",
+      "title": "Friday Meetup RSVP Night",
+      "shortDescription": "Capacity-limited community meetup with free RSVP.",
+      "description": [
+        {
+          "children": [
+            {
+              "text": "A friendly capacity-limited meetup for Dateline organizers."
+            }
+          ]
+        }
+      ],
+      "startsAt": "2026-05-08T01:00:00.000Z",
+      "endsAt": "2026-05-08T03:00:00.000Z",
+      "timezone": "America/Los_Angeles",
+      "allDay": false,
+      "locationType": "physical",
+      "venue": "venue-harbor-hall",
+      "organizers": [
+        "org-dateline"
+      ],
+      "categories": [
+        "community"
+      ],
+      "tags": [
+        "rsvp"
+      ],
+      "capacity": 5,
+      "rsvpRequired": true,
+      "createdAt": "2026-04-01T00:00:00.000Z",
+      "updatedAt": "2026-04-01T00:00:00.000Z",
+      "createdBy": "seed"
+    },
+    {
+      "id": "evt-weekly-yoga",
+      "slug": "weekly-yoga-dst",
+      "status": "published",
+      "title": "Weekly Yoga Across DST",
+      "shortDescription": "Weekly recurring class crossing the 2027 spring DST boundary.",
+      "description": [
+        {
+          "children": [
+            {
+              "text": "Weekly RRULE fixture that should stay at the same wall-clock time."
+            }
+          ]
+        }
+      ],
+      "startsAt": "2027-03-01T17:00:00.000Z",
+      "endsAt": "2027-03-01T18:00:00.000Z",
+      "timezone": "America/Los_Angeles",
+      "allDay": false,
+      "locationType": "physical",
+      "venue": "venue-civic-lab",
+      "organizers": [
+        "org-reef"
+      ],
+      "categories": [
+        "workshop"
+      ],
+      "tags": [
+        "recurring",
+        "dst"
+      ],
+      "recurrenceRule": "FREQ=WEEKLY;COUNT=6",
+      "capacity": 20,
+      "rsvpRequired": false,
+      "createdAt": "2026-04-01T00:00:00.000Z",
+      "updatedAt": "2026-04-01T00:00:00.000Z",
+      "createdBy": "seed"
+    },
+    {
+      "id": "evt-x402-livestream",
+      "slug": "x402-livestream",
+      "status": "published",
+      "title": "x402 Livestream Briefing",
+      "shortDescription": "Micropayment-gated virtual briefing.",
+      "description": [
+        {
+          "children": [
+            {
+              "text": "Demonstrates the x402Price metadata rendered by EventDetail."
+            }
+          ]
+        }
+      ],
+      "startsAt": "2026-05-12T18:00:00.000Z",
+      "endsAt": "2026-05-12T19:00:00.000Z",
+      "timezone": "UTC",
+      "allDay": false,
+      "locationType": "virtual",
+      "organizers": [
+        "org-dateline"
+      ],
+      "categories": [
+        "conference"
+      ],
+      "tags": [
+        "x402"
+      ],
+      "rsvpRequired": false,
+      "x402Price": {
+        "amount": 250,
+        "currency": "USD"
+      },
+      "createdAt": "2026-04-01T00:00:00.000Z",
+      "updatedAt": "2026-04-01T00:00:00.000Z",
+      "createdBy": "seed"
+    },
+    {
+      "id": "evt-venue-organizer",
+      "slug": "venue-organizer-showcase",
+      "status": "published",
+      "title": "Venue + Organizer Showcase",
+      "shortDescription": "Physical event with rich venue and organizer references.",
+      "description": [
+        {
+          "children": [
+            {
+              "text": "Shows venue map and organizer card composition."
+            }
+          ]
+        }
+      ],
+      "startsAt": "2026-05-15T23:00:00.000Z",
+      "endsAt": "2026-05-16T01:00:00.000Z",
+      "timezone": "America/Los_Angeles",
+      "allDay": false,
+      "locationType": "physical",
+      "venue": "venue-harbor-hall",
+      "organizers": [
+        "org-reef",
+        "org-city"
+      ],
+      "categories": [
+        "meeting"
+      ],
+      "tags": [
+        "venue"
+      ],
+      "capacity": 80,
+      "rsvpRequired": false,
+      "createdAt": "2026-04-01T00:00:00.000Z",
+      "updatedAt": "2026-04-01T00:00:00.000Z",
+      "createdBy": "seed"
+    },
+    {
+      "id": "evt-importer-clinic",
+      "slug": "importer-clinic",
+      "status": "published",
+      "title": "Importer Clinic",
+      "shortDescription": "TEC, iCal, CSV migration clinic.",
+      "description": [
+        {
+          "children": [
+            {
+              "text": "Hands-on importer demonstration."
+            }
+          ]
+        }
+      ],
+      "startsAt": "2026-05-20T17:00:00.000Z",
+      "endsAt": "2026-05-20T18:30:00.000Z",
+      "timezone": "America/New_York",
+      "allDay": false,
+      "locationType": "hybrid",
+      "venue": "venue-online",
+      "organizers": [
+        "org-dateline"
+      ],
+      "categories": [
+        "workshop"
+      ],
+      "tags": [
+        "importer"
+      ],
+      "capacity": 40,
+      "rsvpRequired": false,
+      "createdAt": "2026-04-01T00:00:00.000Z",
+      "updatedAt": "2026-04-01T00:00:00.000Z",
+      "createdBy": "seed"
+    },
+    {
+      "id": "evt-calendar-month",
+      "slug": "calendar-month-deep-dive",
+      "status": "published",
+      "title": "Calendar Month Deep Dive",
+      "shortDescription": "Month grid theming session.",
+      "description": [
+        {
+          "children": [
+            {
+              "text": "Customize CalendarMonth and headless variants."
+            }
+          ]
+        }
+      ],
+      "startsAt": "2026-05-22T16:00:00.000Z",
+      "endsAt": "2026-05-22T17:00:00.000Z",
+      "timezone": "UTC",
+      "allDay": false,
+      "locationType": "virtual",
+      "organizers": [
+        "org-reef"
+      ],
+      "categories": [
+        "workshop"
+      ],
+      "tags": [
+        "views"
+      ],
+      "rsvpRequired": false,
+      "createdAt": "2026-04-01T00:00:00.000Z",
+      "updatedAt": "2026-04-01T00:00:00.000Z",
+      "createdBy": "seed"
+    },
+    {
+      "id": "evt-all-day",
+      "slug": "community-all-day",
+      "status": "published",
+      "title": "Community All-Day Festival",
+      "shortDescription": "All-day calendar fixture.",
+      "description": [
+        {
+          "children": [
+            {
+              "text": "All-day community festival for list and agenda views."
+            }
+          ]
+        }
+      ],
+      "startsAt": "2026-05-25T00:00:00.000Z",
+      "endsAt": "2026-05-25T23:59:00.000Z",
+      "timezone": "UTC",
+      "allDay": true,
+      "locationType": "physical",
+      "venue": "venue-civic-lab",
+      "organizers": [
+        "org-city"
+      ],
+      "categories": [
+        "community"
+      ],
+      "tags": [
+        "all-day"
+      ],
+      "capacity": 200,
+      "rsvpRequired": false,
+      "createdAt": "2026-04-01T00:00:00.000Z",
+      "updatedAt": "2026-04-01T00:00:00.000Z",
+      "createdBy": "seed"
+    },
+    {
+      "id": "evt-agenda-breakfast",
+      "slug": "agenda-breakfast",
+      "status": "published",
+      "title": "Agenda Breakfast",
+      "shortDescription": "Morning agenda event.",
+      "description": [
+        {
+          "children": [
+            {
+              "text": "Short morning fixture for agenda sorting."
+            }
+          ]
+        }
+      ],
+      "startsAt": "2026-05-27T15:00:00.000Z",
+      "endsAt": "2026-05-27T16:00:00.000Z",
+      "timezone": "America/Los_Angeles",
+      "allDay": false,
+      "locationType": "physical",
+      "venue": "venue-harbor-hall",
+      "organizers": [
+        "org-dateline"
+      ],
+      "categories": [
+        "meeting"
+      ],
+      "tags": [
+        "agenda"
+      ],
+      "capacity": 25,
+      "rsvpRequired": false,
+      "createdAt": "2026-04-01T00:00:00.000Z",
+      "updatedAt": "2026-04-01T00:00:00.000Z",
+      "createdBy": "seed"
+    },
+    {
+      "id": "evt-week-view",
+      "slug": "week-view-lab",
+      "status": "published",
+      "title": "Week View Lab",
+      "shortDescription": "Week view layout event.",
+      "description": [
+        {
+          "children": [
+            {
+              "text": "Seven-day calendar view exercise."
+            }
+          ]
+        }
+      ],
+      "startsAt": "2026-05-28T20:00:00.000Z",
+      "endsAt": "2026-05-28T21:00:00.000Z",
+      "timezone": "America/Los_Angeles",
+      "allDay": false,
+      "locationType": "hybrid",
+      "venue": "venue-civic-lab",
+      "organizers": [
+        "org-reef"
+      ],
+      "categories": [
+        "workshop"
+      ],
+      "tags": [
+        "week"
+      ],
+      "capacity": 35,
+      "rsvpRequired": false,
+      "createdAt": "2026-04-01T00:00:00.000Z",
+      "updatedAt": "2026-04-01T00:00:00.000Z",
+      "createdBy": "seed"
+    },
+    {
+      "id": "evt-closing-social",
+      "slug": "closing-social",
+      "status": "published",
+      "title": "Closing Social",
+      "shortDescription": "Closing community event.",
+      "description": [
+        {
+          "children": [
+            {
+              "text": "Final social event in the reference dataset."
+            }
+          ]
+        }
+      ],
+      "startsAt": "2026-05-30T01:00:00.000Z",
+      "endsAt": "2026-05-30T03:00:00.000Z",
+      "timezone": "America/Los_Angeles",
+      "allDay": false,
+      "locationType": "physical",
+      "venue": "venue-harbor-hall",
+      "organizers": [
+        "org-city"
+      ],
+      "categories": [
+        "community"
+      ],
+      "tags": [
+        "social"
+      ],
+      "capacity": 60,
+      "rsvpRequired": false,
+      "createdAt": "2026-04-01T00:00:00.000Z",
+      "updatedAt": "2026-04-01T00:00:00.000Z",
+      "createdBy": "seed"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+---
+import CalendarAgenda from "@dateline/views/components/CalendarAgenda.astro";
+import CalendarList from "@dateline/views/components/CalendarList.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { displayEvents, seedEvents } from "../../lib/fixtures.js";
+---
+<BaseLayout title="Dateline Events">
+  <section class="hero grid-stack">
+    <h1>All seeded Dateline events</h1>
+    <p>{seedEvents.length} source events plus generated recurring occurrences power this reference list.</p>
+  </section>
+  <section class="two-column">
+    <div class="panel">
+      <CalendarList events={displayEvents} />
+    </div>
+    <aside class="panel">
+      <h2>Agenda preview</h2>
+      <CalendarAgenda events={displayEvents} limit={10} />
+    </aside>
+  </section>
+</BaseLayout>

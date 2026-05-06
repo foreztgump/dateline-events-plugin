@@ -1,0 +1,11 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+const eventId = Astro.url.searchParams.get("event") ?? "your event";
+---
+<BaseLayout title="RSVP confirmed">
+  <section class="hero" role="status">
+    <h1>Thanks! Your RSVP is confirmed.</h1>
+    <p>Your spot for {eventId} has been reserved in the Dateline reference flow.</p>
+    <a class="button-link" href="/events/friday-meetup">Back to the RSVP event</a>
+  </section>
+</BaseLayout>
