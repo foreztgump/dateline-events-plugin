@@ -1,8 +1,27 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { __capacityLocksSize, releaseCapacity, reserveCapacity } from "./capacity.js";
 import type { RsvpContext } from "./types.js";
 
 describe("storage-backed capacity", () => {
+  it("admits exactly configured capacity across two isolated capacity modules", async () => {
+    const firstIsolate = await import("./capacity.js");
+    vi.resetModules();
+    const secondIsolate = await import("./capacity.js");
+    const { ctx, records } = storageContext({ "capacity:evt_1": { kind: "capacity", eventId: "evt_1", remaining: 3 } });
+
+    const attempts = Array.from({ length: 12 }, (_value, index) => {
+      const isolate = index % 2 === 0 ? firstIsolate : secondIsolate;
+      return isolate.reserveCapacity(ctx, "evt_1", `guest-${index}@example.com`)
+        .then(() => "admitted" as const, () => "rejected" as const);
+    });
+
+    const outcomes = await Promise.all(attempts);
+
+    expect(outcomes.filter((outcome) => outcome === "admitted")).toHaveLength(3);
+    expect(readClaims(records, "confirmed")).toHaveLength(3);
+    expect(readClaims(records, "released")).toHaveLength(9);
+  });
+
   it("preserves the counter under interleaved reserve and release operations", async () => {
     const initial = 10;
     const { ctx, records } = storageContext({ "capacity:evt_1": { kind: "capacity", eventId: "evt_1", remaining: initial } });
@@ -15,6 +34,33 @@ describe("storage-backed capacity", () => {
     await Promise.all(operations);
 
     expect(readRemaining(records, "capacity:evt_1")).toBe(initial);
+  });
+
+  it("releases a confirmed claim only once", async () => {
+    const { ctx, records } = storageContext({
+      "capacity:evt_1": { kind: "capacity", eventId: "evt_1", capacity: 1, remaining: 0 },
+      "claim:evt_1:guest%40example.com": { kind: "claim", eventId: "evt_1", email: "guest@example.com", status: "confirmed" },
+    });
+
+    const firstRelease = await releaseCapacity(ctx, "evt_1", "guest@example.com");
+    const secondRelease = await releaseCapacity(ctx, "evt_1", "guest@example.com");
+
+    expect(firstRelease).toBe(true);
+    expect(secondRelease).toBe(false);
+    expect(readRemaining(records, "capacity:evt_1")).toBe(1);
+    expect(readClaims(records, "cancelled")).toHaveLength(1);
+  });
+
+  it("does not release capacity for a waitlisted claim", async () => {
+    const { ctx, records } = storageContext({
+      "capacity:evt_1": { kind: "capacity", eventId: "evt_1", capacity: 1, remaining: 0 },
+      "claim:evt_1:wait%40example.com": { kind: "claim", eventId: "evt_1", email: "wait@example.com", status: "waitlisted" },
+    });
+
+    const released = await releaseCapacity(ctx, "evt_1", "wait@example.com");
+
+    expect(released).toBe(false);
+    expect(readRemaining(records, "capacity:evt_1")).toBe(0);
   });
 
   it("cleans up locks after concurrent reserve/release cycles across events", async () => {
@@ -57,6 +103,12 @@ function storageContext(initialRecords: Record<string, Record<string, unknown>>)
 function readRemaining(records: Map<string, { id: string; data: unknown }>, id: string): unknown {
   const value = records.get(id)?.data;
   return typeof value === "object" && value !== null && "remaining" in value ? value.remaining : undefined;
+}
+
+function readClaims(records: Map<string, { id: string; data: unknown }>, status: string): unknown[] {
+  return Array.from(records.values())
+    .map((entry) => entry.data)
+    .filter((value) => typeof value === "object" && value !== null && "kind" in value && value.kind === "claim" && "status" in value && value.status === status);
 }
 
 function yieldThen<T>(operation: () => T): Promise<T> {

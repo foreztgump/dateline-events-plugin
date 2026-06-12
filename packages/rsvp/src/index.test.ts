@@ -64,6 +64,7 @@ describe("@dateline/rsvp", () => {
 
   it("promotes the next waitlisted attendee when a confirmed attendee cancels", async () => {
     const ctx = memoryContext({
+      "claim:evt_1:cancel%40example.com": { kind: "claim", eventId: "evt_1", email: "cancel@example.com", status: "confirmed" },
       "waitlist:evt_1": {
         kind: "waitlist",
         eventId: "evt_1",
@@ -71,10 +72,36 @@ describe("@dateline/rsvp", () => {
       },
     });
 
-    await afterSave({ collection: "dateline_attendees", content: { id: "att_cancel", event: "evt_1", rsvpStatus: "cancelled" } }, ctx);
+    await afterSave({ collection: "dateline_attendees", content: { id: "att_cancel", event: "evt_1", email: "cancel@example.com", rsvpStatus: "cancelled" } }, ctx);
 
     expect(ctx.mocks.contentUpdate).toHaveBeenCalledWith("dateline_attendees", "att_wait", { rsvpStatus: "confirmed" });
     expect(ctx.mocks.emailSend).toHaveBeenCalledWith(expect.objectContaining({ to: "wait@example.com" }));
+  });
+
+  it("does not release capacity twice when a cancelled attendee is saved again", async () => {
+    const ctx = memoryContext({
+      "capacity:evt_1": { kind: "capacity", eventId: "evt_1", capacity: 1, remaining: 0 },
+      "claim:evt_1:cancel%40example.com": { kind: "claim", eventId: "evt_1", email: "cancel@example.com", status: "confirmed" },
+    });
+    const cancelledContent = { id: "att_cancel", event: "evt_1", email: "cancel@example.com", rsvpStatus: "cancelled" };
+
+    await afterSave({ collection: "dateline_attendees", content: cancelledContent }, ctx);
+    await afterSave({ collection: "dateline_attendees", content: cancelledContent }, ctx);
+
+    await expect(ctx.storage?.rsvps?.get("capacity:evt_1")).resolves.toMatchObject({ remaining: 1 });
+    expect(ctx.mocks.contentUpdate).not.toHaveBeenCalled();
+  });
+
+  it("does not release capacity when a waitlisted attendee is cancelled", async () => {
+    const ctx = memoryContext({
+      "capacity:evt_1": { kind: "capacity", eventId: "evt_1", capacity: 1, remaining: 0 },
+      "claim:evt_1:wait%40example.com": { kind: "claim", eventId: "evt_1", email: "wait@example.com", status: "waitlisted" },
+    });
+
+    await afterSave({ collection: "dateline_attendees", content: { id: "att_wait", event: "evt_1", email: "wait@example.com", rsvpStatus: "cancelled" } }, ctx);
+
+    await expect(ctx.storage?.rsvps?.get("capacity:evt_1")).resolves.toMatchObject({ remaining: 0 });
+    expect(ctx.mocks.contentUpdate).not.toHaveBeenCalled();
   });
 
   it("sends confirmation email through ctx.email.send from the save hook", async () => {

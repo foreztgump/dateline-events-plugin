@@ -41,6 +41,7 @@ export interface StorageCollection<T = unknown> {
 export interface CapacityRecord {
   kind: "capacity";
   eventId: string;
+  capacity?: number;
   remaining: number;
 }
 
@@ -48,7 +49,9 @@ export interface RsvpClaimRecord {
   kind: "claim";
   eventId: string;
   email: string;
-  status: RsvpStatus;
+  status: "pending" | "confirmed" | "waitlisted" | "cancelled" | "released";
+  createdAt?: string;
+  sequence?: number;
 }
 
 export interface WaitlistRecord {

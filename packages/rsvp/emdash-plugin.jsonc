@@ -16,8 +16,7 @@
   "allowedHosts": [],
   "storage": {
     "rsvps": {
-      "indexes": ["kind", "eventId", "email", "status", "expiresAt"],
-      "uniqueIndexes": [["eventId", "email"]]
+      "indexes": ["kind", "eventId", "email", "status", "expiresAt"]
     }
   },
   "admin": {

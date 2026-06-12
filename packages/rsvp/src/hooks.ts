@@ -52,7 +52,8 @@ export async function cron(event: { name?: string }, ctx: RsvpContext): Promise<
 }
 
 async function handleCancellation(ctx: RsvpContext, attendee: Attendee): Promise<void> {
-  await releaseCapacity(ctx, attendee.event, attendee.email);
+  const releasedSeat = await releaseCapacity(ctx, attendee.event, attendee.email);
+  if (!releasedSeat) return;
   const promotedAttendee = await safePromoteNextWaitlistedAttendee(ctx, attendee.event);
   if (promotedAttendee) await sendConfirmationEmail(ctx, promotedAttendee);
 }
@@ -77,8 +78,8 @@ async function promoteNextWaitlistedAttendee(ctx: RsvpContext, eventId: string):
     await updateAttendeeStatus(ctx, nextEntry.attendeeId, "confirmed");
     return { id: nextEntry.attendeeId, event: eventId, email: nextEntry.email ?? "", name: nextEntry.name ?? DEFAULT_GUEST_NAME, rsvpStatus: "confirmed" };
   } catch (error) {
-    if (capacityReserved) await releaseCapacity(ctx, eventId, nextEntry?.email);
-    if (nextEntry) await enqueueWaitlist(ctx, waitlistAttendee(eventId, nextEntry));
+    if (nextEntry) await safeRequeueWaitlist(ctx, eventId, nextEntry);
+    if (capacityReserved) await safeReleasePromotionCapacity(ctx, eventId, nextEntry?.email);
     throw boundaryError("ctx.content.update(dateline_attendees)", error);
   }
 }
@@ -123,8 +124,24 @@ async function promoteListedAttendee(ctx: RsvpContext, attendee: Attendee): Prom
     attendeeConfirmed = true;
     await sendConfirmationEmail(ctx, { ...attendee, rsvpStatus: "confirmed" });
   } catch (error) {
-    if (capacityReserved && !attendeeConfirmed) await releaseCapacity(ctx, attendee.event, attendee.email);
+    if (capacityReserved && !attendeeConfirmed) await safeReleasePromotionCapacity(ctx, attendee.event, attendee.email);
     throw boundaryError("cron(promote_listed_attendee)", error);
+  }
+}
+
+async function safeRequeueWaitlist(ctx: RsvpContext, eventId: string, entry: NonNullable<Awaited<ReturnType<typeof popNextWaitlistEntry>>>): Promise<void> {
+  try {
+    await enqueueWaitlist(ctx, waitlistAttendee(eventId, entry));
+  } catch (error) {
+    ctx.log?.warn("RSVP waitlist rollback requeue failed", { eventId, error: String(error) });
+  }
+}
+
+async function safeReleasePromotionCapacity(ctx: RsvpContext, eventId: string, email?: string): Promise<void> {
+  try {
+    await releaseCapacity(ctx, eventId, email);
+  } catch (error) {
+    ctx.log?.warn("RSVP waitlist rollback capacity release failed", { eventId, error: String(error) });
   }
 }
 
