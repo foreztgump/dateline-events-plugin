@@ -1,0 +1,41 @@
+{
+  "notes": [
+    "Profiler budgets are pinned to Cloudflare limits: 50ms CPU, 10 subrequests, 30s wall time, and approximately 128MB memory.",
+    "The local @emdash-cms/sandbox-workerd runner only enforces wall time; CPU, subrequest, and memory checks here are advisory measurements to avoid false local confidence."
+  ],
+  "handlers": [
+    {
+      "id": "POST /admin/import/settings",
+      "module": "./dist/plugin.mjs",
+      "pluginRoute": "admin/import/settings",
+      "request": { "url": "https://example.test/admin/import/settings", "method": "POST" }
+    },
+    {
+      "id": "content:afterSave",
+      "module": "./dist/plugin.mjs",
+      "pluginHook": "content:afterSave",
+      "event": { "collection": "dateline_importer_settings" }
+    },
+    { "id": "plugin:install", "module": "./dist/plugin.mjs", "pluginHook": "plugin:install" },
+    { "id": "plugin:activate", "module": "./dist/plugin.mjs", "pluginHook": "plugin:activate" },
+    {
+      "id": "cron",
+      "module": "./dist/plugin.mjs",
+      "pluginHook": "cron",
+      "event": { "name": "dateline-importer-scheduled-imports", "scheduledAt": "2026-01-01T00:00:00.000Z" }
+    },
+    {
+      "id": "POST /admin/import/json",
+      "module": "./dist/plugin.mjs",
+      "pluginRoute": "admin/import/json",
+      "request": {
+        "url": "https://example.test/admin/import/json",
+        "method": "POST",
+        "headers": { "content-type": "application/json" }
+      },
+      "input": {
+        "json": "[{\"sourceId\":\"profile:1\",\"title\":\"Profiler Event\",\"startsAt\":\"2026-01-01T17:00:00.000Z\",\"endsAt\":\"2026-01-01T18:00:00.000Z\",\"timezone\":\"UTC\"}]"
+      }
+    }
+  ]
+}

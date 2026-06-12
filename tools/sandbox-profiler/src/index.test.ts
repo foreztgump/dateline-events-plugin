@@ -34,4 +34,17 @@ describe("runWithProfiling", () => {
     expect(result.cpuMicros).toBeGreaterThan(SANDBOX_CPU_BUDGET_MICROS);
     expect(result.breaches).toContain("cpuMicros exceeded 50000");
   });
+
+  it("keeps storage writes visible across repeated collection access", async () => {
+    const result = await runWithProfiling(async (ctx) => {
+      const collection = ctx.storage.profile_records;
+      if (!collection) throw new Error("missing storage collection");
+      await collection.put("written", { ok: true });
+      const saved = await ctx.storage.profile_records?.get("written");
+      if (!saved) throw new Error("missing storage write");
+    });
+
+    expect(result.ok).toBe(true);
+    expect(result.subrequestCount).toBe(2);
+  });
 });
