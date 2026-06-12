@@ -12,8 +12,8 @@ One milestone = one PR. Every PR routes through `pr-agent-runner` with `mission_
 ## M1 — WS1 dependency bump + cast elimination (PRO-873)
 - [x] 1.1 Bump `emdash ^0.9.0 → ^0.18`, `@emdash-cms/blocks → ^0.18.0` across root + packages; add `@emdash-cms/plugin-cli@^0.5.1`
 - [x] 1.2 Typecheck against real 0.18 types; remove every `as unknown` cast; triage each failure → verified-API rewrite or M2 item
-- [ ] 1.3 CI canary job vs `emdash@latest` (non-blocking)
-- [ ] 1.4 Grep gates wired in CI (per design D7)
+- [x] 1.3 CI canary job vs `emdash@latest` (non-blocking)
+- [x] 1.4 Grep gates wired in CI (per design D7)
 
 ## M2 — WS2 sandboxed conversion + WS3 remediation (PRO-874, PRO-875, PRO-876, PRO-877)
 - [ ] 2.1 `emdash-plugin.jsonc` ×3 (slug, publisher handle, license, security, capabilities, storage incl. uniqueIndexes as defense in depth)

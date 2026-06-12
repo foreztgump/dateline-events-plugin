@@ -38,6 +38,20 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      # M1 wires the full EmDash 0.18 grep gate now, but keeps it advisory
+      # because atomicIncrement/atomicDecrement remain in RSVP until M2 and
+      # legacy docs/factory hits are cleared by their scheduled milestones.
+      # The script exits non-zero on hits; later remediation milestones remove
+      # continue-on-error once their baselines are clean.
+      # Terms: emdash.config.ts | EMDASH_PLUGIN_MANIFEST | atomicIncrement |
+      # atomicDecrement | createCorePlugin. plugin:activate is intentionally
+      # not a gate term because it is a verified 0.18 lifecycle hook.
+      # Excludes: research/, openspec/, MIGRATION.md, CHANGELOG*, PRD*,
+      # VERIFIED-PLATFORM-0.18.md, dist/, node_modules/.
+      - name: EmDash 0.18 grep gate
+        continue-on-error: true
+        run: ./tools/ci-grep-gate.sh
+
       - name: Build
         run: pnpm -r build
 
@@ -52,3 +66,35 @@ jobs:
 
       - name: Sandbox profile
         run: pnpm sandbox:profile
+
+  emdash-latest-canary:
+    name: emdash@latest canary
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    env:
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+
+      - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1
+        with:
+          version: 10.33.2
+
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install pinned dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Override emdash to latest
+        run: |
+          pnpm pkg set "pnpm.overrides.emdash=latest"
+          pnpm install --no-frozen-lockfile
+
+      - name: Build against emdash@latest
+        run: pnpm -r build
+
+      - name: Typecheck against emdash@latest
+        run: pnpm -r typecheck
