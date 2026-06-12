@@ -10,8 +10,8 @@ One milestone = one PR. Every PR routes through `pr-agent-runner` with `mission_
 - [x] 0.5 Linear: comment findings on PRO-872; mark gate resolved on PRO-873
 
 ## M1 — WS1 dependency bump + cast elimination (PRO-873)
-- [ ] 1.1 Bump `emdash ^0.9.0 → ^0.18`, `@emdash-cms/blocks → ^0.18.0` across root + packages; add `@emdash-cms/plugin-cli@^0.5.1`
-- [ ] 1.2 Typecheck against real 0.18 types; remove every `as unknown` cast; triage each failure → verified-API rewrite or M2 item
+- [x] 1.1 Bump `emdash ^0.9.0 → ^0.18`, `@emdash-cms/blocks → ^0.18.0` across root + packages; add `@emdash-cms/plugin-cli@^0.5.1`
+- [x] 1.2 Typecheck against real 0.18 types; remove every `as unknown` cast; triage each failure → verified-API rewrite or M2 item
 - [ ] 1.3 CI canary job vs `emdash@latest` (non-blocking)
 - [ ] 1.4 Grep gates wired in CI (per design D7)
 

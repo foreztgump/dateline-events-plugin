@@ -24,9 +24,10 @@
     "lint:fix": "eslint src --cache --fix"
   },
   "peerDependencies": {
-    "emdash": "^0.9.0"
+    "emdash": "^0.18"
   },
   "devDependencies": {
+    "@emdash-cms/plugin-cli": "^0.5.1",
     "@types/node": "^20.19.39",
     "eslint": "^9.27.0",
     "rimraf": "^6.0.1",

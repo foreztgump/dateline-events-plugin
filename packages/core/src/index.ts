@@ -1,4 +1,3 @@
-import { definePlugin } from "emdash";
 import { adminHandlers } from "./admin.js";
 import { collections } from "./collections.js";
 import { PLUGIN_ID, PLUGIN_VERSION } from "./constants.js";
@@ -16,12 +15,9 @@ export type { AdminHandlers, CollectionField, CollectionSchema, DatelineEvent } 
 
 const capabilities = ["content:read", "content:write", "media:read"];
 const routeNames = ["calendar-feed", "ical", "admin/events", "admin/venues", "admin/organizers", "admin/settings", "privacy/export", "privacy/erase"];
-// EmDash 0.9.0 runtime accepts manifest metadata, while its public type omits in-progress plugin fields used by Dateline v0.1.
-// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-const defineDatelinePlugin = definePlugin as unknown as <T extends Record<string, unknown>>(definition: T) => T;
 
 export default function createCorePlugin() {
-  return defineDatelinePlugin({
+  return {
     id: PLUGIN_ID,
     version: PLUGIN_VERSION,
     capabilities: [...capabilities],
@@ -50,5 +46,5 @@ export default function createCorePlugin() {
         { path: "/dateline/settings", label: "Settings", icon: "cog" },
       ],
     },
-  });
+  };
 }

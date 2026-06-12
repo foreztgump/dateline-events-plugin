@@ -2,3 +2,9 @@ packages:
   - "packages/*"
   - "examples/*"
   - "tools/*"
+
+onlyBuiltDependencies:
+  - workerd
+  - esbuild
+  - better-sqlite3
+  - sharp
