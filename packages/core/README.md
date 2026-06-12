@@ -28,16 +28,14 @@ This sandboxed plugin declares these capabilities:
 ## Usage
 
 ```ts
-import datelineCore from "@dateline/core";
-import { adminHandlers, afterSave } from "@dateline/core";
+import datelineCorePlugin from "@dateline/core/sandbox";
 
 export default {
-  sandboxed: [datelineCore],
+  sandboxed: [datelineCorePlugin],
 };
-
-// Or manually for testing:
-console.log(datelineCore.capabilities); // ["content:read", "content:write"]
 ```
+
+The package root exposes utility helpers such as `adminHandlers`, `calendarFeed`, `iCalFeed`, and `eventToJsonLd` for tests and build-time integrations. The sandboxed plugin descriptor is the default export from `@dateline/core/sandbox`.
 
 ### Routes
 
