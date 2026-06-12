@@ -48,9 +48,12 @@ export interface ImportSummary {
 }
 
 export interface ImporterContext {
-  content?: {
-    list(collection: string, options?: unknown): Promise<{ items?: unknown[]; entries?: unknown[] }>;
-    create(collection: string, content: unknown): Promise<unknown>;
+  content?: object;
+  cron?: {
+    schedule(name: string, opts: { schedule: string; data?: Record<string, unknown> }): Promise<void>;
+  };
+  http?: {
+    fetch: (url: string) => Promise<Response>;
   };
   log?: {
     warn(message: string, details?: unknown): void;

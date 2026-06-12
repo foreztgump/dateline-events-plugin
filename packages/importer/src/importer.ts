@@ -35,7 +35,18 @@ async function sourceExists(sourceId: string, ctx: ImporterContext): Promise<boo
   return (response?.items ?? response?.entries ?? []).length > 0;
 }
 
-function requireContent(ctx: ImporterContext): NonNullable<ImporterContext["content"]> {
-  if (!ctx.content) throw new Error("Importer requires ctx.content.");
+interface ImportContentAccess {
+  list(collection: string, options?: unknown): Promise<{ items?: unknown[]; entries?: unknown[] }>;
+  create(collection: string, content: unknown): Promise<unknown>;
+}
+
+function requireContent(ctx: ImporterContext): ImportContentAccess {
+  if (!hasImportContentAccess(ctx.content)) throw new Error("Importer requires ctx.content.");
   return ctx.content;
+}
+
+function hasImportContentAccess(content: ImporterContext["content"]): content is ImportContentAccess {
+  if (!content) return false;
+  const candidate = content as Partial<ImportContentAccess>;
+  return typeof candidate.list === "function" && typeof candidate.create === "function";
 }

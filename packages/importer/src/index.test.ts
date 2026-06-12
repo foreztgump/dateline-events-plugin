@@ -1,24 +1,31 @@
 import { validateBlocks } from "@dateline/blocks";
+import { readFileSync } from "node:fs";
 import { describe, expect, it, vi } from "vitest";
-import createImporterPlugin, {
+import {
   adminHandlers,
+  importCsv,
+  importICal,
+  importJson,
   importRows,
+  importTec,
   parseCsv,
   parseICal,
   parseJsonEvents,
   migrateTecExport,
 } from "./index.js";
+import ICAL from "ical.js";
+import plugin from "./plugin.js";
 import type { ImportRow } from "./index.js";
+
+const REMOTE_FETCH_TIMEOUT_MS = 25_000;
 
 describe("@dateline/importer", () => {
   it("declares the sandbox manifest and whitelist settings", () => {
-    const manifest = createImporterPlugin();
+    const manifest = importerManifest();
 
-    expect(manifest.id).toBe("dateline-importer");
-    expect(manifest.capabilities).toEqual(["content:read", "content:write", "network:request"]);
-    expect(manifest.capabilities).not.toContain("network:request:unrestricted");
-    expect(manifest.storage.settings.allowedHosts).toEqual([]);
-    expect(manifest.routes).toEqual(expect.arrayContaining(["admin/import/tec", "admin/import/ical", "admin/import/csv", "admin/import/json"]));
+    expect(manifest.capabilities).toEqual(["content:read", "content:write", "network:request:unrestricted"]);
+    expect(manifest.allowedHosts).toEqual([]);
+    expect(Object.keys(plugin.routes ?? {})).toEqual(expect.arrayContaining(["admin/import/tec", "admin/import/ical", "admin/import/csv", "admin/import/json"]));
   });
 
   it("renders valid Block Kit admin import pages with field mapping controls", () => {
@@ -60,6 +67,18 @@ describe("@dateline/importer", () => {
     });
   });
 
+  it("keeps RRULE text when ical.js returns a plain string", () => {
+    const getFirstPropertyValue = vi.spyOn(ICAL.Component.prototype, "getFirstPropertyValue");
+    getFirstPropertyValue.mockImplementation(function getPlainStringRrule(this: ICAL.Component, propertyName?: string) {
+      if (propertyName === "rrule") return "FREQ=DAILY;COUNT=2";
+      return this.getFirstProperty(propertyName)?.getFirstValue() ?? null;
+    });
+
+    const importedEvents = parseICal(icsFixture());
+
+    expect(importedEvents.rows[0]?.event.recurrenceRule).toBe("FREQ=DAILY;COUNT=2");
+  });
+
   it("keeps valid iCalendar rows when another VEVENT is malformed", () => {
     const importedEvents = parseICal(icsFixtureWithMalformedEvent());
 
@@ -97,6 +116,91 @@ describe("@dateline/importer", () => {
     await expect(importRows([row], ctx)).resolves.toMatchObject({ created: 0, skipped: 1, errors: [] });
     expect(ctx.content.create).toHaveBeenCalledTimes(1);
   });
+
+  it("fetches a remote iCalendar URL through ctx.http.fetch before parsing", async () => {
+    const ctx = remoteImportContext([new Response(icsFixture(), { status: 200 })]);
+    const request = jsonRequest({ url: "https://calendar.example.com/events.ics" });
+
+    await expectResponseBody(importICal({ request, ctx }), { created: 1, skipped: 0, errors: [] });
+    expect(ctx.http.fetch).toHaveBeenCalledWith("https://calendar.example.com/events.ics");
+    expect(ctx.content.create).toHaveBeenCalledTimes(1);
+  });
+
+  it("returns an import error when a remote feed responds non-200", async () => {
+    const ctx = remoteImportContext([new Response("unavailable", { status: 503, statusText: "Service Unavailable" })]);
+    const request = jsonRequest({ url: "https://calendar.example.com/events.ics" });
+
+    await expectResponseBody(importICal({ request, ctx }), {
+      created: 0,
+      skipped: 0,
+      errors: [{ row: 1, sourceId: "remote:https://calendar.example.com/events.ics", message: "Error: Remote feed returned HTTP 503 Service Unavailable." }],
+    });
+    expect(ctx.content.create).not.toHaveBeenCalled();
+  });
+
+  it("returns an import error when a remote fetch rejects", async () => {
+    const ctx = remoteImportContext([new Error("operation timed out")]);
+    const request = jsonRequest({ url: "https://calendar.example.com/events.ics" });
+
+    await expectResponseBody(importICal({ request, ctx }), {
+      created: 0,
+      skipped: 0,
+      errors: [{ row: 1, sourceId: "remote:https://calendar.example.com/events.ics", message: "Error: Remote feed request failed: operation timed out" }],
+    });
+  });
+
+  it("times out remote feed requests that never settle", async () => {
+    vi.useFakeTimers();
+    try {
+      const ctx = remoteImportContext([new Promise<Response>(() => undefined)]);
+      const request = jsonRequest({ url: "https://calendar.example.com/events.ics" });
+
+      const responsePromise = importICal({ request, ctx });
+      await vi.advanceTimersByTimeAsync(REMOTE_FETCH_TIMEOUT_MS);
+      await expectResponseBody(responsePromise, {
+        created: 0,
+        skipped: 0,
+        errors: [{ row: 1, sourceId: "remote:https://calendar.example.com/events.ics", message: "Error: Remote feed request failed: Remote feed request timed out after 25000ms." }],
+      });
+    } finally {
+      vi.useRealTimers();
+    }
+  }, 1000);
+
+  it("preserves empty remote feed bodies as parser errors", async () => {
+    const ctx = remoteImportContext([new Response("", { status: 200 })]);
+    const request = jsonRequest({ url: "https://calendar.example.com/events.ics" });
+
+    await expectResponseBody(importICal({ request, ctx }), {
+      created: 0,
+      skipped: 0,
+      errors: [{ row: 1, sourceId: "ical:document", message: "TypeError: Cannot read properties of undefined (reading 'length')" }],
+    });
+  });
+
+
+  it("fetches at most ten remote JSON feeds per invocation", async () => {
+    const remoteBodies = Array.from({ length: 11 }, (_value, index) => new Response(jsonFeedFixture(index + 1), { status: 200 }));
+    const ctx = remoteImportContext(remoteBodies);
+    const request = jsonRequest({ urls: Array.from({ length: 11 }, (_value, index) => `https://feeds.example.com/${index + 1}.json`) });
+
+    await expectResponseBody(importJson({ request, ctx }), {
+      created: 10,
+      skipped: 0,
+      errors: [{ row: 11, sourceId: "remote:budget", message: "Import deferred 1 remote feed because each invocation may issue at most 10 subrequests." }],
+    });
+    expect(ctx.http.fetch).toHaveBeenCalledTimes(10);
+  });
+
+  it("reuses remote feed fetching for CSV and TEC import routes", async () => {
+    const csvContext = remoteImportContext([new Response("title,start,end,timezone\nCSV Launch,2026-05-01T17:00:00Z,2026-05-01T18:00:00Z,UTC", { status: 200 })]);
+    const tecContext = remoteImportContext([new Response(JSON.stringify(createTecExportFixture(1)), { status: 200 })]);
+
+    await expectResponseBody(importCsv({ request: jsonRequest({ url: "https://feeds.example.com/events.csv", mapping: csvMapping() }), ctx: csvContext }), { created: 1, skipped: 0, errors: [] });
+    await expectResponseBody(importTec({ request: jsonRequest({ url: "https://feeds.example.com/events.json" }), ctx: tecContext }), { created: 1, skipped: 0, errors: [] });
+    expect(csvContext.http.fetch).toHaveBeenCalledWith("https://feeds.example.com/events.csv");
+    expect(tecContext.http.fetch).toHaveBeenCalledWith("https://feeds.example.com/events.json");
+  });
 });
 
 function createTecExportFixture(count: number) {
@@ -119,6 +223,11 @@ function createTecExportFixture(count: number) {
       customFields: { legacyKey: "legacy value" },
     })),
   };
+}
+
+function importerManifest() {
+  const manifestText = readFileSync(new URL("../emdash-plugin.jsonc", import.meta.url), "utf8");
+  return JSON.parse(manifestText) as { capabilities: string[]; allowedHosts?: string[] };
 }
 
 function icsFixture(): string {
@@ -172,6 +281,27 @@ function eventDraft(sourceId: string, title: string) {
   };
 }
 
+function jsonFeedFixture(index: number): string {
+  return JSON.stringify([{ sourceId: `json:${index}`, title: `JSON Event ${index}`, startsAt: "2026-06-01T17:00:00Z", endsAt: "2026-06-01T18:00:00Z", timezone: "UTC" }]);
+}
+
+function csvMapping() {
+  return {
+    title: "title",
+    startsAt: "start",
+    endsAt: "end",
+    timezone: "timezone",
+  };
+}
+
+function jsonRequest(body: unknown): Request {
+  return new Request("https://dateline.example.com/import", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify(body),
+  });
+}
+
 function contentContext() {
   const createdSourceIds = new Set<string>();
   return {
@@ -186,4 +316,24 @@ function contentContext() {
       }),
     },
   };
+}
+
+function remoteImportContext(remoteResponses: Array<Response | Error | Promise<Response>>) {
+  const ctx = contentContext();
+  return {
+    ...ctx,
+    http: {
+      fetch: vi.fn((url: string) => {
+        const response = remoteResponses.shift();
+        if (!response) return Promise.reject(new Error(`No fixture response for ${url}.`));
+        if (response instanceof Error) return Promise.reject(response);
+        return Promise.resolve(response);
+      }),
+    },
+  };
+}
+
+async function expectResponseBody(responsePromise: Promise<Response>, expectedBody: unknown): Promise<void> {
+  const response = await responsePromise;
+  await expect(response.json()).resolves.toEqual(expectedBody);
 }

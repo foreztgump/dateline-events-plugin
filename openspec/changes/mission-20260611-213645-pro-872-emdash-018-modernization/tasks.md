@@ -22,7 +22,7 @@ One milestone = one PR. Every PR routes through `pr-agent-runner` with `mission_
 - [ ] 2.4 `emdash-plugin validate` + `build` ×3 in CI; tarballs as artifacts
 - [x] 2.5 RSVP capacity → storage-backed counters (D2); delete atomic-KV paths; concurrent oversell test green
 - [x] 2.6 Cron/lifecycle remediation (D3): schedule in `plugin:install`, consume via `cron` hook; verified hook ids, no casts
-- [ ] 2.7 Importer: implement `ctx.http.fetch` remote-feed import under `network:request:unrestricted` (D4) + tests
+- [x] 2.7 Importer: implement `ctx.http.fetch` remote-feed import under `network:request:unrestricted` (D4) + tests
 - [x] 2.8 Email surfaces: keep `email:send` (+ `hooks.email-events:register` only if actually used)
 
 ## M3 — WS5 reference site rebuild (PRO-878)

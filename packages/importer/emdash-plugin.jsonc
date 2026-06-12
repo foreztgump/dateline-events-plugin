@@ -1,0 +1,25 @@
+{
+  "$schema": "./node_modules/@emdash-cms/plugin-cli/schemas/emdash-plugin.schema.json",
+
+  "slug": "dateline-importer",
+  "publisher": "dateline.example.com",
+
+  "license": "MIT",
+  "author": { "name": "Dateline Maintainers", "email": "maintainers@dateline.example.com", "url": "https://github.com/foreztgump/dateline-events-plugin" },
+  "security": { "email": "security@dateline.example.com", "url": "https://github.com/foreztgump/dateline-events-plugin/security" },
+  "name": "Dateline Importer",
+  "description": "iCalendar, CSV, JSON, and The Events Calendar feed importer for Dateline.",
+  "keywords": ["events", "calendar", "ical", "csv", "migration"],
+  "repo": "https://github.com/foreztgump/dateline-events-plugin",
+
+  "capabilities": ["content:read", "content:write", "network:request:unrestricted"],
+  "allowedHosts": [],
+  "storage": {},
+  "admin": {
+    "pages": [
+      { "path": "/dateline/import/tec", "label": "TEC Import", "icon": "download" },
+      { "path": "/dateline/import/ical", "label": "iCal Import", "icon": "calendar" },
+      { "path": "/dateline/import/csv", "label": "CSV Import", "icon": "table" }
+    ]
+  }
+}
