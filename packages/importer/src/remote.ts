@@ -1,5 +1,7 @@
-import { MAX_REMOTE_SUBREQUESTS, REMOTE_FETCH_TIMEOUT_MS } from "./constants.js";
-import type { ImportError, ImporterContext } from "./types.js";
+import { MAX_REMOTE_SUBREQUESTS } from "./constants.js";
+import { enqueueDeferredRemoteFeeds } from "./deferred.js";
+import { fetchRemoteFeed } from "./fetch.js";
+import type { ImportError, ImportFormat, ImporterContext } from "./types.js";
 
 export interface FeedLoadResult {
   texts: string[];
@@ -7,48 +9,45 @@ export interface FeedLoadResult {
   payload: unknown;
 }
 
-export async function loadFeedTexts(request: Request | undefined, ctx: ImporterContext, bodyKeys: string[]): Promise<FeedLoadResult> {
+interface FeedLoadOptions {
+  request?: Request;
+  ctx: ImporterContext;
+  bodyKeys: string[];
+  format: ImportFormat;
+}
+
+interface RemoteFetchOptions {
+  urls: string[];
+  ctx: ImporterContext;
+  payload: unknown;
+  format: ImportFormat;
+}
+
+export async function loadFeedTexts(options: FeedLoadOptions): Promise<FeedLoadResult> {
+  const { request, ctx, bodyKeys, format } = options;
   const payload = await readPayload(request);
   const urls = remoteUrls(payload);
-  if (urls.length > 0) return fetchRemoteFeeds(urls, ctx, payload);
+  if (urls.length > 0) return fetchRemoteFeeds({ urls, ctx, payload, format });
   return { texts: [inlineFeedText(payload, bodyKeys)], errors: [], payload };
 }
 
-export function readPayloadProperty(payload: unknown, key: string): unknown {
+function readPayloadProperty(payload: unknown, key: string): unknown {
   if (!isRecord(payload)) return undefined;
   return payload[key];
 }
 
-async function fetchRemoteFeeds(urls: string[], ctx: ImporterContext, payload: unknown): Promise<FeedLoadResult> {
-  const fetchedTexts = await Promise.all(urls.slice(0, MAX_REMOTE_SUBREQUESTS).map((url) => fetchRemoteFeed(url, ctx)));
+async function fetchRemoteFeeds(options: RemoteFetchOptions): Promise<FeedLoadResult> {
+  const { urls, ctx, payload, format } = options;
+  const fetchedTexts = await Promise.all(urls.slice(0, MAX_REMOTE_SUBREQUESTS).map((url) => fetchOneRemoteFeed(url, ctx)));
   const errors = fetchedTexts.flatMap((feed, index) => feed.error ? [{ row: index + 1, sourceId: `remote:${urls[index]}`, message: feed.error }] : []);
   const texts = fetchedTexts.flatMap((feed) => feed.text === undefined ? [] : [feed.text]);
+  await enqueueDeferredRemoteFeeds({ ctx, format, urls: urls.slice(MAX_REMOTE_SUBREQUESTS), payload });
   return { texts, errors: [...errors, ...deferredFeedErrors(urls)], payload };
 }
 
-async function fetchRemoteFeed(url: string, ctx: ImporterContext): Promise<{ text?: string; error?: string }> {
-  try {
-    if (!ctx.http) throw new Error("Importer requires ctx.http for remote feed URLs.");
-    const response = await fetchWithTimeout(ctx.http.fetch(url));
-    if (!response.ok) return { error: `Error: Remote feed returned HTTP ${response.status} ${response.statusText}.` };
-    return { text: await response.text() };
-  } catch (error) {
-    return { error: `Error: Remote feed request failed: ${errorMessage(error)}` };
-  }
-}
-
-async function fetchWithTimeout(fetchPromise: Promise<Response>): Promise<Response> {
-  let timeoutId: ReturnType<typeof setTimeout> | undefined;
-  const timeoutPromise = new Promise<Response>((_resolve, reject) => {
-    timeoutId = setTimeout(() => {
-      reject(new Error(`Remote feed request timed out after ${REMOTE_FETCH_TIMEOUT_MS}ms.`));
-    }, REMOTE_FETCH_TIMEOUT_MS);
-  });
-  try {
-    return await Promise.race([fetchPromise, timeoutPromise]);
-  } finally {
-    if (timeoutId) clearTimeout(timeoutId);
-  }
+function fetchOneRemoteFeed(url: string, ctx: ImporterContext): Promise<{ text?: string; error?: string }> {
+  if (!ctx.http) return Promise.resolve({ error: "Error: Remote feed request failed: Importer requires ctx.http for remote feed URLs." });
+  return fetchRemoteFeed(url, ctx.http.fetch);
 }
 
 function deferredFeedErrors(urls: string[]): ImportError[] {
@@ -87,8 +86,4 @@ function remoteUrls(payload: unknown): string[] {
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null;
-}
-
-function errorMessage(error: unknown): string {
-  return error instanceof Error ? error.message : String(error);
 }

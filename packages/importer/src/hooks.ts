@@ -1,4 +1,5 @@
 import { IMPORTER_CRON_NAME, IMPORTER_CRON_SCHEDULE } from "./constants.js";
+import { drainDeferredRemoteFeeds } from "./deferred.js";
 import { boundaryError } from "./errors.js";
 import type { ImporterContext } from "./types.js";
 
@@ -14,8 +15,13 @@ export async function activate(_event: unknown, ctx: ImporterContext): Promise<v
   await scheduleImporterJobs(ctx, "activate");
 }
 
-export function cron(event: { name?: string }): void {
+export async function cron(event: { name?: string }, ctx: ImporterContext): Promise<void> {
   if (event.name !== IMPORTER_CRON_NAME) return;
+  try {
+    await drainDeferredRemoteFeeds(ctx);
+  } catch (error) {
+    throw boundaryError("cron(importer-deferred-feeds)", error);
+  }
 }
 
 async function scheduleImporterJobs(ctx: ImporterContext, lifecycleName: string): Promise<void> {

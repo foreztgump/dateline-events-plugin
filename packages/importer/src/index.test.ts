@@ -3,6 +3,7 @@ import { readFileSync } from "node:fs";
 import { describe, expect, it, vi } from "vitest";
 import {
   adminHandlers,
+  cron,
   importCsv,
   importICal,
   importJson,
@@ -15,6 +16,7 @@ import {
 } from "./index.js";
 import ICAL from "ical.js";
 import plugin from "./plugin.js";
+import { IMPORTER_CRON_NAME } from "./constants.js";
 import type { ImportRow } from "./index.js";
 
 const REMOTE_FETCH_TIMEOUT_MS = 25_000;
@@ -26,6 +28,14 @@ describe("@dateline/importer", () => {
     expect(manifest.capabilities).toEqual(["content:read", "content:write", "network:request:unrestricted"]);
     expect(manifest.allowedHosts).toEqual([]);
     expect(Object.keys(plugin.routes ?? {})).toEqual(expect.arrayContaining(["admin/import/tec", "admin/import/ical", "admin/import/csv", "admin/import/json"]));
+    expect(manifest.storage.imports.indexes).toEqual(expect.arrayContaining(["kind", "status", "format", "createdAt"]));
+    expect(manifest.admin.pages.map((page) => page.path)).toEqual(expect.arrayContaining([
+      "/dateline/import/tec",
+      "/dateline/import/ical",
+      "/dateline/import/csv",
+      "/dateline/import/json",
+      "/dateline/import/settings",
+    ]));
   });
 
   it("renders valid Block Kit admin import pages with field mapping controls", () => {
@@ -33,6 +43,8 @@ describe("@dateline/importer", () => {
 
     for (const page of pages) expect(validateBlocks(adminHandlers[page]().blocks).valid).toBe(true);
     expect(JSON.stringify(adminHandlers.csv().blocks)).toContain("CSV field mapping");
+    expect(JSON.stringify(adminHandlers.settings().blocks)).toContain("unrestricted network access");
+    expect(JSON.stringify(adminHandlers.ical().blocks)).toContain("Import feeds now");
   });
 
   it("migrates a 50-event TEC export into Dateline rows", () => {
@@ -192,6 +204,45 @@ describe("@dateline/importer", () => {
     expect(ctx.http.fetch).toHaveBeenCalledTimes(10);
   });
 
+  it("persists deferred remote feed URLs after the subrequest budget", async () => {
+    const remoteBodies = Array.from({ length: 12 }, (_value, index) => new Response(jsonFeedFixture(index + 1), { status: 200 }));
+    const ctx = remoteImportContext(remoteBodies);
+    const request = jsonRequest({ urls: Array.from({ length: 12 }, (_value, index) => `https://feeds.example.com/${index + 1}.json`) });
+
+    await expectResponseBody(importJson({ request, ctx }), {
+      created: 10,
+      skipped: 0,
+      errors: [{ row: 11, sourceId: "remote:budget", message: "Import deferred 2 remote feeds because each invocation may issue at most 10 subrequests." }],
+    });
+
+    expect(readDeferredRecords(ctx.records).map((record) => record.url)).toEqual([
+      "https://feeds.example.com/11.json",
+      "https://feeds.example.com/12.json",
+    ]);
+  });
+
+  it("drains persisted deferred importer jobs within the cron subrequest budget", async () => {
+    const deferredRecords = Array.from({ length: 12 }, (_value, index) => deferredJsonRecord(index + 1));
+    const remoteBodies = Array.from({ length: 10 }, (_value, index) => new Response(jsonFeedFixture(index + 1), { status: 200 }));
+    const ctx = remoteImportContext(remoteBodies, deferredRecords);
+
+    await cron({ name: IMPORTER_CRON_NAME }, ctx);
+
+    expect(ctx.http.fetch).toHaveBeenCalledTimes(10);
+    expect(ctx.content.create).toHaveBeenCalledTimes(10);
+    expect(readDeferredRecords(ctx.records, "completed")).toHaveLength(10);
+    expect(readDeferredRecords(ctx.records, "pending")).toHaveLength(2);
+  });
+
+  it("leaves an empty deferred queue as a cron no-op", async () => {
+    const ctx = remoteImportContext([]);
+
+    await cron({ name: IMPORTER_CRON_NAME }, ctx);
+
+    expect(ctx.http.fetch).not.toHaveBeenCalled();
+    expect(ctx.content.create).not.toHaveBeenCalled();
+  });
+
   it("reuses remote feed fetching for CSV and TEC import routes", async () => {
     const csvContext = remoteImportContext([new Response("title,start,end,timezone\nCSV Launch,2026-05-01T17:00:00Z,2026-05-01T18:00:00Z,UTC", { status: 200 })]);
     const tecContext = remoteImportContext([new Response(JSON.stringify(createTecExportFixture(1)), { status: 200 })]);
@@ -227,7 +278,12 @@ function createTecExportFixture(count: number) {
 
 function importerManifest() {
   const manifestText = readFileSync(new URL("../emdash-plugin.jsonc", import.meta.url), "utf8");
-  return JSON.parse(manifestText) as { capabilities: string[]; allowedHosts?: string[] };
+  return JSON.parse(manifestText) as {
+    capabilities: string[];
+    allowedHosts?: string[];
+    storage: { imports: { indexes: string[] } };
+    admin: { pages: Array<{ path: string }> };
+  };
 }
 
 function icsFixture(): string {
@@ -318,10 +374,25 @@ function contentContext() {
   };
 }
 
-function remoteImportContext(remoteResponses: Array<Response | Error | Promise<Response>>) {
+function remoteImportContext(remoteResponses: Array<Response | Error | Promise<Response>>, deferredRecords: Array<Record<string, unknown>> = []) {
   const ctx = contentContext();
+  const records = new Map<string, { id: string; data: unknown }>(
+    deferredRecords.map((record, index) => [`deferred:${index}`, { id: `deferred:${index}`, data: record }] as const),
+  );
   return {
     ...ctx,
+    records,
+    storage: {
+      imports: {
+        get: vi.fn((id: string) => Promise.resolve(records.get(id)?.data ?? null)),
+        put: vi.fn((id: string, data: unknown) => {
+          records.set(id, { id, data });
+          return Promise.resolve();
+        }),
+        query: vi.fn(() => Promise.resolve({ items: Array.from(records.values()) })),
+        count: vi.fn(() => Promise.resolve(records.size)),
+      },
+    },
     http: {
       fetch: vi.fn((url: string) => {
         const response = remoteResponses.shift();
@@ -331,6 +402,24 @@ function remoteImportContext(remoteResponses: Array<Response | Error | Promise<R
       }),
     },
   };
+}
+
+function deferredJsonRecord(index: number): Record<string, unknown> {
+  return {
+    kind: "deferredRemoteFeed",
+    status: "pending",
+    format: "json",
+    url: `https://feeds.example.com/${index}.json`,
+    payload: {},
+    createdAt: new Date(index).toISOString(),
+  };
+}
+
+function readDeferredRecords(records: Map<string, { id: string; data: unknown }>, status?: string): Array<Record<string, unknown>> {
+  return Array.from(records.values())
+    .map((entry) => entry.data)
+    .filter((value): value is Record<string, unknown> => typeof value === "object" && value !== null && "kind" in value && value.kind === "deferredRemoteFeed")
+    .filter((record) => status === undefined || record.status === status);
 }
 
 async function expectResponseBody(responsePromise: Promise<Response>, expectedBody: unknown): Promise<void> {

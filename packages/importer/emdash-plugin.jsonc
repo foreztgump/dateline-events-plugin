@@ -14,12 +14,18 @@
 
   "capabilities": ["content:read", "content:write", "network:request:unrestricted"],
   "allowedHosts": [],
-  "storage": {},
+  "storage": {
+    "imports": {
+      "indexes": ["kind", "status", "format", "createdAt"]
+    }
+  },
   "admin": {
     "pages": [
       { "path": "/dateline/import/tec", "label": "TEC Import", "icon": "download" },
       { "path": "/dateline/import/ical", "label": "iCal Import", "icon": "calendar" },
-      { "path": "/dateline/import/csv", "label": "CSV Import", "icon": "table" }
+      { "path": "/dateline/import/csv", "label": "CSV Import", "icon": "table" },
+      { "path": "/dateline/import/json", "label": "JSON Import", "icon": "file-json" },
+      { "path": "/dateline/import/settings", "label": "Importer Settings", "icon": "settings" }
     ]
   }
 }

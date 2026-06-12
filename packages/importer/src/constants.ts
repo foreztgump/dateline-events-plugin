@@ -6,3 +6,6 @@ export const IMPORTER_CRON_NAME = "dateline-importer-scheduled-imports";
 export const IMPORTER_CRON_SCHEDULE = "*/15 * * * *";
 export const MAX_REMOTE_SUBREQUESTS = 10;
 export const REMOTE_FETCH_TIMEOUT_MS = 25_000;
+export const DEFERRED_STATUS_PENDING = "pending";
+export const DEFERRED_STATUS_COMPLETED = "completed";
+export const DEFERRED_STATUS_FAILED = "failed";

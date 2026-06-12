@@ -16,9 +16,8 @@ const plugin: SandboxedPlugin = {
       afterSave(event);
       return Promise.resolve();
     },
-    cron: (event) => {
-      cron(event);
-      return Promise.resolve();
+    cron: async (event, ctx) => {
+      await cron(event, ctx);
     },
   },
   routes: {
