@@ -38,6 +38,12 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      # ci-grep-gate.sh uses ripgrep, which ubuntu-latest does not preinstall.
+      # The gate is blocking from M2, so a missing rg must fail loudly at install
+      # time rather than as an opaque exit 127 inside the gate.
+      - name: Install ripgrep
+        run: sudo apt-get update && sudo apt-get install -y ripgrep
+
       # M2 makes the source-level EmDash 0.18 grep gate blocking now that
       # atomicIncrement and atomicDecrement are removed from plugin code.
       # README/docs pre-v0.2 wording is cleared by the scheduled M4 docs pass.
