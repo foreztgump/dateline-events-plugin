@@ -3,20 +3,26 @@
   "version": "0.1.1",
   "type": "module",
   "license": "MIT",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs"
+    },
+    "./sandbox": {
+      "types": "./dist/plugin.d.mts",
+      "import": "./dist/plugin.mjs"
     }
   },
   "files": [
     "dist",
+    "emdash-plugin.jsonc",
     "README.md"
   ],
   "scripts": {
-    "build": "tsc -b",
+    "build": "mkdir -p node_modules/.cache/emdash-build && TMPDIR=./node_modules/.cache/emdash-build emdash-plugin build && tsc -b",
+    "dev": "emdash-plugin dev",
     "typecheck": "tsc -b --noEmit",
     "lint": "eslint src --cache",
     "test": "vitest run",

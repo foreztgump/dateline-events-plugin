@@ -10,7 +10,7 @@ export async function profileRsvpSubmit(ctx: RsvpContext): Promise<void> {
 }
 
 export async function profileWaitlist(ctx: RsvpContext): Promise<void> {
-  await waitlistJoin({ request: profileRequest("waitlist"), ctx });
+  await waitlistJoin({ request: profileRequest("waitlist"), ctx: profileContext(ctx) });
 }
 
 export async function profileAfterSave(ctx: RsvpContext): Promise<void> {
@@ -33,9 +33,21 @@ function profileRequest(route: string): Request {
 }
 
 function profileContext(ctx: RsvpContext): RsvpContext {
+  const records = new Map<string, { id: string; data: unknown }>([
+    [`capacity:${PROFILE_EVENT}`, { id: `capacity:${PROFILE_EVENT}`, data: { kind: "capacity", eventId: PROFILE_EVENT, remaining: 1 } }],
+  ]);
   return {
     ...ctx,
-    kv: { ...ctx.kv, atomicDecrement: () => Promise.resolve(1) },
-    waitUntil: (promise: Promise<unknown>) => { void promise; },
+    storage: ctx.storage ?? {
+      rsvps: {
+        get: (id) => Promise.resolve(records.get(id)?.data ?? null),
+        put: (id, data) => {
+          records.set(id, { id, data });
+          return Promise.resolve();
+        },
+        query: () => Promise.resolve({ items: Array.from(records.values()) }),
+        count: () => Promise.resolve(records.size),
+      },
+    },
   };
 }

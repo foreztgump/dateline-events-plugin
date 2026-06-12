@@ -1,0 +1,29 @@
+{
+  "$schema": "./node_modules/@emdash-cms/plugin-cli/schemas/emdash-plugin.schema.json",
+
+  "slug": "dateline-rsvp",
+  "publisher": "dateline.example.com",
+
+  "license": "MIT",
+  "author": { "name": "Dateline Maintainers", "email": "maintainers@dateline.example.com", "url": "https://github.com/foreztgump/dateline-events-plugin" },
+  "security": { "email": "security@dateline.example.com", "url": "https://github.com/foreztgump/dateline-events-plugin/security" },
+  "name": "Dateline RSVP",
+  "description": "Free RSVP, capacity, waitlist promotion, and confirmation email for Dateline.",
+  "keywords": ["events", "rsvp", "capacity", "waitlist", "email"],
+  "repo": "https://github.com/foreztgump/dateline-events-plugin",
+
+  "capabilities": ["content:read", "content:write", "email:send"],
+  "allowedHosts": [],
+  "storage": {
+    "rsvps": {
+      "indexes": ["kind", "eventId", "email", "status", "expiresAt"],
+      "uniqueIndexes": [["eventId", "email"]]
+    }
+  },
+  "admin": {
+    "pages": [
+      { "path": "/dateline/rsvp/attendees", "label": "RSVP Attendees", "icon": "users" },
+      { "path": "/dateline/rsvp/waitlist", "label": "Waitlist", "icon": "clock" }
+    ]
+  }
+}

@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-GATE_PATTERN='emdash\.config\.ts|EMDASH_PLUGIN_MANIFEST|atomicIncrement|atomicDecrement|createCorePlugin'
+ATOMIC_INCREMENT='atomic''Increment'
+ATOMIC_DECREMENT='atomic''Decrement'
+GATE_PATTERN="emdash\\.config\\.ts|EMDASH_PLUGIN_MANIFEST|${ATOMIC_INCREMENT}|${ATOMIC_DECREMENT}|createCorePlugin"
 
 GATED_SCOPES=(
   "packages/*/src"
