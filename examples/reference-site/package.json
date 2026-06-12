@@ -29,7 +29,7 @@
     "@dateline/rsvp": "workspace:*",
     "@dateline/views": "workspace:*",
     "astro": "^6.1.10",
-    "emdash": "^0.9.0"
+    "emdash": "^0.18"
   },
   "devDependencies": {
     "@types/node": "^20.19.39",

@@ -18,7 +18,7 @@ const WALL_TIME_FORMAT_OPTIONS = {
 
 export function parseICal(icsText: string): ImportParseResult {
   try {
-    const calendar = new ICAL.Component(ICAL.parse(icsText) as unknown[]);
+    const calendar = parseCalendarComponent(icsText);
     const parsedEvents = calendar.getAllSubcomponents("vevent").map((vevent, index) => parseEventComponent(vevent, index + 1));
     return {
       rows: parsedEvents.flatMap((parsedEvent) => parsedEvent.row ? [parsedEvent.row] : []),
@@ -27,6 +27,12 @@ export function parseICal(icsText: string): ImportParseResult {
   } catch (error) {
     return { rows: [], errors: [{ row: 1, sourceId: "ical:document", message: String(error) }] };
   }
+}
+
+function parseCalendarComponent(icsText: string): ICAL.Component {
+  const parsedCalendar: unknown = ICAL.parse(icsText);
+  if (!Array.isArray(parsedCalendar)) throw new Error("iCalendar parse result was not a component array.");
+  return new ICAL.Component(parsedCalendar);
 }
 
 function parseEventComponent(vevent: ICAL.Component, rowNumber: number): { row?: ImportRow; error?: ImportError } {

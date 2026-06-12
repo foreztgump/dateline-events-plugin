@@ -6,6 +6,8 @@ import {
   type OccurrenceCache,
 } from "./index.js";
 
+declare const process: { env: Record<string, string | undefined> };
+
 describe("@dateline/recurring", () => {
   it("accepts valid RRULEs with an IANA timezone", () => {
     // Arrange
@@ -511,23 +513,21 @@ function createMemoryCache(): OccurrenceCache & { getCalls: number; putTtl: numb
 // Re-runs the PRO-489 / PRO-483 parsing cases under multiple host process
 // timezones to assert host-tz independence (the regression class fixed by
 // v0.1.0 PR #24 and completed here).
-const nodeProcess = (globalThis as unknown as { process: { env: Record<string, string | undefined> } }).process;
-
 describe.each(["UTC", "America/New_York"])(
   "@dateline/recurring host-tz independence (TZ=%s)",
   (hostTz) => {
     let originalTz: string | undefined;
 
     beforeEach(() => {
-      originalTz = nodeProcess.env.TZ;
-      nodeProcess.env.TZ = hostTz;
+      originalTz = process.env.TZ;
+      process.env.TZ = hostTz;
       vi.stubEnv("TZ", hostTz);
     });
 
     afterEach(() => {
       vi.unstubAllEnvs();
-      if (originalTz === undefined) delete nodeProcess.env.TZ;
-      else nodeProcess.env.TZ = originalTz;
+      if (originalTz === undefined) delete process.env.TZ;
+      else process.env.TZ = originalTz;
     });
 
     it("parses TZID with trailing iCal params (PRO-489)", async () => {

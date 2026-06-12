@@ -1,4 +1,3 @@
-import { definePlugin } from "emdash";
 import { adminHandlers } from "./admin.js";
 import { PLUGIN_ID, PLUGIN_VERSION } from "./constants.js";
 import { afterSave } from "./hooks.js";
@@ -24,12 +23,9 @@ export type {
 
 const capabilities = ["content:read", "content:write", "network:request"];
 const routeNames = ["admin/import/tec", "admin/import/ical", "admin/import/csv", "admin/import/json", "admin/import/settings"];
-// EmDash 0.9.0 runtime accepts manifest metadata, while its public type omits in-progress plugin fields used by Dateline v0.1.
-// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-const defineDatelinePlugin = definePlugin as unknown as <T extends Record<string, unknown>>(definition: T) => T;
 
 export default function createImporterPlugin() {
-  return defineDatelinePlugin({
+  return {
     id: PLUGIN_ID,
     version: PLUGIN_VERSION,
     capabilities: [...capabilities],
@@ -57,5 +53,5 @@ export default function createImporterPlugin() {
         { path: "/dateline/import/csv", label: "CSV Import", icon: "table" },
       ],
     },
-  });
+  };
 }

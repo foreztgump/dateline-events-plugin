@@ -1,4 +1,3 @@
-import { definePlugin } from "emdash";
 import { adminHandlers } from "./admin.js";
 import { collections } from "./collections.js";
 import { PLUGIN_ID, PLUGIN_VERSION } from "./constants.js";
@@ -15,12 +14,9 @@ export type { AdminHandlers, Attendee, HookEvent, RouteInput, RsvpContext, RsvpS
 
 const capabilities = ["content:read", "content:write", "email:send"];
 const routeNames = ["rsvp-submit", "waitlist", "admin/attendees", "admin/waitlist"];
-// EmDash 0.9.0 runtime accepts manifest metadata, while its public type omits in-progress plugin fields used by Dateline v0.1.
-// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-const defineDatelinePlugin = definePlugin as unknown as <T extends Record<string, unknown>>(definition: T) => T;
 
 export default function createRsvpPlugin() {
-  return defineDatelinePlugin({
+  return {
     id: PLUGIN_ID,
     version: PLUGIN_VERSION,
     capabilities: [...capabilities],
@@ -43,5 +39,5 @@ export default function createRsvpPlugin() {
         { path: "/dateline/rsvp/waitlist", label: "Waitlist", icon: "clock" },
       ],
     },
-  });
+  };
 }
