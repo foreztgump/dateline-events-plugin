@@ -1,0 +1,33 @@
+{
+	"name": "offline-probe",
+	"version": "0.1.0",
+	"private": true,
+	"type": "module",
+	"main": "dist/index.mjs",
+	"exports": {
+		".": {
+			"import": "./dist/index.mjs",
+			"types": "./dist/index.d.mts"
+		},
+		"./sandbox": "./dist/plugin.mjs"
+	},
+	"files": [
+		"dist",
+		"emdash-plugin.jsonc"
+	],
+	"scripts": {
+		"build": "emdash-plugin build",
+		"dev": "emdash-plugin dev",
+		"typecheck": "tsc --noEmit",
+		"test": "vitest run"
+	},
+	"peerDependencies": {
+		"emdash": ">=0.12.0"
+	},
+	"devDependencies": {
+		"@emdash-cms/plugin-cli": ">=0.1.0",
+		"emdash": ">=0.12.0",
+		"typescript": "^5.9.0",
+		"vitest": "^4.1.0"
+	}
+}

@@ -1,0 +1,33 @@
+[35m◐[39m Building plugin...
+[36mℹ[39m Manifest: /home/cownose/projects/Dateline/tools/platform-probe/plugin/emdash-plugin.jsonc
+[36mℹ[39m Plugin entry: /home/cownose/projects/Dateline/tools/platform-probe/plugin/src/plugin.ts
+[36mℹ[39m Package: dateline-platform-probe
+[35m◐[39m Building runtime entry...
+ℹ entry: src/plugin.ts
+ℹ tsconfig: tsconfig.json
+ℹ Build start
+ℹ tmp/emdash-build-tGwhNw/runtime/plugin.mjs    4.50 kB │ gzip: 1.87 kB
+ℹ tmp/emdash-build-tGwhNw/runtime/plugin.d.mts  0.16 kB │ gzip: 0.13 kB
+ℹ 2 files, total: 4.66 kB
+✔ Build complete in 1195ms
+[32m✔[39m Built plugin.mjs
+[35m◐[39m Probing plugin surface...
+ℹ entry: src/plugin.ts
+ℹ tsconfig: tsconfig.json
+ℹ Build start
+ℹ tmp/emdash-build-tGwhNw/plugin-probe/plugin.mjs  7.48 kB │ gzip: 2.39 kB
+ℹ 1 files, total: 7.48 kB
+✔ Build complete in 7ms
+[36mℹ[39m   Hooks: plugin:install, plugin:activate, content:beforeSave, content:afterSave, cron
+[36mℹ[39m   Routes: dump-ctx, echo-zod, storage-kv, limits
+[32m✔[39m Wrote manifest.json
+[35m◐[39m Generating descriptor module...
+[32m✔[39m Wrote index.mjs
+[32m✔[39m Plugin built: dateline-platform-probe@0.1.0
+
+[36mℹ[39m Output:
+  [36m/home/cownose/projects/Dateline/tools/platform-probe/plugin/dist/index.mjs[39m
+  [36m/home/cownose/projects/Dateline/tools/platform-probe/plugin/dist/plugin.mjs[39m
+  [36m/home/cownose/projects/Dateline/tools/platform-probe/plugin/dist/manifest.json[39m
+
+[exit-code] 0

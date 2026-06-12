@@ -1,0 +1,646 @@
+{
+  "versions": {
+    "node": "v22.21.0",
+    "emdash": "0.18.0",
+    "pluginCli": "0.5.1",
+    "sandboxWorkerd": "0.1.6"
+  },
+  "manifest": {
+    "id": "dateline-platform-probe",
+    "version": "0.1.0",
+    "capabilities": [
+      "content:read",
+      "content:write",
+      "network:request:unrestricted"
+    ],
+    "allowedHosts": [],
+    "storage": {
+      "probe_records": {
+        "indexes": [
+          "kind",
+          "eventId",
+          "email"
+        ],
+        "uniqueIndexes": [
+          [
+            "eventId",
+            "email"
+          ]
+        ]
+      }
+    },
+    "hooks": [
+      {
+        "name": "plugin:install",
+        "priority": 25
+      },
+      "plugin:activate",
+      {
+        "name": "content:beforeSave",
+        "priority": 50
+      },
+      "content:afterSave",
+      "cron"
+    ],
+    "routes": [
+      "dump-ctx",
+      "echo-zod",
+      "storage-kv",
+      "limits"
+    ],
+    "admin": {
+      "pages": [],
+      "widgets": []
+    }
+  },
+  "runtimeCode": {
+    "cliDistImportsZod": true,
+    "workerdProbeCode": "src/plugin.ts bundled with esbuild so zod is embedded for standalone workerd",
+    "runtimeManifestAddsDeprecatedNetworkFetchAny": "@emdash-cms/sandbox-workerd@0.1.6 bridge checks network:fetch:any even though plugin-cli rejects it as deprecated"
+  },
+  "availability": {
+    "isAvailable": true,
+    "isHealthyBeforeInvoke": false,
+    "isHealthyAfterInvoke": true
+  },
+  "invocations": {
+    "dumpCtx": {
+      "ok": true,
+      "result": {
+        "routeInput": {
+          "label": "surface"
+        },
+        "ctxSurface": {
+          "keys": [
+            "content",
+            "email",
+            "http",
+            "kv",
+            "log",
+            "media",
+            "plugin",
+            "site",
+            "storage",
+            "url",
+            "users"
+          ],
+          "types": {
+            "content": "object",
+            "email": "undefined",
+            "http": "object",
+            "kv": "object",
+            "log": "object",
+            "media": "object",
+            "plugin": "object",
+            "site": "object",
+            "storage": "object",
+            "url": "function",
+            "users": "undefined"
+          },
+          "plugin": {
+            "id": "dateline-platform-probe",
+            "version": "0.1.0"
+          },
+          "site": {
+            "name": "Dateline Platform Probe",
+            "url": "http://127.0.0.1:4321",
+            "locale": "en"
+          },
+          "urlSample": "http://127.0.0.1:4321/probe",
+          "storageCollections": [],
+          "capabilityPresence": {
+            "content": true,
+            "http": true,
+            "media": true,
+            "users": false,
+            "email": false,
+            "cron": false
+          },
+          "kvMethods": [
+            "delete",
+            "get",
+            "list",
+            "set"
+          ],
+          "cronMethods": [],
+          "httpMethods": [
+            "fetch"
+          ]
+        }
+      }
+    },
+    "echoZod": {
+      "ok": true,
+      "result": {
+        "input": {
+          "message": "zod input parsed",
+          "count": 2
+        },
+        "pluginId": "dateline-platform-probe",
+        "inputType": "object"
+      }
+    },
+    "pluginInstall": {
+      "ok": true
+    },
+    "pluginActivate": {
+      "ok": true
+    },
+    "cronTasksAfterLifecycle": [],
+    "contentBeforeSave": {
+      "ok": true,
+      "result": {
+        "title": "Probe Event",
+        "status": "draft"
+      }
+    },
+    "contentAfterSave": {
+      "ok": true
+    },
+    "cron": {
+      "ok": true
+    },
+    "storageKv": {
+      "ok": true,
+      "result": {
+        "primary": {
+          "kind": "capacity-check",
+          "eventId": "event-m0",
+          "email": "dupe@example.com",
+          "sequence": 1
+        },
+        "indexedQuery": {
+          "items": [
+            {
+              "id": "primary-m0",
+              "data": {
+                "kind": "capacity-check",
+                "eventId": "event-m0",
+                "email": "dupe@example.com",
+                "sequence": 1
+              }
+            }
+          ],
+          "hasMore": false
+        },
+        "nonIndexedError": {
+          "ok": false,
+          "operation": "non-indexed-query",
+          "details": {
+            "name": "Error",
+            "message": "Bridge call storage/query failed: {\"error\":\"Cannot query on non-indexed field 'note'.\"}",
+            "stackFirstLine": "Error: Bridge call storage/query failed: {\"error\":\"Cannot query on non-indexed field 'note'.\"}"
+          }
+        },
+        "duplicateOutcome": {
+          "ok": true,
+          "operation": "duplicate-unique-index-put",
+          "details": {
+            "message": "duplicate insert succeeded",
+            "primary": {
+              "kind": "capacity-check",
+              "eventId": "event-m0",
+              "email": "dupe@example.com",
+              "sequence": 1
+            },
+            "duplicate": {
+              "kind": "capacity-check",
+              "eventId": "event-m0",
+              "email": "dupe@example.com",
+              "sequence": 2,
+              "note": "same eventId+email, different document id"
+            }
+          }
+        },
+        "kv": {
+          "get": {
+            "status": "set"
+          },
+          "list": [
+            {
+              "key": "probe:m0:one",
+              "value": {
+                "status": "set"
+              }
+            },
+            {
+              "key": "probe:m0:two",
+              "value": "second"
+            }
+          ],
+          "deleteReturned": true,
+          "listAfterDelete": [
+            {
+              "key": "probe:m0:one",
+              "value": {
+                "status": "set"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "sqliteIndexes": [
+      {
+        "name": "idx_plugin_storage_list",
+        "sql": "CREATE INDEX \"idx_plugin_storage_list\" on \"_plugin_storage\" (\"plugin_id\", \"collection\", \"created_at\")"
+      },
+      {
+        "name": "sqlite_autoindex__plugin_storage_1",
+        "sql": null
+      }
+    ],
+    "pluginIndexesRows": []
+  },
+  "limits": {
+    "cpu": {
+      "lastOkMs": 2000,
+      "firstFailure": null
+    },
+    "localSubrequestAttempt": {
+      "ok": false,
+      "error": {
+        "name": "Error",
+        "message": "Plugin dateline-platform-probe:0.1.0 route limits failed: Bridge call http/fetch failed: {\"error\":\"Plugin \\\"dateline-platform-probe\\\": blocked fetch to \\\"127.0.0.1\\\": URLs targeting private IP addresses are not allowed\"}",
+        "stackFirstLine": "Error: Plugin dateline-platform-probe:0.1.0 route limits failed: Bridge call http/fetch failed: {\"error\":\"Plugin \\\"dateline-platform-probe\\\": blocked fetch to \\\"127.0.0.1\\\": URLs targeting private IP addresses are not allowed\"}"
+      }
+    },
+    "subrequests": {
+      "1": {
+        "ok": true,
+        "result": {
+          "mode": "subrequests",
+          "attempted": 1,
+          "responses": [
+            {
+              "index": 1,
+              "status": 200,
+              "ok": true
+            }
+          ]
+        }
+      },
+      "5": {
+        "ok": true,
+        "result": {
+          "mode": "subrequests",
+          "attempted": 5,
+          "responses": [
+            {
+              "index": 1,
+              "status": 200,
+              "ok": true
+            },
+            {
+              "index": 2,
+              "status": 200,
+              "ok": true
+            },
+            {
+              "index": 3,
+              "status": 200,
+              "ok": true
+            },
+            {
+              "index": 4,
+              "status": 200,
+              "ok": true
+            },
+            {
+              "index": 5,
+              "status": 200,
+              "ok": true
+            }
+          ]
+        }
+      },
+      "10": {
+        "ok": true,
+        "result": {
+          "mode": "subrequests",
+          "attempted": 10,
+          "responses": [
+            {
+              "index": 1,
+              "status": 200,
+              "ok": true
+            },
+            {
+              "index": 2,
+              "status": 200,
+              "ok": true
+            },
+            {
+              "index": 3,
+              "status": 200,
+              "ok": true
+            },
+            {
+              "index": 4,
+              "status": 200,
+              "ok": true
+            },
+            {
+              "index": 5,
+              "status": 200,
+              "ok": true
+            },
+            {
+              "index": 6,
+              "status": 200,
+              "ok": true
+            },
+            {
+              "index": 7,
+              "status": 200,
+              "ok": true
+            },
+            {
+              "index": 8,
+              "status": 200,
+              "ok": true
+            },
+            {
+              "index": 9,
+              "status": 200,
+              "ok": true
+            },
+            {
+              "index": 10,
+              "status": 200,
+              "ok": true
+            }
+          ]
+        }
+      },
+      "11": {
+        "ok": true,
+        "result": {
+          "mode": "subrequests",
+          "attempted": 11,
+          "responses": [
+            {
+              "index": 1,
+              "status": 200,
+              "ok": true
+            },
+            {
+              "index": 2,
+              "status": 200,
+              "ok": true
+            },
+            {
+              "index": 3,
+              "status": 200,
+              "ok": true
+            },
+            {
+              "index": 4,
+              "status": 200,
+              "ok": true
+            },
+            {
+              "index": 5,
+              "status": 200,
+              "ok": true
+            },
+            {
+              "index": 6,
+              "status": 200,
+              "ok": true
+            },
+            {
+              "index": 7,
+              "status": 200,
+              "ok": true
+            },
+            {
+              "index": 8,
+              "status": 200,
+              "ok": true
+            },
+            {
+              "index": 9,
+              "status": 200,
+              "ok": true
+            },
+            {
+              "index": 10,
+              "status": 200,
+              "ok": true
+            },
+            {
+              "index": 11,
+              "status": 200,
+              "ok": true
+            }
+          ]
+        }
+      },
+      "12": {
+        "ok": true,
+        "result": {
+          "mode": "subrequests",
+          "attempted": 12,
+          "responses": [
+            {
+              "index": 1,
+              "status": 200,
+              "ok": true
+            },
+            {
+              "index": 2,
+              "status": 200,
+              "ok": true
+            },
+            {
+              "index": 3,
+              "status": 200,
+              "ok": true
+            },
+            {
+              "index": 4,
+              "status": 200,
+              "ok": true
+            },
+            {
+              "index": 5,
+              "status": 200,
+              "ok": true
+            },
+            {
+              "index": 6,
+              "status": 200,
+              "ok": true
+            },
+            {
+              "index": 7,
+              "status": 200,
+              "ok": true
+            },
+            {
+              "index": 8,
+              "status": 200,
+              "ok": true
+            },
+            {
+              "index": 9,
+              "status": 200,
+              "ok": true
+            },
+            {
+              "index": 10,
+              "status": 200,
+              "ok": true
+            },
+            {
+              "index": 11,
+              "status": 200,
+              "ok": true
+            },
+            {
+              "index": 12,
+              "status": 200,
+              "ok": true
+            }
+          ]
+        }
+      },
+      "15": {
+        "ok": true,
+        "result": {
+          "mode": "subrequests",
+          "attempted": 15,
+          "responses": [
+            {
+              "index": 1,
+              "status": 200,
+              "ok": true
+            },
+            {
+              "index": 2,
+              "status": 200,
+              "ok": true
+            },
+            {
+              "index": 3,
+              "status": 200,
+              "ok": true
+            },
+            {
+              "index": 4,
+              "status": 200,
+              "ok": true
+            },
+            {
+              "index": 5,
+              "status": 200,
+              "ok": true
+            },
+            {
+              "index": 6,
+              "status": 200,
+              "ok": true
+            },
+            {
+              "index": 7,
+              "status": 200,
+              "ok": true
+            },
+            {
+              "index": 8,
+              "status": 200,
+              "ok": true
+            },
+            {
+              "index": 9,
+              "status": 200,
+              "ok": true
+            },
+            {
+              "index": 10,
+              "status": 200,
+              "ok": true
+            },
+            {
+              "index": 11,
+              "status": 200,
+              "ok": true
+            },
+            {
+              "index": 12,
+              "status": 200,
+              "ok": true
+            },
+            {
+              "index": 13,
+              "status": 200,
+              "ok": true
+            },
+            {
+              "index": 14,
+              "status": 200,
+              "ok": true
+            },
+            {
+              "index": 15,
+              "status": 200,
+              "ok": true
+            }
+          ]
+        }
+      }
+    },
+    "memory": {
+      "32mb": {
+        "ok": true,
+        "result": {
+          "mode": "memory",
+          "targetMb": 32,
+          "allocatedChunks": 32,
+          "firstByte": 0,
+          "lastByte": 31
+        }
+      },
+      "128mb": {
+        "ok": true,
+        "result": {
+          "mode": "memory",
+          "targetMb": 128,
+          "allocatedChunks": 128,
+          "firstByte": 0,
+          "lastByte": 127
+        }
+      },
+      "192mb": {
+        "ok": true,
+        "result": {
+          "mode": "memory",
+          "targetMb": 192,
+          "allocatedChunks": 192,
+          "firstByte": 0,
+          "lastByte": 191
+        }
+      }
+    },
+    "wall": {
+      "1000ms": {
+        "ok": true,
+        "result": {
+          "mode": "wall",
+          "targetMs": 1000,
+          "elapsedMs": 1000
+        }
+      },
+      "31000ms": {
+        "ok": false,
+        "error": {
+          "name": "Error",
+          "message": "Plugin dateline-platform-probe exceeded wall-time limit of 30000ms during route:limits",
+          "stackFirstLine": "Error: Plugin dateline-platform-probe exceeded wall-time limit of 30000ms during route:limits"
+        }
+      }
+    },
+    "subrequestServerHits": 0
+  }
+}
