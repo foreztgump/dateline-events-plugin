@@ -1,16 +1,18 @@
 import { JSON_HEADERS } from "./constants.js";
 import { parseCsv } from "./csv.js";
+import { csvMapping } from "./csv-mapping.js";
 import { parseICal } from "./ical.js";
-import { importRows } from "./importer.js";
+import { importRows, mergeParseResults } from "./importer.js";
 import { parseJsonEvents } from "./json.js";
+import { loadFeedTexts } from "./remote.js";
 import { migrateTecExport } from "./tec.js";
-import type { CsvFieldMapping, RouteInput } from "./types.js";
+import type { ImportParseResult, ImportSummary, RouteInput } from "./types.js";
 
 export async function importTec(input: RouteInput): Promise<Response> {
   try {
-    const body = await readJson(input.request);
-    const migration = migrateTecExport(body);
-    return jsonResponse(await importRows(migration.rows, input.ctx));
+    const feeds = await loadFeedTexts({ request: input.request, ctx: input.ctx, bodyKeys: ["tec", "json"], format: "tec" });
+    const parsedFeeds = feeds.texts.map((feedText) => migrateTecExport(JSON.parse(feedText)));
+    return jsonResponse(await importParsed(mergeParseResults(parsedFeeds), input, feeds.errors));
   } catch (error) {
     return jsonResponse({ created: 0, skipped: 0, errors: [routeError(error)] });
   }
@@ -18,9 +20,9 @@ export async function importTec(input: RouteInput): Promise<Response> {
 
 export async function importICal(input: RouteInput): Promise<Response> {
   try {
-    const icsText = await readText(input.request);
-    const parsedCalendar = parseICal(icsText);
-    return jsonResponse(await importRows(parsedCalendar.rows, input.ctx));
+    const feeds = await loadFeedTexts({ request: input.request, ctx: input.ctx, bodyKeys: ["ics", "ical"], format: "ical" });
+    const parsedCalendar = mergeParseResults(feeds.texts.map((feedText) => parseICal(feedText)));
+    return jsonResponse(await importParsed(parsedCalendar, input, feeds.errors));
   } catch (error) {
     return jsonResponse({ created: 0, skipped: 0, errors: [routeError(error)] });
   }
@@ -28,9 +30,10 @@ export async function importICal(input: RouteInput): Promise<Response> {
 
 export async function importCsv(input: RouteInput): Promise<Response> {
   try {
-    const requestBody = await readJson(input.request) as { csv: string; mapping: CsvFieldMapping };
-    const parsedCsv = parseCsv(requestBody.csv, requestBody.mapping);
-    return jsonResponse(await importRows(parsedCsv.rows, input.ctx));
+    const feeds = await loadFeedTexts({ request: input.request, ctx: input.ctx, bodyKeys: ["csv"], format: "csv" });
+    const mapping = csvMapping(feeds.payload);
+    const parsedCsv = mergeParseResults(feeds.texts.map((feedText) => parseCsv(feedText, mapping)));
+    return jsonResponse(await importParsed(parsedCsv, input, feeds.errors));
   } catch (error) {
     return jsonResponse({ created: 0, skipped: 0, errors: [routeError(error)] });
   }
@@ -38,22 +41,17 @@ export async function importCsv(input: RouteInput): Promise<Response> {
 
 export async function importJson(input: RouteInput): Promise<Response> {
   try {
-    const jsonText = await readText(input.request);
-    const parsedEvents = parseJsonEvents(jsonText);
-    return jsonResponse(await importRows(parsedEvents.rows, input.ctx));
+    const feeds = await loadFeedTexts({ request: input.request, ctx: input.ctx, bodyKeys: ["json", "events"], format: "json" });
+    const parsedEvents = mergeParseResults(feeds.texts.map((feedText) => parseJsonEvents(feedText)));
+    return jsonResponse(await importParsed(parsedEvents, input, feeds.errors));
   } catch (error) {
     return jsonResponse({ created: 0, skipped: 0, errors: [routeError(error)] });
   }
 }
 
-async function readText(request?: Request): Promise<string> {
-  if (!request) return "";
-  return request.text();
-}
-
-async function readJson(request?: Request): Promise<unknown> {
-  if (!request) return {};
-  return request.json();
+async function importParsed(parsedFeed: ImportParseResult, input: RouteInput, priorErrors: ImportSummary["errors"]): Promise<ImportSummary> {
+  const summary = await importRows(parsedFeed.rows, input.ctx);
+  return { ...summary, errors: [...priorErrors, ...parsedFeed.errors, ...summary.errors] };
 }
 
 function jsonResponse(body: unknown): Response {

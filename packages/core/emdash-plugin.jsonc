@@ -1,0 +1,26 @@
+{
+  "$schema": "./node_modules/@emdash-cms/plugin-cli/schemas/emdash-plugin.schema.json",
+
+  "slug": "dateline-core",
+  "publisher": "dateline.example.com",
+
+  "license": "MIT",
+  "author": { "name": "Dateline Maintainers", "email": "maintainers@dateline.example.com", "url": "https://github.com/foreztgump/dateline-events-plugin" },
+  "security": { "email": "security@dateline.example.com", "url": "https://github.com/foreztgump/dateline-events-plugin/security" },
+  "name": "Dateline Core",
+  "description": "Events, venues, organizers, calendar feeds, schema.org, admin Block Kit, and privacy helpers for Dateline.",
+  "keywords": ["events", "calendar", "ical", "schema-org", "privacy"],
+  "repo": "https://github.com/foreztgump/dateline-events-plugin",
+
+  "capabilities": ["content:read", "content:write"],
+  "allowedHosts": [],
+  "storage": {},
+  "admin": {
+    "pages": [
+      { "path": "/dateline", "label": "Events", "icon": "calendar" },
+      { "path": "/dateline/venues", "label": "Venues", "icon": "map-pin" },
+      { "path": "/dateline/organizers", "label": "Organizers", "icon": "users" },
+      { "path": "/dateline/settings", "label": "Settings", "icon": "cog" }
+    ]
+  }
+}

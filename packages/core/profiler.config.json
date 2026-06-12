@@ -1,0 +1,79 @@
+{
+  "notes": [
+    "Profiler budgets are pinned to Cloudflare limits: 50ms CPU, 10 subrequests, 30s wall time, and approximately 128MB memory.",
+    "The local @emdash-cms/sandbox-workerd runner only enforces wall time; CPU, subrequest, and memory checks here are advisory measurements to avoid false local confidence."
+  ],
+  "handlers": [
+    {
+      "id": "content:beforeSave",
+      "module": "./dist/plugin.mjs",
+      "pluginHook": "content:beforeSave",
+      "event": {
+        "collection": "dateline_events",
+        "id": "evt_profile",
+        "content": {
+          "id": "evt_profile",
+          "startsAt": "2026-01-01T17:00:00.000Z",
+          "endsAt": "2026-01-01T18:00:00.000Z",
+          "timezone": "UTC"
+        }
+      }
+    },
+    {
+      "id": "content:afterSave",
+      "module": "./dist/plugin.mjs",
+      "pluginHook": "content:afterSave",
+      "event": {
+        "collection": "dateline_events",
+        "id": "evt_profile",
+        "content": { "id": "evt_profile" }
+      }
+    },
+    {
+      "id": "content:beforeDelete",
+      "module": "./dist/plugin.mjs",
+      "pluginHook": "content:beforeDelete",
+      "event": {
+        "collection": "dateline_events",
+        "id": "evt_profile",
+        "content": { "id": "evt_profile" }
+      }
+    },
+    {
+      "id": "GET /calendar-feed",
+      "module": "./dist/plugin.mjs",
+      "pluginRoute": "calendar-feed",
+      "request": {
+        "url": "https://example.test/calendar-feed?range=2026-01-01..2026-12-31",
+        "method": "GET"
+      }
+    },
+    {
+      "id": "GET /ical",
+      "module": "./dist/plugin.mjs",
+      "pluginRoute": "ical",
+      "request": {
+        "url": "https://example.test/ical?range=2026-01-01..2026-12-31",
+        "method": "GET"
+      }
+    },
+    {
+      "id": "POST /privacy/export",
+      "module": "./dist/plugin.mjs",
+      "pluginRoute": "privacy/export",
+      "request": {
+        "url": "https://example.test/privacy/export?email=profile@example.com",
+        "method": "POST"
+      }
+    },
+    {
+      "id": "POST /privacy/erase",
+      "module": "./dist/plugin.mjs",
+      "pluginRoute": "privacy/erase",
+      "request": {
+        "url": "https://example.test/privacy/erase?email=profile@example.com",
+        "method": "POST"
+      }
+    }
+  ]
+}

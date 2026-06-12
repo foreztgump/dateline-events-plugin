@@ -38,19 +38,57 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      # M1 wires the full EmDash 0.18 grep gate now, but keeps it advisory
-      # because atomicIncrement/atomicDecrement remain in RSVP until M2 and
-      # legacy docs/factory hits are cleared by their scheduled milestones.
-      # The script exits non-zero on hits; later remediation milestones remove
-      # continue-on-error once their baselines are clean.
+      # ci-grep-gate.sh uses ripgrep, which ubuntu-latest does not preinstall.
+      # The gate is blocking from M2, so a missing rg must fail loudly at install
+      # time rather than as an opaque exit 127 inside the gate.
+      - name: Install ripgrep
+        run: sudo apt-get update && sudo apt-get install -y ripgrep
+
+      # M2 makes the source-level EmDash 0.18 grep gate blocking now that
+      # atomicIncrement and atomicDecrement are removed from plugin code.
+      # README/docs pre-v0.2 wording is cleared by the scheduled M4 docs pass.
       # Terms: emdash.config.ts | EMDASH_PLUGIN_MANIFEST | atomicIncrement |
       # atomicDecrement | createCorePlugin. plugin:activate is intentionally
       # not a gate term because it is a verified 0.18 lifecycle hook.
-      # Excludes: research/, openspec/, MIGRATION.md, CHANGELOG*, PRD*,
-      # VERIFIED-PLATFORM-0.18.md, dist/, node_modules/.
+      # Excludes: docs/, README.md, research/, openspec/, MIGRATION.md,
+      # CHANGELOG*, PRD*, VERIFIED-PLATFORM-0.18.md, dist/, node_modules/.
       - name: EmDash 0.18 grep gate
-        continue-on-error: true
         run: ./tools/ci-grep-gate.sh
+
+      - name: Validate sandboxed plugins
+        run: |
+          (cd packages/core && ./node_modules/.bin/emdash-plugin validate)
+          (cd packages/rsvp && ./node_modules/.bin/emdash-plugin validate)
+          (cd packages/importer && ./node_modules/.bin/emdash-plugin validate)
+
+      # The emdash-plugin build probe imports each plugin's workspace deps
+      # (@dateline/blocks, @dateline/recurring) from their dist/ output. The
+      # full `pnpm -r build` runs later, so build these leaf deps first or the
+      # probe fails with "Cannot find module @dateline/blocks/dist/index.js".
+      - name: Build workspace dependencies for plugin probe
+        run: pnpm --filter @dateline/blocks --filter @dateline/recurring build
+
+      - name: Build sandboxed plugins
+        run: |
+          mkdir -p packages/core/node_modules/.cache/emdash-build
+          mkdir -p packages/rsvp/node_modules/.cache/emdash-build
+          mkdir -p packages/importer/node_modules/.cache/emdash-build
+          (cd packages/core && TMPDIR=./node_modules/.cache/emdash-build ./node_modules/.bin/emdash-plugin build)
+          (cd packages/rsvp && TMPDIR=./node_modules/.cache/emdash-build ./node_modules/.bin/emdash-plugin build)
+          (cd packages/importer && TMPDIR=./node_modules/.cache/emdash-build ./node_modules/.bin/emdash-plugin build)
+          # These artifacts intentionally capture the marketplace-facing
+          # emdash-plugin build outputs before the later workspace tsc build.
+          mkdir -p sandbox-plugin-build-artifacts
+          tar -czf sandbox-plugin-build-artifacts/dateline-core-build.tar.gz -C packages/core dist emdash-plugin.jsonc
+          tar -czf sandbox-plugin-build-artifacts/dateline-rsvp-build.tar.gz -C packages/rsvp dist emdash-plugin.jsonc
+          tar -czf sandbox-plugin-build-artifacts/dateline-importer-build.tar.gz -C packages/importer dist emdash-plugin.jsonc
+
+      - name: Upload sandboxed plugin build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: sandboxed-plugin-builds
+          path: sandbox-plugin-build-artifacts/*.tar.gz
+          if-no-files-found: error
 
       - name: Build
         run: pnpm -r build

@@ -48,10 +48,9 @@ export interface CoreContext {
   };
   kv?: {
     get?(key: string): Promise<string | null>;
-    put?(key: string, value: string, options?: { expirationTtl?: number }): Promise<void>;
-    delete?(key: string): Promise<void>;
+    set?(key: string, value: string): Promise<void>;
+    delete?(key: string): Promise<boolean | void>;
   };
-  waitUntil?(promise: Promise<unknown>): void;
 }
 
 export interface HookEvent {

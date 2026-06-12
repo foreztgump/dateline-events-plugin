@@ -1,7 +1,0 @@
-{
-  "handlers": [
-    { "id": "POST /admin/import/settings", "module": "./dist/sandbox-profile.js", "export": "profileAdmin" },
-    { "id": "content:afterSave", "module": "./dist/sandbox-profile.js", "export": "profileAfterSave" },
-    { "id": "POST /admin/import/chunk", "module": "./dist/sandbox-profile.js", "export": "profileImportRows" }
-  ]
-}

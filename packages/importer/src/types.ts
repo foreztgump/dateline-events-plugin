@@ -47,13 +47,43 @@ export interface ImportSummary {
   errors: ImportError[];
 }
 
+export interface StoragePage<T = unknown> {
+  items?: Array<{ id: string; data: T }>;
+  entries?: Array<{ id: string; data: T }>;
+}
+
+export interface StorageCollection<T = unknown> {
+  get(id: string): Promise<T | null>;
+  put(id: string, data: T): Promise<void>;
+  query(options?: unknown): Promise<StoragePage<T>>;
+  count(where?: unknown): Promise<number>;
+}
+
+export type ImportFormat = "tec" | "ical" | "csv" | "json";
+
+export interface DeferredRemoteFeedRecord {
+  kind: "deferredRemoteFeed";
+  status: "pending" | "completed" | "failed";
+  format: ImportFormat;
+  url: string;
+  payload: unknown;
+  createdAt: string;
+  lastError?: string;
+}
+
 export interface ImporterContext {
-  content?: {
-    list(collection: string, options?: unknown): Promise<{ items?: unknown[]; entries?: unknown[] }>;
-    create(collection: string, content: unknown): Promise<unknown>;
+  content?: object;
+  cron?: {
+    schedule(name: string, opts: { schedule: string; data?: Record<string, unknown> }): Promise<void>;
+  };
+  http?: {
+    fetch: (url: string) => Promise<Response>;
   };
   log?: {
     warn(message: string, details?: unknown): void;
+  };
+  storage?: {
+    imports?: StorageCollection;
   };
 }
 

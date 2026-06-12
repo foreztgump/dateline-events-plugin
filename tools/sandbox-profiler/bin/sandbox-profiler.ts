@@ -2,9 +2,15 @@
 import { access, readdir, readFile } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
-import { runWithProfiling, type ProfileResult, type ProfiledHandler } from "../src/index.js";
+import {
+  PROFILER_BASE_URL,
+  runWithProfiling,
+  type ProfileResult,
+  type ProfiledHandler,
+  type StorageSeedRecords,
+} from "../src/index.js";
 
-const MANIFEST_FILE = "sandboxed.json";
+const MANIFEST_FILE = "profiler.config.json";
 const PACKAGE_FILE = "package.json";
 const PNPM_WORKSPACE_FILE = "pnpm-workspace.yaml";
 const DEFAULT_EXPORT = "default";
@@ -15,6 +21,16 @@ interface HandlerEntry {
   id: string;
   module: string;
   export?: string;
+  pluginHook?: string;
+  pluginRoute?: string;
+  event?: unknown;
+  input?: unknown;
+  seedRecords?: StorageSeedRecords;
+  request?: {
+    url: string;
+    method?: string;
+    headers?: Record<string, string>;
+  };
 }
 
 interface HandlerReport extends ProfileResult {
@@ -22,12 +38,20 @@ interface HandlerReport extends ProfileResult {
   manifestPath: string;
 }
 
+type PluginEntryHandler = (...args: unknown[]) => unknown;
+
+interface PluginEntryLookup {
+  property: "hooks" | "routes";
+  key: string | undefined;
+  id: string;
+}
+
 export async function main(cwd?: string, args = process.argv.slice(2)): Promise<number> {
   const workspaceRoot = await resolveDiscoveryRoot(cwd ?? process.cwd(), cwd === undefined);
   const packageName = parsePackageFilter(args);
   const manifests = await findSandboxManifests(workspaceRoot, packageName);
   if (manifests.length === 0) {
-    writeOutput("sandbox-profiler: no sandboxed.json manifests found; skipping sandbox budget gate.");
+    writeOutput(`sandbox-profiler: no ${MANIFEST_FILE} manifests found; skipping sandbox budget gate.`);
     return 0;
   }
   const results = (await Promise.all(manifests.map(profileManifest))).flat();
@@ -126,7 +150,7 @@ async function readManifest(manifestPath: string): Promise<HandlerEntry[]> {
 async function profileHandler(manifestPath: string, entry: HandlerEntry): Promise<HandlerReport> {
   try {
     const handler = await importHandler(manifestPath, entry);
-    const result = await runWithProfiling(handler);
+    const result = await runWithProfiling(handler, { storageSeedRecords: entry.seedRecords });
     return { id: entry.id, manifestPath, ...result };
   } catch (error) {
     return createFailedReport(manifestPath, entry.id, error);
@@ -141,10 +165,60 @@ async function importHandler(manifestPath: string, entry: HandlerEntry): Promise
   const modulePath = resolve(dirname(manifestPath), entry.module);
   const imported = await importModule(modulePath, entry.id);
   const handler = imported[entry.export ?? DEFAULT_EXPORT];
+  if (entry.pluginHook) return pluginHookHandler(handler, entry);
+  if (entry.pluginRoute) return pluginRouteHandler(handler, entry);
   if (typeof handler !== "function") {
     throw new Error(`Sandbox handler ${entry.id} does not export a function.`);
   }
   return handler as ProfiledHandler;
+}
+
+function pluginHookHandler(pluginExport: unknown, entry: HandlerEntry): ProfiledHandler {
+  return async (ctx) => {
+    const hook = readPluginEntry(pluginExport, { property: "hooks", key: entry.pluginHook, id: entry.id });
+    const hookHandler = isPluginEntryHandler(hook) ? hook : readHandlerProperty(hook, entry.id);
+    await hookHandler(entry.event ?? {}, ctx);
+  };
+}
+
+function pluginRouteHandler(pluginExport: unknown, entry: HandlerEntry): ProfiledHandler {
+  return async (ctx) => {
+    const route = readPluginEntry(pluginExport, { property: "routes", key: entry.pluginRoute, id: entry.id });
+    const routeHandler = isPluginEntryHandler(route) ? route : readHandlerProperty(route, entry.id);
+    await routeHandler(createRouteContext(entry), ctx);
+  };
+}
+
+function readPluginEntry(pluginExport: unknown, lookup: PluginEntryLookup): unknown {
+  const { property, key, id } = lookup;
+  if (!key) throw new Error(`Sandbox plugin handler ${id} is missing a ${property} key.`);
+  if (!isRecord(pluginExport)) throw new Error(`Sandbox plugin handler ${id} default export is not an object.`);
+  const entries = pluginExport[property];
+  if (!isRecord(entries) || !(key in entries)) throw new Error(`Sandbox plugin handler ${id} does not define ${property}.${key}.`);
+  return entries[key];
+}
+
+function readHandlerProperty(entry: unknown, id: string): PluginEntryHandler {
+  if (!isRecord(entry) || !isPluginEntryHandler(entry.handler)) {
+    throw new Error(`Sandbox plugin handler ${id} does not define a callable handler.`);
+  }
+  return entry.handler;
+}
+
+function createRouteContext(entry: HandlerEntry): { input: unknown; request: Request } {
+  const request = entry.request ?? { url: `${PROFILER_BASE_URL}/` };
+  return {
+    input: entry.input,
+    request: new Request(request.url, { method: request.method ?? "GET", headers: request.headers }),
+  };
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null;
+}
+
+function isPluginEntryHandler(value: unknown): value is PluginEntryHandler {
+  return typeof value === "function";
 }
 
 async function importModule(modulePath: string, handlerId: string): Promise<Record<string, unknown>> {
@@ -156,5 +230,10 @@ async function importModule(modulePath: string, handlerId: string): Promise<Reco
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-  process.exitCode = await main();
+  try {
+    process.exitCode = await main();
+  } catch (error) {
+    writeOutput(String(error));
+    process.exitCode = 1;
+  }
 }

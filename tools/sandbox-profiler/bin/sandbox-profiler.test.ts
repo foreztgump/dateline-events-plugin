@@ -15,7 +15,7 @@ describe("sandbox-profiler CLI", () => {
     const exitCode = await main(cwd);
 
     expect(exitCode).toBe(0);
-    expect(writeSpy.mock.calls.join("\n")).toContain("no sandboxed.json manifests");
+    expect(writeSpy.mock.calls.join("\n")).toContain("no profiler.config.json manifests");
     writeSpy.mockRestore();
   });
 
@@ -25,7 +25,7 @@ describe("sandbox-profiler CLI", () => {
       join(cwd, "handler.mjs"),
       `export default async () => new Promise((r) => setTimeout(r, ${SLOW_HANDLER_SLEEP_MS}));`,
     );
-    await writeFile(join(cwd, "sandboxed.json"), JSON.stringify({
+    await writeFile(join(cwd, "profiler.config.json"), JSON.stringify({
       handlers: [{ id: "slow-hook", module: "./handler.mjs" }],
     }));
     const writeSpy = vi.spyOn(process.stdout, "write").mockImplementation(() => true);
@@ -34,6 +34,37 @@ describe("sandbox-profiler CLI", () => {
 
     expect(exitCode).toBe(1);
     expect(writeSpy.mock.calls.join("\n")).toContain("slow-hook");
+    writeSpy.mockRestore();
+  });
+
+  it("profiles a route handler from a built plugin default export", async () => {
+    const cwd = await mkdtemp(join(tmpdir(), "dateline-profiler-plugin-"));
+    await writeFile(
+      join(cwd, "plugin.mjs"),
+      `export default { routes: { status: async (_routeCtx, ctx) => {
+        const seeded = await ctx.storage.profile_records.get("seed:profile");
+        if (seeded?.kind !== "profile") throw new Error("missing profiler seed");
+        await ctx.fetch("https://example.test/status");
+      } } };`,
+    );
+    await writeFile(join(cwd, "profiler.config.json"), JSON.stringify({
+      handlers: [{
+        id: "GET /status",
+        module: "./plugin.mjs",
+        pluginRoute: "status",
+        request: { url: "https://example.test/status", method: "GET" },
+        seedRecords: {
+          profile_records: [{ id: "seed:profile", data: { kind: "profile" } }],
+        },
+      }],
+    }));
+    const writeSpy = vi.spyOn(process.stdout, "write").mockImplementation(() => true);
+
+    const exitCode = await main(cwd);
+
+    expect(exitCode).toBe(0);
+    expect(writeSpy.mock.calls.join("\n")).toContain("GET /status");
+    expect(writeSpy.mock.calls.join("\n")).toContain('"subrequestCount": 2');
     writeSpy.mockRestore();
   });
 
@@ -46,7 +77,7 @@ describe("sandbox-profiler CLI", () => {
     await writeFile(join(workspaceRoot, "pnpm-workspace.yaml"), "packages:\n  - packages/*\n  - tools/*\n");
     await writeFile(join(corePackage, "package.json"), JSON.stringify({ name: "@dateline/core" }));
     await writeFile(join(corePackage, "dist", "handler.mjs"), "export default async () => undefined;");
-    await writeFile(join(corePackage, "sandboxed.json"), JSON.stringify({
+    await writeFile(join(corePackage, "profiler.config.json"), JSON.stringify({
       handlers: [{ id: "core-hook", module: "./dist/handler.mjs" }],
     }));
     vi.stubEnv("INIT_CWD", workspaceRoot);
@@ -57,7 +88,7 @@ describe("sandbox-profiler CLI", () => {
 
       expect(exitCode).toBe(0);
       expect(writeSpy.mock.calls.join("\n")).toContain("core-hook");
-      expect(writeSpy.mock.calls.join("\n")).not.toContain("no sandboxed.json manifests");
+      expect(writeSpy.mock.calls.join("\n")).not.toContain("no profiler.config.json manifests");
     } finally {
       writeSpy.mockRestore();
       vi.unstubAllEnvs();

@@ -5,12 +5,12 @@ The foundational sandboxed plugin for Dateline. Defines the canonical event cont
 ## Install
 
 ```bash
-pnpm add @dateline/core emdash@^0.9.0
+pnpm add @dateline/core emdash@^0.18.0
 ```
 
 ## Peer dependencies
 
-- `emdash@^0.9.0` — EmDash CMS runtime
+- `emdash@^0.18.0` — EmDash CMS runtime
 
 ## Capabilities required
 
@@ -18,7 +18,6 @@ This sandboxed plugin declares these capabilities:
 
 - `content:read` — fetch events, venues, organizers
 - `content:write` — create, update, delete events and metadata
-- `media:read` — access featured images and gallery assets
 
 ## Sandboxed?
 
@@ -29,17 +28,14 @@ This sandboxed plugin declares these capabilities:
 ## Usage
 
 ```ts
-import createCorePlugin from "@dateline/core";
-import { adminHandlers, afterSave } from "@dateline/core";
+import datelineCorePlugin from "@dateline/core/sandbox";
 
 export default {
-  plugins: [createCorePlugin()],
+  sandboxed: [datelineCorePlugin],
 };
-
-// Or manually for testing:
-const plugin = createCorePlugin();
-console.log(plugin.capabilities); // ["content:read", "content:write", "media:read"]
 ```
+
+The package root exposes utility helpers such as `adminHandlers`, `calendarFeed`, `iCalFeed`, and `eventToJsonLd` for tests and build-time integrations. The sandboxed plugin descriptor is the default export from `@dateline/core/sandbox`.
 
 ### Routes
 

@@ -1,0 +1,58 @@
+{
+  "notes": [
+    "Profiler budgets are pinned to Cloudflare limits: 50ms CPU, 10 subrequests, 30s wall time, and approximately 128MB memory.",
+    "The local @emdash-cms/sandbox-workerd runner only enforces wall time; CPU, subrequest, and memory checks here are advisory measurements to avoid false local confidence."
+  ],
+  "handlers": [
+    {
+      "id": "POST /rsvp-submit",
+      "module": "./dist/plugin.mjs",
+      "pluginRoute": "rsvp-submit",
+      "request": {
+        "url": "https://example.test/rsvp-submit",
+        "method": "POST",
+        "headers": { "content-type": "application/json", "cf-connecting-ip": "203.0.113.10" }
+      },
+      "input": { "eventId": "evt_profile", "email": "profile@example.com", "name": "Profile Guest" },
+      "seedRecords": {
+        "rsvps": [
+          { "id": "capacity:evt_profile", "data": { "kind": "capacity", "eventId": "evt_profile", "remaining": 1 } }
+        ]
+      }
+    },
+    {
+      "id": "POST /waitlist",
+      "module": "./dist/plugin.mjs",
+      "pluginRoute": "waitlist",
+      "request": {
+        "url": "https://example.test/waitlist",
+        "method": "POST",
+        "headers": { "content-type": "application/json", "cf-connecting-ip": "203.0.113.10" }
+      },
+      "input": { "eventId": "evt_profile", "email": "profile@example.com", "name": "Profile Guest" }
+    },
+    {
+      "id": "content:afterSave",
+      "module": "./dist/plugin.mjs",
+      "pluginHook": "content:afterSave",
+      "event": {
+        "collection": "dateline_attendees",
+        "content": {
+          "id": "att_profile",
+          "event": "evt_profile",
+          "email": "profile@example.com",
+          "name": "Profile Guest",
+          "rsvpStatus": "confirmed"
+        }
+      }
+    },
+    { "id": "plugin:install", "module": "./dist/plugin.mjs", "pluginHook": "plugin:install" },
+    { "id": "plugin:activate", "module": "./dist/plugin.mjs", "pluginHook": "plugin:activate" },
+    {
+      "id": "cron",
+      "module": "./dist/plugin.mjs",
+      "pluginHook": "cron",
+      "event": { "name": "dateline-rsvp-waitlist-sweep", "scheduledAt": "2026-01-01T00:00:00.000Z" }
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { HOLD_TTL_SECONDS } from "./constants.js";
 import { boundaryError } from "./errors.js";
-import type { Attendee, RsvpContext } from "./types.js";
+import { rsvpStorage } from "./storage.js";
+import type { Attendee, RsvpContext, WaitlistRecord } from "./types.js";
 
 const WaitlistEntrySchema = z.object({
   attendeeId: z.string().min(1),
@@ -27,11 +27,11 @@ export async function popNextWaitlistEntry(ctx: RsvpContext, eventId: string): P
 
 export async function readWaitlist(ctx: RsvpContext, eventId: string): Promise<WaitlistEntry[]> {
   try {
-    const storedValue = await ctx.kv?.get?.(waitlistKey(eventId));
-    if (!storedValue) return [];
-    return z.array(WaitlistEntrySchema).parse(JSON.parse(storedValue));
+    const storedValue = await rsvpStorage(ctx).get(waitlistKey(eventId));
+    if (!isWaitlistRecord(storedValue)) return [];
+    return z.array(WaitlistEntrySchema).parse(storedValue.entries);
   } catch (error) {
-    throw boundaryError("ctx.kv.get(waitlist)", error);
+    throw boundaryError("ctx.storage.rsvps.get(waitlist)", error);
   }
 }
 
@@ -41,10 +41,14 @@ export function waitlistKey(eventId: string): string {
 
 async function writeWaitlist(ctx: RsvpContext, eventId: string, entries: WaitlistEntry[]): Promise<void> {
   try {
-    await ctx.kv?.put?.(waitlistKey(eventId), JSON.stringify(entries), { expirationTtl: HOLD_TTL_SECONDS });
+    await rsvpStorage(ctx).put(waitlistKey(eventId), { kind: "waitlist", eventId, entries });
   } catch (error) {
-    throw boundaryError("ctx.kv.put(waitlist)", error);
+    throw boundaryError("ctx.storage.rsvps.put(waitlist)", error);
   }
+}
+
+function isWaitlistRecord(value: unknown): value is WaitlistRecord {
+  return typeof value === "object" && value !== null && "kind" in value && value.kind === "waitlist";
 }
 
 function waitlistEntry(attendee: Attendee): WaitlistEntry {

@@ -1,8 +1,0 @@
-{
-  "handlers": [
-    { "id": "POST /rsvp-submit", "module": "./dist/sandbox-profile.js", "export": "profileRsvpSubmit" },
-    { "id": "POST /waitlist", "module": "./dist/sandbox-profile.js", "export": "profileWaitlist" },
-    { "id": "content:afterSave", "module": "./dist/sandbox-profile.js", "export": "profileAfterSave" },
-    { "id": "plugin:activate", "module": "./dist/sandbox-profile.js", "export": "profileActivate" }
-  ]
-}

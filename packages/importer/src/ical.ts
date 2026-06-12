@@ -136,7 +136,9 @@ function timezoneProperty(vevent: ICAL.Component, propertyName: string): string 
 
 function recurrenceRule(vevent: ICAL.Component): string | undefined {
   const propertyValue = vevent.getFirstPropertyValue("rrule");
-  return propertyValue && typeof propertyValue !== "string" && "toString" in propertyValue ? propertyValue.toString() : undefined;
+  if (typeof propertyValue === "string" && propertyValue.length > 0) return propertyValue;
+  if (typeof propertyValue !== "object" || propertyValue === null) return undefined;
+  return "toString" in propertyValue ? propertyValue.toString() : undefined;
 }
 
 function recurrenceExceptions(vevent: ICAL.Component): string[] {
