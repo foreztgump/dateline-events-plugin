@@ -24,10 +24,19 @@ const storageInput = z.object({
 	nonce: z.string().min(1),
 });
 
+const PROBE_TARGET_MAX = {
+	cpu: 2500,
+	subrequests: 20,
+	wall: 31_000,
+	memory: 256,
+} as const;
+
 const limitInput = z.object({
 	mode: z.enum(["cpu", "subrequests", "wall", "memory"]),
 	target: z.number().int().positive(),
 	url: z.string().url().optional(),
+}).refine((input) => input.target <= PROBE_TARGET_MAX[input.mode], {
+	message: "target exceeds the platform-probe safety cap for the selected mode",
 });
 
 const plugin: SandboxedPlugin = {

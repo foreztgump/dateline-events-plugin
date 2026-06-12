@@ -14,7 +14,7 @@ RSVP capacity SHALL be enforced through the plugin `storage` collection (D1 sing
 - **THEN** the second submission is rejected by the application-level duplicate check without double-counting capacity, even if the local storage backend accepts duplicate rows for declared `uniqueIndexes`
 
 ### Requirement: Lifecycle-registered waitlist sweep
-The waitlist-promotion sweep SHALL be registered via `ctx.cron.schedule()` inside `plugin:install` (idempotently re-asserted in `plugin:activate`) and consumed via the `cron` hook, discriminating on `event.name`. The sweep interval SHALL be documented as a latency semantic in user-facing docs.
+The waitlist-promotion sweep SHALL be registered via `ctx.cron.schedule()` inside `plugin:install` (idempotently re-asserted in `plugin:activate`) when `ctx.cron` is available, and consumed via the `cron` hook, discriminating on `event.name`. The integrated reference site SHALL verify schedule persistence before downstream code depends on the sweep, because M0 verified the local workerd harness invokes lifecycle hooks but does not expose `ctx.cron` or persist cron rows there. The sweep interval SHALL be documented as a latency semantic in user-facing docs.
 
 #### Scenario: Promotion after cancellation
 - **WHEN** a confirmed RSVP is cancelled and the sweep fires

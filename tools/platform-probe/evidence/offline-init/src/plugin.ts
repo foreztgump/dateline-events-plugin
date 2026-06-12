@@ -1,12 +1,10 @@
 import type { SandboxedPlugin } from "emdash/plugin";
 
 /**
- * Sandboxed plugin entry. The default export is a bare object; the
- * `satisfies SandboxedPlugin` annotation gives TypeScript per-hook /
- * per-route inference (`ctx` is `PluginContext` automatically; hook
- * `event` parameters are typed by hook name).
+ * Sandboxed plugin entry. The explicit annotation keeps declaration
+ * generation portable under the probed pnpm + TypeScript toolchain.
  */
-export default {
+const plugin: SandboxedPlugin = {
 	routes: {
 		hello: {
 			handler: async (_routeCtx, ctx) => {
@@ -15,4 +13,6 @@ export default {
 			},
 		},
 	},
-} satisfies SandboxedPlugin;
+};
+
+export default plugin;
