@@ -14,6 +14,10 @@
       "import": "./dist/plugin.mjs",
       "types": "./dist/plugin.d.mts",
       "default": "./dist/plugin.mjs"
+    },
+    "./routes": {
+      "types": "./dist/routes.d.ts",
+      "import": "./dist/routes.js"
     }
   },
   "files": [

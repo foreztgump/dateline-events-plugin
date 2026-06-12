@@ -16,7 +16,8 @@ import {
 } from "./index.js";
 import ICAL from "ical.js";
 import plugin from "./plugin.js";
-import { IMPORTER_CRON_NAME } from "./constants.js";
+import { enqueueDeferredRemoteFeeds } from "./deferred.js";
+import { IMPORTER_CRON_NAME, MAX_REMOTE_SUBREQUESTS } from "./constants.js";
 import type { ImportRow } from "./index.js";
 
 const REMOTE_FETCH_TIMEOUT_MS = 25_000;
@@ -221,17 +222,50 @@ describe("@dateline/importer", () => {
     ]);
   });
 
-  it("drains persisted deferred importer jobs within the cron subrequest budget", async () => {
+  it("keeps deferred storage keys bounded for very long feed URLs", async () => {
+    // A >500-char URL must not produce an unbounded storage key: the URL-derived suffix is capped
+    // and uniqueness comes from the embedded UUID, not the URL.
+    const longUrl = `https://feeds.example.com/${"a".repeat(600)}.json`;
+    const ctx = remoteImportContext([]);
+
+    await enqueueDeferredRemoteFeeds({ ctx, format: "json", urls: [longUrl, longUrl], payload: {} });
+
+    const keys = Array.from(ctx.records.keys()).filter((key) => key.startsWith("deferred:"));
+    expect(keys).toHaveLength(2); // both feeds enqueued
+    for (const key of keys) expect(key.length).toBeLessThanOrEqual(280); // prefix+timestamp+index+uuid (~80) + capped 200-char suffix
+    expect(new Set(keys).size).toBe(keys.length); // UUID keeps keys unique despite identical capped URLs
+  });
+
+  it("drains deferred single-row feeds without exceeding the per-tick subrequest budget", async () => {
+    // 12 single-row feeds. Each feed costs 1 fetch + 1 dedup-list + 1 create + 1 progress put = 4 subrequests;
+    // with a 10-subrequest cap (1 reserved for the queue listing) only two feeds fit per tick.
     const deferredRecords = Array.from({ length: 12 }, (_value, index) => deferredJsonRecord(index + 1));
-    const remoteBodies = Array.from({ length: 10 }, (_value, index) => new Response(jsonFeedFixture(index + 1), { status: 200 }));
+    const remoteBodies = Array.from({ length: 12 }, (_value, index) => new Response(jsonFeedFixture(index + 1), { status: 200 }));
     const ctx = remoteImportContext(remoteBodies, deferredRecords);
 
     await cron({ name: IMPORTER_CRON_NAME }, ctx);
 
-    expect(ctx.http.fetch).toHaveBeenCalledTimes(10);
-    expect(ctx.content.create).toHaveBeenCalledTimes(10);
-    expect(readDeferredRecords(ctx.records, "completed")).toHaveLength(10);
-    expect(readDeferredRecords(ctx.records, "pending")).toHaveLength(2);
+    expect(tickSubrequestCost(ctx)).toBeLessThanOrEqual(MAX_REMOTE_SUBREQUESTS);
+    expect(ctx.http.fetch).toHaveBeenCalledTimes(2);
+    expect(ctx.content.create).toHaveBeenCalledTimes(2);
+    expect(readDeferredRecords(ctx.records, "completed")).toHaveLength(2);
+    expect(readDeferredRecords(ctx.records, "pending")).toHaveLength(10);
+  });
+
+  it("drains a 2-feed/12-row backlog across ticks, staying within budget every tick", async () => {
+    // Two feeds of 6 rows each. A many-row feed must NOT spend its whole row count in one tick:
+    // each tick is capped at MAX_REMOTE_SUBREQUESTS and the feed resumes from its importedRows offset.
+    const deferredRecords = [deferredJsonRecord(1), deferredJsonRecord(2)];
+    const ctx = remoteImportContext([], deferredRecords);
+    ctx.http.fetch.mockImplementation((url: string) => Promise.resolve(new Response(jsonFeedFixtureRows(feedIndexFromUrl(url), 6), { status: 200 })));
+
+    const ticks = await drainUntilSettled(ctx, 12);
+
+    expect(ticks.length).toBeGreaterThan(1); // proves the backlog needed multiple ticks
+    for (const cost of ticks) expect(cost).toBeLessThanOrEqual(MAX_REMOTE_SUBREQUESTS);
+    expect(ctx.content.create).toHaveBeenCalledTimes(12); // every row imported exactly once
+    expect(readDeferredRecords(ctx.records, "completed")).toHaveLength(2);
+    expect(readDeferredRecords(ctx.records, "pending")).toHaveLength(0);
   });
 
   it("leaves an empty deferred queue as a cron no-op", async () => {
@@ -341,6 +375,23 @@ function jsonFeedFixture(index: number): string {
   return JSON.stringify([{ sourceId: `json:${index}`, title: `JSON Event ${index}`, startsAt: "2026-06-01T17:00:00Z", endsAt: "2026-06-01T18:00:00Z", timezone: "UTC" }]);
 }
 
+/** A JSON feed carrying `rows` distinct events, all namespaced under feed `index` for unique sourceIds. */
+function jsonFeedFixtureRows(index: number, rows: number): string {
+  return JSON.stringify(
+    Array.from({ length: rows }, (_value, row) => ({
+      sourceId: `json:${index}:${row + 1}`,
+      title: `JSON Event ${index}-${row + 1}`,
+      startsAt: "2026-06-01T17:00:00Z",
+      endsAt: "2026-06-01T18:00:00Z",
+      timezone: "UTC",
+    })),
+  );
+}
+
+function feedIndexFromUrl(url: string): number {
+  return Number(url.match(/\/(\d+)\.json$/)?.[1] ?? "0");
+}
+
 function csvMapping() {
   return {
     title: "title",
@@ -420,6 +471,29 @@ function readDeferredRecords(records: Map<string, { id: string; data: unknown }>
     .map((entry) => entry.data)
     .filter((value): value is Record<string, unknown> => typeof value === "object" && value !== null && "kind" in value && value.kind === "deferredRemoteFeed")
     .filter((record) => status === undefined || record.status === status);
+}
+
+/** Total subrequest-bearing mock calls a cron tick made: feed fetches + content reads/writes + storage queries/puts. */
+function tickSubrequestCost(ctx: ReturnType<typeof remoteImportContext>): number {
+  return (
+    ctx.http.fetch.mock.calls.length +
+    ctx.content.list.mock.calls.length +
+    ctx.content.create.mock.calls.length +
+    ctx.storage.imports.query.mock.calls.length +
+    ctx.storage.imports.put.mock.calls.length
+  );
+}
+
+/** Run drain ticks until no pending feeds remain (or `maxTicks` reached), returning each tick's subrequest cost. */
+async function drainUntilSettled(ctx: ReturnType<typeof remoteImportContext>, maxTicks: number): Promise<number[]> {
+  const costs: number[] = [];
+  for (let tick = 0; tick < maxTicks; tick += 1) {
+    const before = tickSubrequestCost(ctx);
+    await cron({ name: IMPORTER_CRON_NAME }, ctx);
+    costs.push(tickSubrequestCost(ctx) - before);
+    if (readDeferredRecords(ctx.records, "pending").length === 0) break;
+  }
+  return costs;
 }
 
 async function expectResponseBody(responsePromise: Promise<Response>, expectedBody: unknown): Promise<void> {
