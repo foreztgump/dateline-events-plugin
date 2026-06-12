@@ -3,6 +3,10 @@ import { describe, expect, it, vi } from "vitest";
 
 import type { DatelineViewEvent } from "@dateline/views";
 
+const { loadEventBySlugMock } = vi.hoisted(() => ({
+  loadEventBySlugMock: vi.fn<(slug: string) => Promise<DatelineViewEvent | undefined>>(),
+}));
+
 const fridayMeetup: DatelineViewEvent = {
   id: "friday-meetup",
   slug: "friday-meetup",
@@ -18,10 +22,12 @@ const fridayMeetup: DatelineViewEvent = {
   organizers: ["dateline-community"],
   categories: ["community"],
   rsvpRequired: true,
+  rsvpCapacity: 5,
+  rsvpRemaining: 5,
 };
 
 vi.mock("../../lib/events.js", () => ({
-  loadEventBySlug: (slug: string) => Promise.resolve(slug === "friday-meetup" ? fridayMeetup : undefined),
+  loadEventBySlug: loadEventBySlugMock,
   loadVenueForEvent: () => Promise.resolve(undefined),
   loadOrganizersForEvent: () => Promise.resolve([]),
 }));
@@ -29,9 +35,10 @@ vi.mock("../../lib/events.js", () => ({
 import EventPage from "./[slug].astro";
 
 describe("event detail page", () => {
-  it("renders schema.org JSON-LD and the RSVP form for RSVP-required events", async () => {
+  it.sequential("renders schema.org JSON-LD and the RSVP form for RSVP-required events", async () => {
     // Arrange
     const container = await AstroContainer.create();
+    loadEventBySlugMock.mockResolvedValueOnce(fridayMeetup);
 
     // Act
     const html = await container.renderToString(EventPage, { params: { slug: "friday-meetup" } });
@@ -40,5 +47,20 @@ describe("event detail page", () => {
     expect(html).toContain('type="application/ld+json"');
     expect(html).toContain('"@type":"Event"');
     expect(html).toContain('data-dateline-component="RsvpForm"');
+    expect(html).toContain('action="/api/rsvp"');
+    expect(html).toContain("5 spots remaining");
+  });
+
+  it.sequential("renders a full-state message instead of the RSVP submit button when capacity is exhausted", async () => {
+    // Arrange
+    const container = await AstroContainer.create();
+    loadEventBySlugMock.mockResolvedValueOnce({ ...fridayMeetup, rsvpRemaining: 0, rsvpCapacity: 5 });
+
+    // Act
+    const html = await container.renderToString(EventPage, { params: { slug: "friday-meetup" } });
+
+    // Assert
+    expect(html).toContain("This event is full");
+    expect(html).not.toContain("Submit RSVP");
   });
 });

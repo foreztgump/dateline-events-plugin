@@ -7,6 +7,7 @@ export interface Attendee {
   event: string;
   email: string;
   name: string;
+  eventTitle?: string;
   rsvpStatus: RsvpStatus;
   ticketTierId?: null;
 }
@@ -67,6 +68,11 @@ export interface RateLimitRecord {
   expiresAt: string;
 }
 
+export interface AttendeeRecord extends Attendee {
+  kind: "attendee";
+  createdAt: string;
+}
+
 export interface HoldRecord {
   kind: "hold";
   eventId: string;
@@ -75,7 +81,7 @@ export interface HoldRecord {
   status: "active" | "expired";
 }
 
-export type RsvpStorageRecord = CapacityRecord | RsvpClaimRecord | WaitlistRecord | RateLimitRecord | HoldRecord;
+export type RsvpStorageRecord = CapacityRecord | RsvpClaimRecord | WaitlistRecord | RateLimitRecord | HoldRecord | AttendeeRecord;
 
 export interface RsvpContext {
   storage?: {

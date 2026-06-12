@@ -543,7 +543,7 @@
         "status": "published",
         "data": {
           "title": "Closing Social",
-          "short_description": "Closing community event.",
+          "short_description": "Small-capacity closing community event for full-state RSVP testing.",
           "description": [
             {
               "children": [
@@ -568,8 +568,8 @@
           "tags": [
             "social"
           ],
-          "capacity": 60,
-          "rsvp_required": false
+          "capacity": 2,
+          "rsvp_required": true
         }
       }
     ]

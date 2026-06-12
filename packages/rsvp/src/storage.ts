@@ -6,3 +6,7 @@ export function rsvpStorage(ctx: RsvpContext): StorageCollection {
   if (!collection) throw new DatelineRsvpError("STORAGE_UNAVAILABLE", "ctx.storage.rsvps is required for RSVP storage.");
   return collection;
 }
+
+export function attendeeKey(eventId: string, email: string): string {
+  return `attendee:${eventId}:${encodeURIComponent(email.toLowerCase())}`;
+}

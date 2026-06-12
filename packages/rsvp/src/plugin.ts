@@ -21,8 +21,8 @@ const plugin: SandboxedPlugin = {
     },
   },
   routes: {
-    "rsvp-submit": async (routeCtx, ctx) => jsonRoute(rsvpSubmit, routeCtx, ctx),
-    waitlist: async (routeCtx, ctx) => jsonRoute(waitlistJoin, routeCtx, ctx),
+    "rsvp-submit": { public: true, handler: async (routeCtx, ctx) => jsonRoute(rsvpSubmit, routeCtx, ctx) },
+    waitlist: { public: true, handler: async (routeCtx, ctx) => jsonRoute(waitlistJoin, routeCtx, ctx) },
     "admin/attendees": () => Promise.resolve(adminHandlers.attendees()),
     "admin/waitlist": () => Promise.resolve(adminHandlers.waitlist()),
   },

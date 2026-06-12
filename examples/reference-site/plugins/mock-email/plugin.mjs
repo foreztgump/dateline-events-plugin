@@ -19,7 +19,7 @@ import { fileURLToPath } from "node:url";
 
 const LOG_PATH = resolve(dirname(fileURLToPath(import.meta.url)), "../../.emdash-dev/mock-email.log");
 
-function captureMessage(event) {
+export function captureMessage(event) {
   try {
     const { message, source } = event;
     const entry = {

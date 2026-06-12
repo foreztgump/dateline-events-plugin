@@ -5,11 +5,11 @@ import { loadEventBySlug, loadOrganizersForEvent, loadVenueForEvent } from "../.
 
 const slug = Astro.params.slug ?? "";
 const event = await loadEventBySlug(slug);
-if (!event) return Astro.redirect("/events", 302);
+if (!event) return Astro.redirect("/events");
 const [venue, organizers] = await Promise.all([loadVenueForEvent(event), loadOrganizersForEvent(event)]);
 ---
 <BaseLayout title={`${event.title} | Dateline`}>
   <section class="grid-stack">
-    <EventDetail event={event} venue={venue} organizers={organizers} />
+    <EventDetail event={event} venue={venue} organizers={organizers} rsvpAction="/api/rsvp" />
   </section>
 </BaseLayout>

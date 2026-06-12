@@ -1,6 +1,5 @@
 import { z } from "zod";
 import {
-  ATTENDEES_COLLECTION,
   CAPACITY_FULL_MESSAGE,
   DUPLICATE_RSVP_MESSAGE,
   HTTP_BAD_REQUEST,
@@ -9,22 +8,33 @@ import {
   HTTP_TOO_MANY_REQUESTS,
   JSON_HEADERS,
   RATE_LIMIT_TTL_SECONDS,
+  RSVP_STATUS_CANCELLED,
+  RSVP_STATUS_CONFIRMED,
+  RSVP_STATUS_WAITLISTED,
 } from "./constants.js";
 import { reserveCapacity, releaseCapacity } from "./capacity.js";
+import { sendConfirmationEmail } from "./email.js";
 import { boundaryError, DatelineRsvpError } from "./errors.js";
+import { attendeeKey, rsvpStorage } from "./storage.js";
 import { enqueueWaitlist } from "./waitlist.js";
 import type { Attendee, RateLimitRecord, RouteInput, RsvpContext } from "./types.js";
 
-const RsvpBodySchema = z.object({ eventId: z.string().min(1), email: z.string().email(), name: z.string().min(1) });
+const RsvpBodySchema = z.object({
+  eventId: z.string().min(1),
+  email: z.string().email(),
+  name: z.string().min(1),
+  eventTitle: z.string().min(1).optional(),
+});
 const RATE_LIMIT_ID_PREFIX = "rate-limit:";
 const MILLISECONDS_PER_SECOND = 1000;
 
 export async function rsvpSubmit(input: RouteInput): Promise<Response> {
   try {
-    const attendee = await parseAttendee(input.request, "confirmed");
+    const attendee = await parseAttendee(input.request, RSVP_STATUS_CONFIRMED);
     await enforceRateLimit(input.ctx, attendee.event, clientIp(input.request));
     await reserveCapacity(input.ctx, attendee.event, attendee.email);
     const createdAttendee = await createAttendee(input.ctx, attendee, true);
+    await sendRouteConfirmationEmail(input.ctx, attendee);
     return jsonResponse(HTTP_OK, { ok: true, attendee: createdAttendee });
   } catch (error) {
     return routeErrorResponse(error);
@@ -33,30 +43,61 @@ export async function rsvpSubmit(input: RouteInput): Promise<Response> {
 
 export async function waitlistJoin(input: RouteInput): Promise<Response> {
   try {
-    const attendee = await parseAttendee(input.request, "waitlisted");
+    const attendee = await parseAttendee(input.request, RSVP_STATUS_WAITLISTED);
     const createdAttendee = await createAttendee(input.ctx, attendee, false);
-    await enqueueWaitlist(input.ctx, { ...attendee, id: readCreatedId(createdAttendee) });
+    try {
+      await enqueueWaitlist(input.ctx, { ...attendee, id: readCreatedId(createdAttendee) });
+    } catch (error) {
+      await rollbackWaitlistAttendee(input.ctx, attendee);
+      throw error;
+    }
     return jsonResponse(HTTP_OK, { ok: true, attendee: createdAttendee });
   } catch (error) {
     return routeErrorResponse(error);
   }
 }
 
-async function createAttendee(ctx: RsvpContext, attendee: Attendee, shouldReleaseCapacity: boolean): Promise<unknown> {
-  if (!ctx.content?.create) throw new Error("ctx.content.create is required for RSVP submissions.");
+async function rollbackWaitlistAttendee(ctx: RsvpContext, attendee: Attendee): Promise<void> {
+  const key = attendeeKey(attendee.event, attendee.email);
   try {
-    return await ctx.content.create(ATTENDEES_COLLECTION, { ...attendee });
+    const record = await rsvpStorage(ctx).get(key);
+    if (typeof record === "object" && record !== null) {
+      await rsvpStorage(ctx).put(key, { ...record, rsvpStatus: RSVP_STATUS_CANCELLED });
+    }
+  } catch (error) {
+    ctx.log?.warn("RSVP waitlist rollback failed", { eventId: attendee.event, email: attendee.email, error: String(error) });
+  }
+}
+
+async function createAttendee(ctx: RsvpContext, attendee: Attendee, shouldReleaseCapacity: boolean): Promise<unknown> {
+  try {
+    return await storeAttendee(ctx, attendee);
   } catch (error) {
     if (shouldReleaseCapacity) await releaseCapacity(ctx, attendee.event, attendee.email);
-    throw boundaryError("ctx.content.create(dateline_attendees)", error);
+    throw boundaryError("rsvp.createAttendee", error);
   }
+}
+
+async function sendRouteConfirmationEmail(ctx: RsvpContext, attendee: Attendee): Promise<void> {
+  try {
+    await sendConfirmationEmail(ctx, attendee);
+  } catch (error) {
+    ctx.log?.warn("RSVP route confirmation email failed", { eventId: attendee.event, email: attendee.email, error: String(error) });
+  }
+}
+
+async function storeAttendee(ctx: RsvpContext, attendee: Attendee): Promise<unknown> {
+  const id = attendeeKey(attendee.event, attendee.email);
+  const createdAt = new Date().toISOString();
+  await rsvpStorage(ctx).put(id, { ...attendee, id, kind: "attendee", createdAt });
+  return { id, ...attendee };
 }
 
 async function parseAttendee(request: Request | undefined, rsvpStatus: Attendee["rsvpStatus"]): Promise<Attendee> {
   if (!request) throw new DatelineRsvpError("REQUEST_MISSING", "Request is required.");
   try {
     const body = RsvpBodySchema.parse(await request.json());
-    return { event: body.eventId, email: body.email, name: body.name, rsvpStatus, ticketTierId: null };
+    return { event: body.eventId, email: body.email, name: body.name, eventTitle: body.eventTitle, rsvpStatus, ticketTierId: null };
   } catch (error) {
     throw new DatelineRsvpError("INVALID_RSVP", String(error));
   }

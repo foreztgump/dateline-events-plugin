@@ -17,6 +17,8 @@ export interface DatelineViewEvent {
   recurrenceRule?: string;
   x402Price?: { amount: number; currency: string };
   rsvpRequired?: boolean;
+  rsvpCapacity?: number;
+  rsvpRemaining?: number;
   [key: string]: unknown;
 }
 
