@@ -61,6 +61,13 @@ jobs:
           (cd packages/rsvp && ./node_modules/.bin/emdash-plugin validate)
           (cd packages/importer && ./node_modules/.bin/emdash-plugin validate)
 
+      # The emdash-plugin build probe imports each plugin's workspace deps
+      # (@dateline/blocks, @dateline/recurring) from their dist/ output. The
+      # full `pnpm -r build` runs later, so build these leaf deps first or the
+      # probe fails with "Cannot find module @dateline/blocks/dist/index.js".
+      - name: Build workspace dependencies for plugin probe
+        run: pnpm --filter @dateline/blocks --filter @dateline/recurring build
+
       - name: Build sandboxed plugins
         run: |
           mkdir -p packages/core/node_modules/.cache/emdash-build
