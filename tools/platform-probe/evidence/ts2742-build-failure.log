@@ -1,0 +1,18 @@
+> dateline-platform-probe@0.1.0 build /home/cownose/projects/Dateline/tools/platform-probe/plugin
+> emdash-plugin build
+
+◐ Building plugin...
+ℹ Manifest: /home/cownose/projects/Dateline/tools/platform-probe/plugin/emdash-plugin.jsonc
+ℹ Plugin entry: /home/cownose/projects/Dateline/tools/platform-probe/plugin/src/plugin.ts
+ℹ Package: dateline-platform-probe
+◐ Building runtime entry...
+ℹ entry: src/plugin.ts
+ℹ tsconfig: tsconfig.json
+ℹ Build start
+
+ERROR Failed to build /home/cownose/projects/Dateline/tools/platform-probe/plugin/src/plugin.ts: Build failed with 1 error:
+
+[plugin rolldown-plugin-dts:generate]
+RollupError: src/plugin.ts(9,1): error TS2883: The inferred type of 'default' cannot be named without a reference to 'PluginStorageConfig' from '.pnpm/@emdash-cms+plugin-types@0.0.1/node_modules/@emdash-cms/plugin-types'. This is likely not portable. A type annotation is necessary.
+
+[exit-code] 1

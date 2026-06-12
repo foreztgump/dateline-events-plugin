@@ -1,0 +1,26 @@
+{
+	"$schema": "./node_modules/@emdash-cms/plugin-cli/schemas/emdash-plugin.schema.json",
+
+	"slug": "dateline-platform-probe",
+	"publisher": "did:plc:datelineprobe000000000000000",
+
+	"license": "MIT",
+	"author": { "name": "Dateline maintainers", "email": "maintainers@dateline.example.com" },
+	"security": { "email": "security@dateline.example.com" },
+	"description": "EmDash platform verification probe",
+	"repo": "https://github.com/foreztgump/dateline-events-plugin",
+
+	// Trust contract — what runtime APIs the plugin asks for.
+	// Empty arrays mean no extra privileges beyond logging,
+	// KV, and route/hook registration. Changing these between
+	// releases requires a version bump because installed
+	// users have consented to the old contract.
+	"capabilities": ["content:read", "content:write", "network:request:unrestricted"],
+	"allowedHosts": [],
+	"storage": {
+		"probe_records": {
+			"indexes": ["kind", "eventId", "email"],
+			"uniqueIndexes": [["eventId", "email"]]
+		}
+	}
+}
