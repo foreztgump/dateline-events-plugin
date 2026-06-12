@@ -18,9 +18,8 @@ export function profileBeforeSave(): void {
   beforeSave(structuredClone(SAMPLE_EVENT));
 }
 
-export function profileAfterSave(ctx: CoreContext): void {
-  const waitUntilContext = { ...ctx, waitUntil: (promise: Promise<unknown>) => { void promise; } };
-  afterSave(SAMPLE_EVENT, waitUntilContext);
+export async function profileAfterSave(ctx: CoreContext): Promise<void> {
+  await afterSave(SAMPLE_EVENT, ctx);
 }
 
 export async function profileBeforeDelete(ctx: CoreContext): Promise<void> {

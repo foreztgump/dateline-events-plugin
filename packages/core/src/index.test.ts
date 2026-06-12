@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 import { validateBlocks } from "@dateline/blocks";
-import createCorePlugin, {
+import {
   adminHandlers,
   afterSave,
   beforeDelete,
@@ -12,6 +12,7 @@ import createCorePlugin, {
   privacyErase,
   privacyExport,
 } from "./index.js";
+import plugin from "./plugin.js";
 import type { DatelineEvent } from "./index.js";
 import { invalidateEventCaches } from "./cache.js";
 
@@ -32,14 +33,11 @@ const eventFixture: DatelineEvent = {
 };
 
 describe("core plugin manifest", () => {
-  it("declares the Dateline core sandbox manifest", () => {
-    const manifest = createCorePlugin();
+  it("declares the Dateline core sandboxed runtime surface", () => {
+    const routeNames = Object.keys(plugin.routes ?? {});
 
-    expect(manifest.id).toBe("dateline-core");
-    expect(manifest.version).toBe("0.1.0");
-    expect(manifest.capabilities).toEqual(["content:read", "content:write", "media:read"]);
-    expect(Object.keys(manifest.hooks)).toContain("content:beforeSave");
-    expect(manifest.routes).toEqual(expect.arrayContaining(["privacy/export", "privacy/erase"]));
+    expect(Object.keys(plugin.hooks ?? {})).toEqual(expect.arrayContaining(["content:beforeSave", "content:afterSave", "content:beforeDelete"]));
+    expect(routeNames).toEqual(expect.arrayContaining(["calendar-feed", "ical", "admin/events", "admin/venues", "admin/organizers", "admin/settings", "privacy/export", "privacy/erase"]));
   });
 });
 
@@ -78,13 +76,13 @@ describe("content hooks", () => {
     await expect(beforeDelete({ collection: "dateline_events", id: "evt_1" }, ctx)).rejects.toThrow("ATTENDEES_EXIST");
   });
 
-  it("uses ctx.waitUntil for event cache invalidation", () => {
-    const promiseSink = vi.fn();
-    const ctx = { waitUntil: promiseSink, kv: { delete: vi.fn().mockResolvedValue(undefined) } };
+  it("invalidates event caches directly from the sandbox hook", async () => {
+    const deleteCache = vi.fn().mockResolvedValue(true);
+    const ctx = { kv: { get: vi.fn().mockResolvedValue(null), delete: deleteCache } };
 
-    afterSave({ collection: "dateline_events", content: { id: "evt_1" } }, ctx);
+    await afterSave({ collection: "dateline_events", content: { id: "evt_1" } }, ctx);
 
-    expect(promiseSink).toHaveBeenCalledWith(expect.any(Promise));
+    expect(deleteCache).toHaveBeenCalledWith("event-cache-index:calendar:evt_1");
   });
 });
 
@@ -283,7 +281,7 @@ function kvBackedContext(events: unknown[]) {
     content: { list: vi.fn().mockResolvedValue({ items: events }) },
     kv: {
       get: vi.fn((key: string) => Promise.resolve(store.get(key) ?? null)),
-      put: vi.fn((key: string, value: string) => {
+      set: vi.fn((key: string, value: string) => {
         store.set(key, value);
         return Promise.resolve();
       }),
@@ -297,7 +295,7 @@ function kvBackedContext(events: unknown[]) {
 
 function listContext(events: unknown[]) {
   return {
-    kv: { get: vi.fn().mockResolvedValue(null), put: vi.fn().mockResolvedValue(undefined) },
+    kv: { get: vi.fn().mockResolvedValue(null), set: vi.fn().mockResolvedValue(undefined) },
     content: { list: vi.fn().mockResolvedValue({ items: events }) },
   };
 }

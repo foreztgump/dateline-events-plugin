@@ -12,10 +12,9 @@ export function beforeSave(event: HookEvent): void {
   event.content.endsAt = normalized.endsAt;
 }
 
-export function afterSave(event: HookEvent, ctx: CoreContext): void {
+export async function afterSave(event: HookEvent, ctx: CoreContext): Promise<void> {
   if (event.collection !== EVENTS_COLLECTION || !event.content?.id) return;
-  if (!ctx.waitUntil) throw new DatelineCoreError("WAIT_UNTIL_MISSING", "ctx.waitUntil is required for cache invalidation.");
-  ctx.waitUntil(invalidateEventCaches(ctx, readString(event.content.id)));
+  await invalidateEventCaches(ctx, readString(event.content.id));
 }
 
 export async function beforeDelete(event: HookEvent, ctx: CoreContext): Promise<void> {

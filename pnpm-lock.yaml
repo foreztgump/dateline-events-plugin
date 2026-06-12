@@ -113,7 +113,7 @@ importers:
         specifier: workspace:*
         version: link:../recurring
       emdash:
-        specifier: ^0.18
+        specifier: ^0.18.0
         version: 0.18.0(0b1e11744b0afcaee199726f2206e951)
       ical-generator:
         specifier: 10.2.0

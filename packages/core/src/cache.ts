@@ -1,4 +1,4 @@
-import { CACHE_TTL_SECONDS, EVENTS_COLLECTION } from "./constants.js";
+import { EVENTS_COLLECTION } from "./constants.js";
 import { boundaryError } from "./errors.js";
 import type { CoreContext } from "./types.js";
 
@@ -27,11 +27,11 @@ export async function readCachedResponse(ctx: CoreContext, key: string): Promise
 }
 
 export async function writeCachedResponse(ctx: CoreContext, key: string, value: string): Promise<void> {
-  if (!ctx.kv?.put) return;
+  if (!ctx.kv?.set) return;
   try {
-    await ctx.kv.put(key, value, { expirationTtl: CACHE_TTL_SECONDS });
+    await ctx.kv.set(key, value);
   } catch (error) {
-    throw boundaryError("ctx.kv.put", error);
+    throw boundaryError("ctx.kv.set", error);
   }
 }
 
