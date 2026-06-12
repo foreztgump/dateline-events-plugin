@@ -2,6 +2,7 @@ import {
   ATTENDEES_COLLECTION,
   HOLD_STATUS_ACTIVE,
   HOLD_STATUS_EXPIRED,
+  MAX_CRON_HOLD_EXPIRATIONS,
   MAX_CRON_PROMOTIONS,
   RSVP_HOLD_EXPIRY_NAME,
   RSVP_STATUS_CANCELLED,
@@ -88,7 +89,8 @@ async function expireCapacityHolds(ctx: RsvpContext): Promise<void> {
   try {
     const collection = rsvpStorage(ctx);
     const page = await collection.query({ where: { kind: "hold", status: HOLD_STATUS_ACTIVE } });
-    for (const entry of page.items ?? page.entries ?? []) await expireHold(ctx, entry.id, entry.data);
+    const holds = (page.items ?? page.entries ?? []).slice(0, MAX_CRON_HOLD_EXPIRATIONS);
+    for (const entry of holds) await expireHold(ctx, entry.id, entry.data);
   } catch (error) {
     throw boundaryError("cron(expire_capacity_holds)", error);
   }

@@ -18,4 +18,8 @@ export const HTTP_BAD_REQUEST = 400;
 export const HTTP_TOO_MANY_REQUESTS = 429;
 export const HTTP_CAPACITY_FULL = 409;
 export const MAX_CRON_PROMOTIONS = 3;
+// Cap hold expirations per cron invocation: each expireHold spends multiple
+// storage subrequests, so an unbounded sweep would breach the 10-subrequest
+// sandbox budget. Remaining holds are swept on the next cron tick.
+export const MAX_CRON_HOLD_EXPIRATIONS = 3;
 export const JSON_HEADERS = { "content-type": "application/json; charset=utf-8" };

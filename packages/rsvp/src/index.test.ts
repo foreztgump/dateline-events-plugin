@@ -5,10 +5,12 @@ import {
   activate,
   adminHandlers,
   afterSave,
+  cron,
   install,
   rsvpSubmit,
   waitlistJoin,
 } from "./index.js";
+import { MAX_CRON_HOLD_EXPIRATIONS } from "./constants.js";
 import { CAPACITY_FULL_MESSAGE } from "./constants.js";
 import type { RsvpContext } from "./types.js";
 
@@ -129,6 +131,24 @@ describe("@dateline/rsvp", () => {
     await expect(activate({}, { ...ctx, cron: undefined })).resolves.toBeUndefined();
   });
 
+  it("caps hold expirations per cron invocation to stay within the subrequest budget", async () => {
+    const expiredAt = new Date(Date.now() - 1000).toISOString();
+    const holds = Object.fromEntries(
+      Array.from({ length: MAX_CRON_HOLD_EXPIRATIONS + 2 }, (_, index) => [
+        `hold:evt_1:guest-${index}@example.com`,
+        { kind: "hold", eventId: "evt_1", email: `guest-${index}@example.com`, expiresAt: expiredAt, status: "active" },
+      ]),
+    );
+    const ctx = memoryContext(holds);
+
+    await cron({ name: "dateline-rsvp-hold-expiry" }, ctx);
+
+    const resolved = await Promise.all(
+      Object.keys(holds).map(async (id) => (await ctx.storage?.rsvps?.get(id) as { status?: string } | null)?.status),
+    );
+    expect(resolved.filter((status) => status === "expired")).toHaveLength(MAX_CRON_HOLD_EXPIRATIONS);
+  });
+
   it("renders valid Block Kit admin pages and accepts waitlist joins", async () => {
     const ctx = memoryContext();
     const response = await waitlistJoin({ request: jsonRequest("/waitlist", { eventId: "evt_1", email: "wait@example.com", name: "Wait" }), ctx });
@@ -169,7 +189,9 @@ function memoryContext(initialRecords: Record<string, Record<string, unknown>> =
         put: vi.fn((id: string, data: unknown) => yieldThen(() => {
           records.set(id, { id, data });
         })),
-        query: vi.fn(() => yieldThen(() => ({ items: Array.from(records.values()) }))),
+        query: vi.fn((options?: { where?: { kind?: string } }) => yieldThen(() => ({
+          items: Array.from(records.values()).filter((entry) => matchesKind(entry.data, options?.where?.kind)),
+        }))),
         count: vi.fn(() => yieldThen(() => records.size)),
       },
     },
@@ -186,6 +208,11 @@ function memoryContext(initialRecords: Record<string, Record<string, unknown>> =
 
 function storageContext(eventId: string, capacity: number): TestRsvpContext {
   return memoryContext({ [`capacity:${eventId}`]: { kind: "capacity", eventId, remaining: capacity } });
+}
+
+function matchesKind(data: unknown, kind?: string): boolean {
+  if (!kind) return true;
+  return typeof data === "object" && data !== null && "kind" in data && (data as { kind?: unknown }).kind === kind;
 }
 
 function yieldThen<T>(operation: () => T): Promise<T> {
