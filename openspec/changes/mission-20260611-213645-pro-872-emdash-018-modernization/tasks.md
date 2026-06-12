@@ -27,8 +27,8 @@ One milestone = one PR. Every PR routes through `pr-agent-runner` with `mission_
 
 ## M3 — WS5 reference site rebuild (PRO-878)
 - [ ] 3.1 Real `emdash()` config: dev (sqlite/local/workerd) + deploy (d1/r2/cloudflare sandbox); `sandboxed: [core, rsvp, importer]`
-- [ ] 3.2 Seed events/venues/organizers (`seed/seed.json`); mock `email:deliver` transport plugin
-- [ ] 3.3 Delete `src/lib/fixtures.js`; pages render live data via `@dateline/views`
+- [x] 3.2 Seed events/venues/organizers (`seed/seed.json`); mock `email:deliver` transport plugin
+- [x] 3.3 Delete `src/lib/fixtures.js`; pages render live data via `@dateline/views`
 - [ ] 3.4 Playwright e2e: calendars, event detail, RSVP flow incl. capacity + email, iCal feed, importer round-trip
 - [ ] 3.5 CI e2e job blocking from this milestone
 

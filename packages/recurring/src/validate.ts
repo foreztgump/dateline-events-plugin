@@ -1,11 +1,11 @@
-import rrulePackage from "rrule";
 import { DTSTART_TZID_PREFIX, VALID_FREQ_VALUES } from "./constants.js";
+import { getRRuleApi } from "./rrule-api.js";
 import { errorMessage, extractRRuleLine, readFreqValue } from "./rrule-utils.js";
 import { isValidTimeZone } from "./timezone.js";
 import type { ValidateRRuleErrorCode, ValidateRRuleResult } from "./types.js";
 
-const { rrulestr } = rrulePackage;
 const VALIDATION_DTSTART = "20000101T000000";
+const { rrulestr } = getRRuleApi();
 
 export function validateRRule(rule: string, tzid: string): ValidateRRuleResult {
   if (!isValidTimeZone(tzid)) return validationError("INVALID_TZID", `Unknown IANA timezone: ${tzid}`);
@@ -31,3 +31,4 @@ function parseRuleForValidation(rruleLine: string, tzid: string): ValidateRRuleR
 function validationError(code: ValidateRRuleErrorCode, message: string): ValidateRRuleResult {
   return { ok: false, code, message };
 }
+

@@ -1,0 +1,10 @@
+# EmDash dev runtime artifacts (not committed)
+data.db
+data.db-shm
+data.db-wal
+uploads/
+.emdash-dev/
+emdash-env.d.ts
+
+# Secrets, never commit
+.dev.vars

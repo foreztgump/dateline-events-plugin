@@ -2,7 +2,10 @@
 import CalendarAgenda from "@dateline/views/components/CalendarAgenda.astro";
 import CalendarList from "@dateline/views/components/CalendarList.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { displayEvents, seedEvents } from "../../lib/fixtures.js";
+import { loadDisplayEvents, loadSeedEvents } from "../../lib/events.js";
+
+const seedEvents = await loadSeedEvents();
+const displayEvents = await loadDisplayEvents(seedEvents);
 ---
 <BaseLayout title="Dateline Events">
   <section class="hero grid-stack">

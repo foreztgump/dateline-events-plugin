@@ -12,7 +12,8 @@
     },
     "./sandbox": {
       "types": "./dist/plugin.d.mts",
-      "import": "./dist/plugin.mjs"
+      "import": "./dist/plugin.mjs",
+      "default": "./dist/plugin.mjs"
     }
   },
   "files": [
@@ -30,7 +31,7 @@
     "lint:fix": "eslint src --cache --fix"
   },
   "peerDependencies": {
-    "emdash": "^0.18"
+    "emdash": "^0.18.0"
   },
   "devDependencies": {
     "@emdash-cms/plugin-cli": "^0.5.1",

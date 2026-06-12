@@ -44,6 +44,12 @@ importers:
       '@astrojs/cloudflare':
         specifier: 13.3.0
         version: 13.3.0(@types/node@20.19.39)(astro@6.2.1(@types/node@20.19.39)(rollup@4.60.2)(typescript@6.0.3)(yaml@2.8.4))(workerd@1.20260504.1)(wrangler@4.88.0)(yaml@2.8.4)
+      '@astrojs/node':
+        specifier: 10.0.6
+        version: 10.0.6(astro@6.2.1(@types/node@20.19.39)(rollup@4.60.2)(typescript@6.0.3)(yaml@2.8.4))
+      '@dateline/blocks':
+        specifier: workspace:*
+        version: link:../../packages/blocks
       '@dateline/core':
         specifier: workspace:*
         version: link:../../packages/core
@@ -59,12 +65,24 @@ importers:
       '@dateline/views':
         specifier: workspace:*
         version: link:../../packages/views
+      '@emdash-cms/sandbox-workerd':
+        specifier: 0.1.6
+        version: 0.1.6(e7a34831eb25e438672f860a339dc9c2)
       astro:
         specifier: ^6.1.10
         version: 6.2.1(@types/node@20.19.39)(rollup@4.60.2)(typescript@6.0.3)(yaml@2.8.4)
+      better-sqlite3:
+        specifier: ^12.9.0
+        version: 12.9.0
       emdash:
         specifier: ^0.18
         version: 0.18.0(0b1e11744b0afcaee199726f2206e951)
+      react:
+        specifier: ^19.2.5
+        version: 19.2.5
+      react-dom:
+        specifier: ^19.2.5
+        version: 19.2.5(react@19.2.5)
     devDependencies:
       '@astrojs/check':
         specifier: ^0.9.9
@@ -147,7 +165,7 @@ importers:
         specifier: workspace:*
         version: link:../core
       emdash:
-        specifier: ^0.18
+        specifier: ^0.18.0
         version: 0.18.0(0b1e11744b0afcaee199726f2206e951)
       ical.js:
         specifier: 2.2.1
@@ -206,7 +224,7 @@ importers:
         specifier: workspace:*
         version: link:../blocks
       emdash:
-        specifier: ^0.18
+        specifier: ^0.18.0
         version: 0.18.0(0b1e11744b0afcaee199726f2206e951)
       zod:
         specifier: 4.4.2
@@ -278,43 +296,6 @@ importers:
         specifier: ^4.1.5
         version: 4.1.5(@types/node@20.19.39)(vite@7.3.2(@types/node@20.19.39)(yaml@2.8.4))
 
-  tools/platform-probe/plugin:
-    dependencies:
-      '@emdash-cms/sandbox-workerd':
-        specifier: 0.1.6
-        version: 0.1.6(7bcac9e4e1439c2f2fd8e2103552036d)
-      astro:
-        specifier: 6.2.1
-        version: 6.2.1(@types/node@20.19.39)(rollup@4.60.2)(typescript@6.0.3)(yaml@2.8.4)
-      zod:
-        specifier: 4.4.2
-        version: 4.4.2
-    devDependencies:
-      '@emdash-cms/plugin-cli':
-        specifier: 0.5.1
-        version: 0.5.1(@atcute/identity@1.1.5(@atcute/lexicons@1.3.1))(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(typescript@6.0.3)
-      '@types/better-sqlite3':
-        specifier: 7.6.13
-        version: 7.6.13
-      better-sqlite3:
-        specifier: 12.9.0
-        version: 12.9.0
-      emdash:
-        specifier: 0.18.0
-        version: 0.18.0(0b1e11744b0afcaee199726f2206e951)
-      esbuild:
-        specifier: 0.27.7
-        version: 0.27.7
-      kysely:
-        specifier: 0.29.2
-        version: 0.29.2
-      typescript:
-        specifier: ^6.0.3
-        version: 6.0.3
-      vitest:
-        specifier: ^4.1.5
-        version: 4.1.5(@types/node@20.19.39)(vite@7.3.2(@types/node@20.19.39)(yaml@2.8.4))
-
   tools/sandbox-profiler:
     devDependencies:
       '@types/node':
@@ -367,6 +348,11 @@ packages:
 
   '@astrojs/markdown-remark@7.1.1':
     resolution: {integrity: sha512-C6e9BnLGlbdv6bV8MYGeHpHxsUHrCrB4OuRLqi5LI7oiBVcBcqfUN06zpwFQdHgV48QCCrMmLpyqBr7VqC+swA==}
+
+  '@astrojs/node@10.0.6':
+    resolution: {integrity: sha512-e8JmaP4sGxqvdei14kmBzhAqgd5/L5MTExW3Hks5DOt9LDvGzlsFZwnXVXzWPVjW/PErl7t9uLg7xWhCqfkSrA==}
+    peerDependencies:
+      astro: ^6.0.0
 
   '@astrojs/prism@4.0.1':
     resolution: {integrity: sha512-nksZQVjlferuWzhPsBpQ1JE5XuKAf1id1/9Hj4a9KG4+ofrlzxUUwX4YGQF/SuDiuiGKEnzopGOt38F3AnVWsQ==}
@@ -2237,9 +2223,6 @@ packages:
 
   '@types/babel__traverse@7.28.0':
     resolution: {integrity: sha512-8PvcXf70gTDZBgt9ptxJ8elBeBjcLOAcOtoO/mPJjtji1+CdGbHgm77om1GrsPxsiE+uXIpNSK64UYaIwQXd4Q==}
-
-  '@types/better-sqlite3@7.6.13':
-    resolution: {integrity: sha512-NMv9ASNARoKksWtsq/SHakpYAYnhBrQgGD8zkLYk/jaK8jUGn08CfEdTRgYhMypUQAfzSP8W6gNLe0q19/t4VA==}
 
   '@types/chai@5.2.3':
     resolution: {integrity: sha512-Mw558oeA9fFbv65/y4mHtXDs9bPnFMZAL/jxdPFUpOHHIXX91mcgEHbS5Lahr+pwZFR8A7GQleRWeI6cGFC2UA==}
@@ -4435,6 +4418,9 @@ packages:
     resolution: {integrity: sha512-xRXBn0pPqQTVQiC8wyQrKs2MOlX24zQ0POGaj0kultvoOCstBQM5yvOhAVSUwOMjQtTvsPWoNCHfPGwaaQJhTw==}
     engines: {node: '>= 18'}
 
+  server-destroy@1.0.1:
+    resolution: {integrity: sha512-rb+9B5YBIEzYcD6x2VKidaa+cqYBJQKnU4oe4E3ANwRRN56yk/ua1YCJT1n21NTS8w6CcOclAKNP3PhdCXKYtQ==}
+
   setprototypeof@1.2.0:
     resolution: {integrity: sha512-E5LDX7Wrp85Kil5bhZv46j8jOeboKq5JMmYM3gVGdGH8xFpPWXUMsNrlODCrkoxMEeNi/XZIwuRvY4XNwYMJpw==}
 
@@ -5315,6 +5301,15 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@astrojs/node@10.0.6(astro@6.2.1(@types/node@20.19.39)(rollup@4.60.2)(typescript@6.0.3)(yaml@2.8.4))':
+    dependencies:
+      '@astrojs/internal-helpers': 0.9.0
+      astro: 6.2.1(@types/node@20.19.39)(rollup@4.60.2)(typescript@6.0.3)(yaml@2.8.4)
+      send: 1.2.1
+      server-destroy: 1.0.1
+    transitivePeerDependencies:
+      - supports-color
+
   '@astrojs/prism@4.0.1':
     dependencies:
       prismjs: 1.30.0
@@ -6038,7 +6033,7 @@ snapshots:
       '@atcute/atproto': 3.1.12(@atcute/lexicons@1.3.1)
       '@atcute/lexicons': 1.3.1
 
-  '@emdash-cms/sandbox-workerd@0.1.6(7bcac9e4e1439c2f2fd8e2103552036d)':
+  '@emdash-cms/sandbox-workerd@0.1.6(e7a34831eb25e438672f860a339dc9c2)':
     dependencies:
       emdash: 0.18.0(0b1e11744b0afcaee199726f2206e951)
       kysely: 0.29.2
@@ -7258,10 +7253,6 @@ snapshots:
   '@types/babel__traverse@7.28.0':
     dependencies:
       '@babel/types': 7.29.0
-
-  '@types/better-sqlite3@7.6.13':
-    dependencies:
-      '@types/node': 20.19.39
 
   '@types/chai@5.2.3':
     dependencies:
@@ -9934,6 +9925,8 @@ snapshots:
       send: 1.2.1
     transitivePeerDependencies:
       - supports-color
+
+  server-destroy@1.0.1: {}
 
   setprototypeof@1.2.0: {}
 

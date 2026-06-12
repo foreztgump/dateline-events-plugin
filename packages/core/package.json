@@ -12,7 +12,8 @@
     },
     "./sandbox": {
       "types": "./dist/plugin.d.mts",
-      "import": "./dist/plugin.mjs"
+      "import": "./dist/plugin.mjs",
+      "default": "./dist/plugin.mjs"
     },
     "./schema-org": {
       "types": "./dist/schema-org.d.ts",

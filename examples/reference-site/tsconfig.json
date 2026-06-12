@@ -9,6 +9,6 @@
     "allowJs": true,
     "types": ["astro/client"]
   },
-  "include": ["src", "seed/**/*.json", "astro.config.mjs"],
+  "include": ["src", "seed/**/*.json", "astro.config.mjs", "emdash-env.d.ts", "plugins/**/*.mjs"],
   "exclude": ["dist"]
 }

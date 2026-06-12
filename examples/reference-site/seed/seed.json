@@ -1,0 +1,577 @@
+{
+  "version": "1",
+  "collections": [
+    {
+      "slug": "dateline_events",
+      "label": "Dateline Events",
+      "fields": [
+        {
+          "slug": "title",
+          "label": "Title",
+          "type": "string"
+        },
+        {
+          "slug": "short_description",
+          "label": "Short description",
+          "type": "text"
+        },
+        {
+          "slug": "description",
+          "label": "Description",
+          "type": "portableText"
+        },
+        {
+          "slug": "starts_at",
+          "label": "Starts at",
+          "type": "datetime"
+        },
+        {
+          "slug": "ends_at",
+          "label": "Ends at",
+          "type": "datetime"
+        },
+        {
+          "slug": "timezone",
+          "label": "Timezone",
+          "type": "string"
+        },
+        {
+          "slug": "all_day",
+          "label": "All day",
+          "type": "boolean"
+        },
+        {
+          "slug": "location_type",
+          "label": "Location type",
+          "type": "select"
+        },
+        {
+          "slug": "venue",
+          "label": "Venue",
+          "type": "reference"
+        },
+        {
+          "slug": "organizers",
+          "label": "Organizers",
+          "type": "json"
+        },
+        {
+          "slug": "categories",
+          "label": "Categories",
+          "type": "json"
+        },
+        {
+          "slug": "tags",
+          "label": "Tags",
+          "type": "json"
+        },
+        {
+          "slug": "capacity",
+          "label": "Capacity",
+          "type": "integer"
+        },
+        {
+          "slug": "rsvp_required",
+          "label": "RSVP required",
+          "type": "boolean"
+        },
+        {
+          "slug": "recurrence_rule",
+          "label": "Recurrence rule",
+          "type": "string"
+        },
+        {
+          "slug": "x402_price",
+          "label": "x402 price",
+          "type": "json"
+        }
+      ]
+    },
+    {
+      "slug": "dateline_venues",
+      "label": "Dateline Venues",
+      "fields": [
+        {
+          "slug": "name",
+          "label": "Name",
+          "type": "string"
+        },
+        {
+          "slug": "address",
+          "label": "Address",
+          "type": "json"
+        },
+        {
+          "slug": "lat",
+          "label": "Latitude",
+          "type": "number"
+        },
+        {
+          "slug": "lng",
+          "label": "Longitude",
+          "type": "number"
+        },
+        {
+          "slug": "website",
+          "label": "Website",
+          "type": "url"
+        }
+      ]
+    },
+    {
+      "slug": "dateline_organizers",
+      "label": "Dateline Organizers",
+      "fields": [
+        {
+          "slug": "name",
+          "label": "Name",
+          "type": "string"
+        },
+        {
+          "slug": "email",
+          "label": "Email",
+          "type": "string"
+        },
+        {
+          "slug": "website",
+          "label": "Website",
+          "type": "url"
+        }
+      ]
+    }
+  ],
+  "taxonomies": [],
+  "content": {
+    "dateline_venues": [
+      {
+        "id": "venue-harbor-hall",
+        "slug": "harbor-hall",
+        "status": "published",
+        "data": {
+          "name": "Harbor Hall",
+          "address": {
+            "line1": "100 Pier Ave",
+            "city": "Oakland",
+            "region": "CA",
+            "postalCode": "94607",
+            "country": "US"
+          },
+          "lat": 37.7955,
+          "lng": -122.277,
+          "website": "https://example.com/harbor-hall"
+        }
+      },
+      {
+        "id": "venue-civic-lab",
+        "slug": "civic-lab",
+        "status": "published",
+        "data": {
+          "name": "Civic Lab",
+          "address": {
+            "line1": "42 Market St",
+            "city": "San Francisco",
+            "region": "CA",
+            "postalCode": "94105",
+            "country": "US"
+          },
+          "lat": 37.789,
+          "lng": -122.394
+        }
+      },
+      {
+        "id": "venue-online",
+        "slug": "online",
+        "status": "published",
+        "data": {
+          "name": "Online"
+        }
+      }
+    ],
+    "dateline_organizers": [
+      {
+        "id": "org-dateline",
+        "slug": "dateline-community",
+        "status": "published",
+        "data": {
+          "name": "Dateline Community",
+          "email": "hello@dateline.dev",
+          "website": "https://dateline.dev"
+        }
+      },
+      {
+        "id": "org-reef",
+        "slug": "reef-network",
+        "status": "published",
+        "data": {
+          "name": "Reef Network",
+          "email": "events@reef.example",
+          "website": "https://reef.example"
+        }
+      },
+      {
+        "id": "org-city",
+        "slug": "city-arts",
+        "status": "published",
+        "data": {
+          "name": "City Arts Collective",
+          "website": "https://cityarts.example"
+        }
+      }
+    ],
+    "dateline_events": [
+      {
+        "id": "evt-friday-meetup",
+        "slug": "friday-meetup",
+        "status": "published",
+        "data": {
+          "title": "Friday Meetup RSVP Night",
+          "short_description": "Capacity-limited community meetup with free RSVP.",
+          "description": [
+            {
+              "children": [
+                {
+                  "text": "A friendly capacity-limited meetup for Dateline organizers."
+                }
+              ]
+            }
+          ],
+          "starts_at": "2026-05-08T01:00:00.000Z",
+          "ends_at": "2026-05-08T03:00:00.000Z",
+          "timezone": "America/Los_Angeles",
+          "all_day": false,
+          "location_type": "physical",
+          "venue": "harbor-hall",
+          "organizers": [
+            "dateline-community"
+          ],
+          "categories": [
+            "community"
+          ],
+          "tags": [
+            "rsvp"
+          ],
+          "capacity": 5,
+          "rsvp_required": true
+        }
+      },
+      {
+        "id": "evt-weekly-yoga",
+        "slug": "weekly-yoga-dst",
+        "status": "published",
+        "data": {
+          "title": "Weekly Yoga Across DST",
+          "short_description": "Weekly recurring class crossing the 2027 spring DST boundary.",
+          "description": [
+            {
+              "children": [
+                {
+                  "text": "Weekly RRULE fixture that should stay at the same wall-clock time."
+                }
+              ]
+            }
+          ],
+          "starts_at": "2027-03-01T17:00:00.000Z",
+          "ends_at": "2027-03-01T18:00:00.000Z",
+          "timezone": "America/Los_Angeles",
+          "all_day": false,
+          "location_type": "physical",
+          "venue": "civic-lab",
+          "organizers": [
+            "reef-network"
+          ],
+          "categories": [
+            "workshop"
+          ],
+          "tags": [
+            "recurring",
+            "dst"
+          ],
+          "capacity": 20,
+          "rsvp_required": false,
+          "recurrence_rule": "FREQ=WEEKLY;COUNT=6"
+        }
+      },
+      {
+        "id": "evt-x402-livestream",
+        "slug": "x402-livestream",
+        "status": "published",
+        "data": {
+          "title": "x402 Livestream Briefing",
+          "short_description": "Micropayment-gated virtual briefing.",
+          "description": [
+            {
+              "children": [
+                {
+                  "text": "Demonstrates the x402Price metadata rendered by EventDetail."
+                }
+              ]
+            }
+          ],
+          "starts_at": "2026-05-12T18:00:00.000Z",
+          "ends_at": "2026-05-12T19:00:00.000Z",
+          "timezone": "UTC",
+          "all_day": false,
+          "location_type": "virtual",
+          "organizers": [
+            "dateline-community"
+          ],
+          "categories": [
+            "conference"
+          ],
+          "tags": [
+            "x402"
+          ],
+          "rsvp_required": false,
+          "x402_price": {
+            "amount": 250,
+            "currency": "USD"
+          }
+        }
+      },
+      {
+        "id": "evt-venue-organizer",
+        "slug": "venue-organizer-showcase",
+        "status": "published",
+        "data": {
+          "title": "Venue + Organizer Showcase",
+          "short_description": "Physical event with rich venue and organizer references.",
+          "description": [
+            {
+              "children": [
+                {
+                  "text": "Shows venue map and organizer card composition."
+                }
+              ]
+            }
+          ],
+          "starts_at": "2026-05-15T23:00:00.000Z",
+          "ends_at": "2026-05-16T01:00:00.000Z",
+          "timezone": "America/Los_Angeles",
+          "all_day": false,
+          "location_type": "physical",
+          "venue": "harbor-hall",
+          "organizers": [
+            "reef-network",
+            "city-arts"
+          ],
+          "categories": [
+            "meeting"
+          ],
+          "tags": [
+            "venue"
+          ],
+          "capacity": 80,
+          "rsvp_required": false
+        }
+      },
+      {
+        "id": "evt-importer-clinic",
+        "slug": "importer-clinic",
+        "status": "published",
+        "data": {
+          "title": "Importer Clinic",
+          "short_description": "TEC, iCal, CSV migration clinic.",
+          "description": [
+            {
+              "children": [
+                {
+                  "text": "Hands-on importer demonstration."
+                }
+              ]
+            }
+          ],
+          "starts_at": "2026-05-20T17:00:00.000Z",
+          "ends_at": "2026-05-20T18:30:00.000Z",
+          "timezone": "America/New_York",
+          "all_day": false,
+          "location_type": "hybrid",
+          "venue": "online",
+          "organizers": [
+            "dateline-community"
+          ],
+          "categories": [
+            "workshop"
+          ],
+          "tags": [
+            "importer"
+          ],
+          "capacity": 40,
+          "rsvp_required": false
+        }
+      },
+      {
+        "id": "evt-calendar-month",
+        "slug": "calendar-month-deep-dive",
+        "status": "published",
+        "data": {
+          "title": "Calendar Month Deep Dive",
+          "short_description": "Month grid theming session.",
+          "description": [
+            {
+              "children": [
+                {
+                  "text": "Customize CalendarMonth and headless variants."
+                }
+              ]
+            }
+          ],
+          "starts_at": "2026-05-22T16:00:00.000Z",
+          "ends_at": "2026-05-22T17:00:00.000Z",
+          "timezone": "UTC",
+          "all_day": false,
+          "location_type": "virtual",
+          "organizers": [
+            "reef-network"
+          ],
+          "categories": [
+            "workshop"
+          ],
+          "tags": [
+            "views"
+          ],
+          "rsvp_required": false
+        }
+      },
+      {
+        "id": "evt-all-day",
+        "slug": "community-all-day",
+        "status": "published",
+        "data": {
+          "title": "Community All-Day Festival",
+          "short_description": "All-day calendar fixture.",
+          "description": [
+            {
+              "children": [
+                {
+                  "text": "All-day community festival for list and agenda views."
+                }
+              ]
+            }
+          ],
+          "starts_at": "2026-05-25T00:00:00.000Z",
+          "ends_at": "2026-05-25T23:59:00.000Z",
+          "timezone": "UTC",
+          "all_day": true,
+          "location_type": "physical",
+          "venue": "civic-lab",
+          "organizers": [
+            "city-arts"
+          ],
+          "categories": [
+            "community"
+          ],
+          "tags": [
+            "all-day"
+          ],
+          "capacity": 200,
+          "rsvp_required": false
+        }
+      },
+      {
+        "id": "evt-agenda-breakfast",
+        "slug": "agenda-breakfast",
+        "status": "published",
+        "data": {
+          "title": "Agenda Breakfast",
+          "short_description": "Morning agenda event.",
+          "description": [
+            {
+              "children": [
+                {
+                  "text": "Short morning fixture for agenda sorting."
+                }
+              ]
+            }
+          ],
+          "starts_at": "2026-05-27T15:00:00.000Z",
+          "ends_at": "2026-05-27T16:00:00.000Z",
+          "timezone": "America/Los_Angeles",
+          "all_day": false,
+          "location_type": "physical",
+          "venue": "harbor-hall",
+          "organizers": [
+            "dateline-community"
+          ],
+          "categories": [
+            "meeting"
+          ],
+          "tags": [
+            "agenda"
+          ],
+          "capacity": 25,
+          "rsvp_required": false
+        }
+      },
+      {
+        "id": "evt-week-view",
+        "slug": "week-view-lab",
+        "status": "published",
+        "data": {
+          "title": "Week View Lab",
+          "short_description": "Week view layout event.",
+          "description": [
+            {
+              "children": [
+                {
+                  "text": "Seven-day calendar view exercise."
+                }
+              ]
+            }
+          ],
+          "starts_at": "2026-05-28T20:00:00.000Z",
+          "ends_at": "2026-05-28T21:00:00.000Z",
+          "timezone": "America/Los_Angeles",
+          "all_day": false,
+          "location_type": "hybrid",
+          "venue": "civic-lab",
+          "organizers": [
+            "reef-network"
+          ],
+          "categories": [
+            "workshop"
+          ],
+          "tags": [
+            "week"
+          ],
+          "capacity": 35,
+          "rsvp_required": false
+        }
+      },
+      {
+        "id": "evt-closing-social",
+        "slug": "closing-social",
+        "status": "published",
+        "data": {
+          "title": "Closing Social",
+          "short_description": "Closing community event.",
+          "description": [
+            {
+              "children": [
+                {
+                  "text": "Final social event in the reference dataset."
+                }
+              ]
+            }
+          ],
+          "starts_at": "2026-05-30T01:00:00.000Z",
+          "ends_at": "2026-05-30T03:00:00.000Z",
+          "timezone": "America/Los_Angeles",
+          "all_day": false,
+          "location_type": "physical",
+          "venue": "harbor-hall",
+          "organizers": [
+            "city-arts"
+          ],
+          "categories": [
+            "community"
+          ],
+          "tags": [
+            "social"
+          ],
+          "capacity": 60,
+          "rsvp_required": false
+        }
+      }
+    ]
+  }
+}

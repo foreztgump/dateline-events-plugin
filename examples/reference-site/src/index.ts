@@ -1,2 +1,2 @@
 export const PACKAGE_NAME = "@dateline/reference-site";
-export { seedEvents, displayEvents } from "./lib/fixtures.js";
+export { loadDisplayEvents, loadSeedEvents, loadEventBySlug } from "./lib/events.js";
