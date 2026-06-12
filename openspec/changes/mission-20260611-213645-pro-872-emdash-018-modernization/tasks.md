@@ -16,8 +16,8 @@ One milestone = one PR. Every PR routes through `pr-agent-runner` with `mission_
 - [ ] 1.4 Grep gates wired in CI (per design D7)
 
 ## M2 — WS2 sandboxed conversion + WS3 remediation (PRO-874, PRO-875, PRO-876, PRO-877)
-- [ ] 2.1 `emdash-plugin.jsonc` ×3 (slug, publisher DID decision, license, security, capabilities, storage incl. uniqueIndexes)
-- [ ] 2.2 Collapse each plugin to `src/plugin.ts` `satisfies SandboxedPlugin`; delete factories; fix package exports (`./sandbox`)
+- [ ] 2.1 `emdash-plugin.jsonc` ×3 (slug, publisher handle, license, security, capabilities, storage incl. uniqueIndexes as defense in depth)
+- [ ] 2.2 Collapse each plugin to `src/plugin.ts` with `const plugin: SandboxedPlugin = {...}; export default plugin;`; delete factories; fix package exports (`./sandbox`)
 - [ ] 2.3 Rename profiler `sandboxed.json` → `profiler.config.json`; recalibrate budgets to M0 measured limits
 - [ ] 2.4 `emdash-plugin validate` + `build` ×3 in CI; tarballs as artifacts
 - [ ] 2.5 RSVP capacity → storage-backed counters (D2); delete atomic-KV paths; concurrent oversell test green

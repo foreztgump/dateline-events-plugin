@@ -10,7 +10,7 @@ The repo SHALL contain `VERIFIED-PLATFORM-0.18.md` recording empirically probed 
 - **THEN** the fact is resolved by probe and recorded in `VERIFIED-PLATFORM-0.18.md` before code depends on it
 
 ### Requirement: Sandboxed plugin format
-`@dateline/core`, `@dateline/rsvp`, and `@dateline/importer` SHALL each ship an `emdash-plugin.jsonc` manifest (slug, publisher, license, author, security, capabilities, allowedHosts, storage, admin as applicable) and a single `src/plugin.ts` bare default export `satisfies SandboxedPlugin` imported from `emdash/plugin`.
+`@dateline/core`, `@dateline/rsvp`, and `@dateline/importer` SHALL each ship an `emdash-plugin.jsonc` manifest (slug, publisher, license, author, security, capabilities, allowedHosts, storage, admin as applicable) and a single `src/plugin.ts` whose default export uses the M0-verified TS2742-safe shape: `import type { SandboxedPlugin } from "emdash/plugin"; const plugin: SandboxedPlugin = {...}; export default plugin;`.
 
 #### Scenario: CLI validation
 - **WHEN** `emdash-plugin validate` runs against any of the three plugins in CI

@@ -3,7 +3,7 @@
 ## ADDED Requirements
 
 ### Requirement: Storage-backed capacity counters
-RSVP capacity SHALL be enforced through the plugin `storage` collection (D1 single-writer): a unique constraint per event+attendee prevents duplicate RSVPs, and the available-count check uses query-count or a counter row with conflict retry. `ctx.kv` SHALL be used only for the 1-hour occurrence cache.
+RSVP capacity SHALL be enforced through the plugin `storage` collection (D1 single-writer): duplicate event+attendee RSVPs are rejected by an explicit application-level conflict check, and the available-count check uses query-count or a counter row with conflict retry. Manifests SHALL still declare event+attendee `uniqueIndexes` as production-backend defense in depth, but correctness MUST NOT rely on unique-index conflicts because the M0 probe verified local workerd does not enforce them. `ctx.kv` SHALL be used only for the 1-hour occurrence cache.
 
 #### Scenario: Concurrent oversell attempt
 - **WHEN** N concurrent RSVP submissions target an event with fewer than N remaining seats
@@ -11,7 +11,7 @@ RSVP capacity SHALL be enforced through the plugin `storage` collection (D1 sing
 
 #### Scenario: Duplicate RSVP
 - **WHEN** the same attendee submits twice for the same event
-- **THEN** the second submission is rejected by the unique constraint without double-counting capacity
+- **THEN** the second submission is rejected by the application-level duplicate check without double-counting capacity, even if the local storage backend accepts duplicate rows for declared `uniqueIndexes`
 
 ### Requirement: Lifecycle-registered waitlist sweep
 The waitlist-promotion sweep SHALL be registered via `ctx.cron.schedule()` inside `plugin:install` (idempotently re-asserted in `plugin:activate`) and consumed via the `cron` hook, discriminating on `event.name`. The sweep interval SHALL be documented as a latency semantic in user-facing docs.
