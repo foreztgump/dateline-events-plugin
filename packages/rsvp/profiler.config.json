@@ -53,6 +53,19 @@
       "module": "./dist/plugin.mjs",
       "pluginHook": "cron",
       "event": { "name": "dateline-rsvp-waitlist-sweep", "scheduledAt": "2026-01-01T00:00:00.000Z" }
+    },
+    {
+      "id": "cron hold-expiry",
+      "module": "./dist/plugin.mjs",
+      "pluginHook": "cron",
+      "event": { "name": "dateline-rsvp-hold-expiry", "scheduledAt": "2026-01-01T00:00:00.000Z" },
+      "seedRecords": {
+        "rsvps": [
+          { "id": "rate-limit:evt_profile:203.0.113.10", "data": { "kind": "rateLimit", "eventId": "evt_profile", "ipAddress": "203.0.113.10", "expiresAt": "2020-01-01T00:00:00.000Z" } },
+          { "id": "rate-limit:evt_profile:203.0.113.11", "data": { "kind": "rateLimit", "eventId": "evt_profile", "ipAddress": "203.0.113.11", "expiresAt": "2020-01-01T00:00:00.000Z" } },
+          { "id": "rate-limit:evt_profile:203.0.113.12", "data": { "kind": "rateLimit", "eventId": "evt_profile", "ipAddress": "203.0.113.12", "expiresAt": "2020-01-01T00:00:00.000Z" } }
+        ]
+      }
     }
   ]
 }

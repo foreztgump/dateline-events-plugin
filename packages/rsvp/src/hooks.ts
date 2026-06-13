@@ -52,6 +52,22 @@ export async function afterSave(event: HookEvent, ctx: RsvpContext): Promise<voi
   }
 }
 
+// Cron subrequest budget (Cloudflare sandbox limit: 10 storage subrequests/invocation).
+// The hold-expiry tick runs BOTH sweeps, so the worst case is their combined fan-out —
+// not the cap COUNTS (MAX_CRON_HOLD_EXPIRATIONS=3 + MAX_CRON_RATE_LIMIT_PURGES=3 = 6),
+// because a single hold expiry is NOT one subrequest:
+//   - expireCapacityHolds: 1 query(holds) + per expired hold ~6 (releaseCapacity =
+//     get claim + get capacity + put claim + query claims + put capacity, then put
+//     expired hold) → 1 + 3×6 = 19 at MAX_CRON_HOLD_EXPIRATIONS.
+//   - purgeExpiredRateLimits: 1 query(rateLimit) + up to MAX_CRON_RATE_LIMIT_PURGES
+//     deletes → 4 at the cap.
+// Theoretical combined worst case ≈ 23, which EXCEEDS the 10-subrequest budget.
+// Realized cost today is ~5 (1 query(holds) finds 0 + 1 query(rateLimit) + up to 3
+// deletes) because no production path writes `hold` records — capacity uses `claim`
+// records, and `hold` is reserved for a future ticketing flow. profiler.config.json's
+// "cron hold-expiry" handler asserts this realized path stays within budget. If
+// hold-writing is ever added, split the two sweeps across separate cron ticks (or
+// lower MAX_CRON_HOLD_EXPIRATIONS) so a populated tick cannot breach the limit.
 export async function cron(event: { name?: string }, ctx: RsvpContext): Promise<void> {
   if (event.name === RSVP_SWEEP_NAME) await promoteFromListedWaitlist(ctx);
   if (event.name === RSVP_HOLD_EXPIRY_NAME) {

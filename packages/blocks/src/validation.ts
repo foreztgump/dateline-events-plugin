@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { validateBlocks } from "@emdash-cms/blocks/server";
-import type { BlockResponse } from "@emdash-cms/blocks/server";
+import type { BlockResponse } from "@emdash-cms/blocks";
 
 const INVALID_BLOCKS_MESSAGE = "Invalid BlockResponse";
 

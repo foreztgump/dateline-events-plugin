@@ -82,7 +82,7 @@ If you build admin UIs, switch to upstream 0.18 shapes: Stats `items`, buttons/c
 
 ## Known limitations (v0.2 Cloudflare deploy path)
 
-The local dev and Playwright e2e flows are fully working on EmDash 0.18. Two limitations apply to the **Cloudflare deploy path** and must be addressed before production:
+The local dev and Playwright e2e flows are fully working on EmDash 0.18. Three limitations apply to the **Cloudflare deploy path** and must be addressed before production:
 
 1. **No email transport on the Cloudflare build.** The dev/e2e mock `email:deliver` transport is a Node-filesystem plugin and is intentionally omitted from the Cloudflare build (it cannot run on Workers). RSVP confirmation emails will **not** be delivered on Cloudflare until you wire a Workers-compatible `email:deliver` transport — a provider HTTP API such as Cloudflare Email Service.
 
