@@ -30,6 +30,14 @@ rejection, the iCal feed, and the importer round-trip. This suite runs as a
 
 ## Cloudflare deploy validation
 
+> **Note (2026-06-13):** the live mission-scoped resources backing this section
+> have been torn down — D1 `dateline-refsite-db` (was id
+> `7c82560c-7344-4432-b699-5904375c0e32`) and R2 `dateline-refsite-media`. The
+> ids/names below remain in `wrangler.jsonc` for reference only. To deploy
+> again, recreate them (`wrangler d1 create dateline-refsite-db`,
+> `wrangler r2 bucket create dateline-refsite-media`) and update the new D1
+> `database_id` in `wrangler.jsonc` before running the steps below.
+
 The Cloudflare path swaps the host adapter to `@astrojs/cloudflare` and the
 EmDash backends to D1 / R2 / the Dynamic Worker Loader sandbox via the
 `DEPLOY_TARGET=cloudflare` env flag (see `astro.config.mjs`). Bindings live in
