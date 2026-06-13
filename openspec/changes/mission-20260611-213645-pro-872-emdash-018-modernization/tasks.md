@@ -37,7 +37,7 @@ One milestone = one PR. Every PR routes through `pr-agent-runner` with `mission_
 - [x] 4.2 `docs/installation.md`, `docs/capabilities-and-security.md`, `docs/plugin-development.md`: purge + real `ctx` surface + measured budgets; grep gate broadened to docs/ + README.md (A-M4-3)
 - [x] 4.3 `MIGRATION.md` (v0.1→v0.2)
 - [x] 4.4 Views: inline `entry.data.terms` accessor (`entryTerms`/`entryTermSlugs`; no legacy lookup symbol pre-existed); re-verified `getEmDashCollection`/`getEmDashEntry`/`ContentEntry` shapes vs 0.18; blocks rebased onto upstream `@emdash-cms/blocks@^0.18` (re-export builders/validator/types via `/server`, kept `assertResponse`)
-- [ ] 4.5 Verify README install verbatim against fresh `npm create emdash@latest`
+- [x] 4.5 Verified README install + deploy verbatim in a scratch git worktree: install → seed → dev serves seeded events (agent-browser confirmed `/events` renders Friday Meetup + Closing Social); deploy path through local `wrangler dev --port 8789` serves `/` (200) + `/events.ics` (BEGIN:VCALENDAR, 10 VEVENT) after miniflare D1 seed (stopped before any production `wrangler deploy`). Sanity-checked vs fresh `npm create emdash@latest --template blog --platform cloudflare --pm pnpm --yes --no-install`: scaffold now pins `emdash@^0.18.0` (NOT 0.16 — prior premise stale), so no bump instruction is warranted. No README gaps found requiring a fix.
 - [x] 4.6 Storage/KV hygiene (PRO-879): core range-cache lazy 1h expiry (no `expirationTtl` in 0.18); rsvp rate-limit purge in cron (budget-capped); rsvp/proxy 500 branch for server faults; reference-site omit `rsvpRemaining` on storage read failure
 
 ## M5 — WS7 release v0.2.0 (PRO-881)
