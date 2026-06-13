@@ -40,7 +40,8 @@ Hard rules block merge; soft guidelines inform design. See `CODE_PRINCIPLES.md` 
 - **Wrangler ≥4.87 requires Node.js 22+** (drops Node 20, EOL 2026-04-30). Prefer upgrading Node; only pin Wrangler <4.87 if CI is genuinely stuck.
 - **Astro 6 + `@astrojs/cloudflare` 13.3.0** runs `workerd` at all stages — use the `cloudflare:workers` module directly for bindings. No more `Astro.locals.runtime` workarounds.
 - Source PRD was authored from clean-room analysis of 14 GPL WordPress plugins. Architecture is not copyrightable; specific code is. NEVER copy PHP source into TypeScript — the PHP→TypeScript language change is a deliberate guardrail.
-- This is an 11-package monorepo. `@dateline/core` is the root; everything depends on it. When a change touches multiple packages, declare the dependency direction explicitly in the change proposal.
+- This is a 6-package monorepo (`core`, `rsvp`, `importer`, `recurring`, `views`, `blocks`). `@dateline/core` is the root; everything depends on it. When a change touches multiple packages, declare the dependency direction explicitly in the change proposal.
+- Paid ticketing/payments are NOT in this repo. They are delegated to the separate Tender payments plugin family (https://github.com/foreztgump/tender; gateway-agnostic, Stripe + Square). The Dateline ↔ Tender ticket-purchase integration is planned, not yet built (Tender PRO-610/PRO-611). The Stripe/inventory/webhook gotchas elsewhere in this file are forward-looking design notes for that future integration, not implemented Dateline code.
 
 ## Linear Integration
 Linear IS connected for Dateline (workspace prefix `PRO`). Commits and PR titles use `[PRO-XXX]` tags (e.g. `research(synthesis): prd-inputs.md definition-of-done doc [PRO-340]`). OpenSpec change directories follow `pro-<id>-<slug>` (e.g. `pro-332-p1-static-analysis`). Reference the Linear issue id in the commit footer when fixing or closing work.
