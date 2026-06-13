@@ -1,5 +1,17 @@
 # @dateline/core
 
+## 0.2.0
+
+### Minor Changes
+
+- Convert `@dateline/core` to the EmDash 0.18 sandboxed plugin format: a single `src/plugin.ts` default-exporting a typed `SandboxedPlugin`, paired with a hand-authored `emdash-plugin.jsonc` manifest (capabilities `content:read` / `content:write`, admin Block Kit pages). Drops the legacy `definePlugin()` / factory-export shape and the invented `emdash.config.ts` / `EMDASH_PLUGIN_MANIFEST` surfaces. Data access goes exclusively through `ctx.content` / `ctx.storage` — no raw SQL or D1. Events, venues, organizers, calendar/iCal feeds, schema.org metadata, and GDPR export/erase helpers are preserved on the real platform.
+
+### Patch Changes
+
+- Updated dependencies
+  - @dateline/blocks@0.2.0
+  - @dateline/recurring@0.2.0
+
 ## 0.1.1
 
 ### Patch Changes

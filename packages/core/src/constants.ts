@@ -1,5 +1,4 @@
 export const PLUGIN_ID = "dateline-core";
-export const PLUGIN_VERSION = "0.1.0";
 export const EVENTS_COLLECTION = "dateline_events";
 export const VENUES_COLLECTION = "dateline_venues";
 export const ORGANIZERS_COLLECTION = "dateline_organizers";

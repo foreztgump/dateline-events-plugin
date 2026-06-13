@@ -34,6 +34,7 @@ export interface ProfilingOptions {
 interface StorageCollection {
   get(id: string): Promise<unknown>;
   put(id: string, data: unknown): Promise<void>;
+  delete(id: string): Promise<void>;
   query(): Promise<{ items: Array<{ id: string; data: unknown }> }>;
   count(): Promise<number>;
 }
@@ -112,6 +113,10 @@ function createStorageCollection(name: string, handler: (...args: unknown[]) => 
     put: async (id, data) => {
       await handler();
       records.set(id, data);
+    },
+    delete: async (id) => {
+      await handler();
+      records.delete(id);
     },
     query: async () => {
       await handler();

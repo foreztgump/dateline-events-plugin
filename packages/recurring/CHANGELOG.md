@@ -1,5 +1,11 @@
 # @dateline/recurring
 
+## 0.2.0
+
+### Minor Changes
+
+- Type-bump `@dateline/recurring` for EmDash 0.18 compatibility. The RRULE validation, timezone-aware (tzid-anchored) occurrence materialization with a 2-year forward cap, EXDATE/RDATE handling, and KV occurrence-cache helpers are unchanged — the algorithm is intentionally untouched.
+
 ## 0.1.1
 
 ### Patch Changes

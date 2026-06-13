@@ -42,7 +42,7 @@ One milestone = one PR. Every PR routes through `pr-agent-runner` with `mission_
 - [x] 4.7 README Step 5 self-contained (A-M4-6 fix, PRO-879): added explicit ordered `pnpm install` + `pnpm -r build` before `seed`/`dev` so a fresh checkout following Step 5 verbatim succeeds (was failing — seed `ERR_MODULE_NOT_FOUND: better-sqlite3` needs install; dev "Failed to resolve entry for @dateline/core" needs build). Re-verified in a scratch `git worktree` (no pre-install/build): install → build → seed → dev → `/events` 200. Docs-only; grep gate (now covering README.md) green.
 
 ## M5 — WS7 release v0.2.0 (PRO-881)
-- [ ] 5.1 Changesets minor bump; per-package CHANGELOGs
-- [ ] 5.2 CI fully green incl. e2e + grep gates + validate ×3
-- [ ] 5.3 `emdash-plugin bundle` ×3; publish dry-run (no live publish)
-- [ ] 5.4 Tag v0.2.0; archive OpenSpec change; Linear: close PRO-872 family
+- [x] 5.1 Changesets minor bump; per-package CHANGELOGs (six packages → 0.2.0; root CHANGELOG updated)
+- [x] 5.2 CI fully green incl. e2e + grep gates + validate ×3 (build/typecheck/lint/test + sandbox:profile 20/20 + 8/8 Playwright e2e; A-M4-3/A-M4-4 grep gates exit 1)
+- [x] 5.3 `emdash-plugin bundle` ×3; publish dry-run (no live publish) (dist/dateline-{core,rsvp,importer}-0.2.0.tar.gz; `pnpm -r publish --dry-run` clean, zero registry writes)
+- [x] 5.4 Tag v0.2.0 (annotated, on release commit, NOT pushed) — OpenSpec change ready to archive post-merge; Linear: PRO-881 In Progress, done-pending-merge on PRO-872 (close PRO-872 family at ship)
