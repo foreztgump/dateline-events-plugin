@@ -44,14 +44,14 @@ jobs:
       - name: Install ripgrep
         run: sudo apt-get update && sudo apt-get install -y ripgrep
 
-      # M2 makes the source-level EmDash 0.18 grep gate blocking now that
-      # atomicIncrement and atomicDecrement are removed from plugin code.
-      # README/docs pre-v0.2 wording is cleared by the scheduled M4 docs pass.
+      # M4 broadens the EmDash 0.18 grep gate to the FULL gated scope: now that
+      # the docs truth pass (PRO-879) purged the banned terms from docs/ and
+      # README.md, those join the blocking gate permanently (assertion A-M4-3).
       # Terms: emdash.config.ts | EMDASH_PLUGIN_MANIFEST | atomicIncrement |
       # atomicDecrement | createCorePlugin. plugin:activate is intentionally
       # not a gate term because it is a verified 0.18 lifecycle hook.
-      # Excludes: docs/, README.md, research/, openspec/, MIGRATION.md,
-      # CHANGELOG*, PRD*, VERIFIED-PLATFORM-0.18.md, dist/, node_modules/.
+      # Excludes: research/, openspec/, MIGRATION.md, CHANGELOG*, PRD*,
+      # VERIFIED-PLATFORM-0.18.md, dist/, node_modules/.
       - name: EmDash 0.18 grep gate
         run: ./tools/ci-grep-gate.sh
 

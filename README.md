@@ -11,139 +11,169 @@ Dateline is a modular events, calendar, and ticketing system for [EmDash CMS](ht
 Dateline solves four chronic WordPress events problems at the EmDash architecture level:
 
 1. **Performance** — Single-digit-query calendar views (vs The Events Calendar's 85+ DB queries per list view).
-2. **Modularity without compromise** — Each add-on runs in its own isolated V8 sandbox with declared capabilities (vs EventON's shared PHP process).
-3. **AI-first operations** — Every Dateline action is reachable via MCP and a native chat interface (vs EventON's one-line AI assists).
+2. **Modularity without compromise** — Each plugin runs in its own isolated V8 sandbox with declared capabilities on a Cloudflare Workers Paid plan (vs EventON's shared PHP process).
+3. **AI-first operations** — Dateline actions are reachable via REST routes today, with an MCP wrapper planned (vs EventON's one-line AI assists).
 4. **Unified versioning** — Ticketing, RSVP, import, and recurring events under one coherent version story (vs TEC's separate plugin family).
 
-## What's in the box (v0.1.0)
+## What's in the box (v0.2.0)
 
-| Package | Role | Sandboxed | Capabilities |
-|---------|------|-----------|--------------|
-| `@dateline/core` | Events, venues, organizers, Block Kit admin, iCal, schema.org, x402 metadata, GDPR helpers | ✅ | `content:read`, `content:write`, `media:read` |
-| `@dateline/rsvp` | Free RSVP, capacity, waitlist, confirmation email | ✅ | `content:read`, `content:write`, `email:send` |
-| `@dateline/recurring` | RRULE validation, lazy materialization, DST-aware occurrence caching | ❌ | Helper library (not a plugin) |
-| `@dateline/importer` | iCal, CSV, JSON, and The Events Calendar import | ✅ | `content:read`, `content:write`, `network:request` |
-| `@dateline/views` | Native Astro components: month/week/day/list calendars, event cards, RSVP forms | ❌ | Trusted Astro library (not sandboxed) |
-| `@dateline/blocks` | Typed Block Kit builders and validators for safe admin UI construction | ❌ | Helper library (not a plugin) |
+Dateline ships three sandboxed EmDash 0.18 plugins plus three helper libraries. The plugins use the single-file sandboxed format (`emdash-plugin.jsonc` + `src/plugin.ts`) and declare their capabilities in their manifest, which EmDash enforces at the sandbox boundary on a Cloudflare Workers Paid plan.
+
+| Package | Role | Format | Manifest capabilities |
+|---------|------|--------|-----------------------|
+| `@dateline/core` | Events, venues, organizers, Block Kit admin, iCal, schema.org, GDPR helpers | Sandboxed plugin | `content:read`, `content:write` |
+| `@dateline/rsvp` | Free RSVP, storage-backed capacity, waitlist, confirmation email | Sandboxed plugin | `content:read`, `content:write`, `email:send` |
+| `@dateline/importer` | iCal, CSV, JSON, and The Events Calendar import | Sandboxed plugin | `content:read`, `content:write`, `network:request:unrestricted` |
+| `@dateline/recurring` | RRULE validation, lazy materialization, DST-aware occurrence caching | Helper library | — (not a plugin) |
+| `@dateline/views` | Native Astro components: month/week/day/agenda calendars, event cards, RSVP forms | Astro component library | — (runs in the host theme, not sandboxed) |
+| `@dateline/blocks` | Typed Block Kit builders/validators (rebased on `@emdash-cms/blocks@0.18`) | Helper library | — (not a plugin) |
+
+The exact capability lists live in each package's `emdash-plugin.jsonc`: [core](packages/core/emdash-plugin.jsonc), [rsvp](packages/rsvp/emdash-plugin.jsonc), [importer](packages/importer/emdash-plugin.jsonc).
 
 ## Architecture
 
 ```
-┌─────────────────────────────────────────────────────┐
-│         EmDash CMS (Event Content Layer)            │
-│  ┌────────────────────────────────────────────────┐ │
-│  │       @dateline/core (Sandboxed Plugin)        │ │
-│  │  - Events, venues, organizers, calendar feed  │ │
-│  └────────────────────────────────────────────────┘ │
-│     ↑                                 ↑  ↑  ↑       │
-│   hooks                          routes (Block Kit) │
-│     ↑                                   ↑  ↑  ↑     │
-│  ┌──┴──────────────────────────────────┴──┴──┴───┐ │
-│  │ @dateline/recurring                          │ │
-│  │ (Helper: RRULE, lazy materialization)        │ │
-│  └──────────────────────────────────────────────┘ │
-│  ┌──────────────────────────────────────────────┐  │
-│  │ @dateline/rsvp (Sandboxed Plugin)            │  │
-│  │ - Attendee registration, email, capacity    │  │
-│  └──────────────────────────────────────────────┘  │
-│  ┌──────────────────────────────────────────────┐  │
-│  │ @dateline/importer (Sandboxed Plugin)        │  │
-│  │ - Import from iCal, CSV, JSON, The Events   │  │
-│  │   Calendar                                   │  │
-│  └──────────────────────────────────────────────┘  │
-└─────────────────────────────────────────────────────┘
-                       ↑
-         (EmDash capability gates)
-                       ↑
-┌─────────────────────────────────────────────────────┐
-│         Operator's Astro Theme (Frontend)           │
-│  ┌────────────────────────────────────────────────┐ │
-│  │  @dateline/views (Trusted Library)             │ │
-│  │  - Calendar components, event cards, RSVP UI  │ │
-│  └────────────────────────────────────────────────┘ │
-│  ┌────────────────────────────────────────────────┐ │
-│  │  @dateline/blocks (Helper)                     │ │
-│  │  - Typed Block Kit construction               │ │
-│  └────────────────────────────────────────────────┘ │
-└─────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────┐
+│            EmDash CMS (host runtime + ctx)           │
+│   wired via astro.config.mjs:                        │
+│   sandboxed: [core, rsvp, importer] + sandboxRunner  │
+│  ┌─────────────────────────────────────────────────┐ │
+│  │      @dateline/core (Sandboxed Plugin)          │ │
+│  │  Events, venues, organizers, iCal, schema.org   │ │
+│  └─────────────────────────────────────────────────┘ │
+│  ┌─────────────────────────────────────────────────┐ │
+│  │      @dateline/rsvp (Sandboxed Plugin)          │ │
+│  │  RSVP, storage-backed capacity, waitlist, email │ │
+│  └─────────────────────────────────────────────────┘ │
+│  ┌─────────────────────────────────────────────────┐ │
+│  │      @dateline/importer (Sandboxed Plugin)      │ │
+│  │  iCal / CSV / JSON / TEC import via ctx.http     │ │
+│  └─────────────────────────────────────────────────┘ │
+│  each plugin sees only its declared `ctx` surface;   │
+│  capabilities enforced at the sandbox boundary       │
+│  ┌─────────────────────────────────────────────────┐ │
+│  │  @dateline/recurring · @dateline/blocks         │ │
+│  │  helper libraries bundled into plugin builds    │ │
+│  └─────────────────────────────────────────────────┘ │
+└──────────────────────────────────────────────────────┘
+                        ↑
+            getEmDashCollection / getEmDashEntry
+                        ↑
+┌──────────────────────────────────────────────────────┐
+│          Operator's Astro Theme (Frontend)           │
+│  ┌─────────────────────────────────────────────────┐ │
+│  │  @dateline/views (Astro component library)      │ │
+│  │  Month/week/day/agenda calendars, cards, RSVP UI│ │
+│  └─────────────────────────────────────────────────┘ │
+│  renders in the host theme build + at the edge via   │
+│  @astrojs/cloudflare (not sandboxed)                 │
+└──────────────────────────────────────────────────────┘
 ```
 
-Plugins run in Cloudflare Workers' Dynamic Worker sandbox (Paid plan only; Free plan runs as trusted). Astro components run in the theme's static build and at the edge via `@astrojs/cloudflare`.
+Sandbox isolation is provided by Cloudflare's Dynamic Worker Loader, which requires a **Workers Paid plan**. On the Free plan Dynamic Workers are unavailable, so EmDash runs plugins in-process and the per-plugin capability boundary is not enforced — treat the isolation pitch as Paid-only and disclose this at install time. `@dateline/views` is a native Astro component library: it renders in the operator's theme build and at the edge via `@astrojs/cloudflare`, outside the sandbox.
 
 ## Getting started
 
-### 1. Install the core package
+Dateline's sandboxed plugins are not registered through a config-file factory call. EmDash loads them as **default imports** in your Astro config's `sandboxed: [...]` array, and a `sandboxRunner` executes them in isolation. The fastest way to a running site is the reference site in this repo; the steps below mirror what it does.
+
+### 1. Install the packages
+
+The three plugins are distributed as EmDash plugins (marketplace install or a built tarball from `emdash-plugin bundle`); the helper libraries install from the workspace/npm:
 
 ```bash
-pnpm add @dateline/core emdash@^0.9.0
+pnpm add @dateline/core @dateline/rsvp @dateline/importer \
+         @dateline/views @dateline/recurring @dateline/blocks \
+         emdash@^0.18 @emdash-cms/sandbox-workerd@^0.1.6
 ```
 
-### 2. Register the plugin in your EmDash config
+### 2. Wire the plugins in `astro.config.mjs`
 
-```ts
-// emdash.config.ts
-import createCorePlugin from "@dateline/core";
+Pass the plugins as **default imports** to `sandboxed` (not factory calls) and provide a `sandboxRunner`. For local dev use sqlite + local storage + the `@emdash-cms/sandbox-workerd` runner:
 
-export default {
-  plugins: [createCorePlugin()],
-  // ... rest of config
-};
+```mjs
+import { defineConfig } from "astro/config";
+import node from "@astrojs/node";
+import emdash, { local } from "emdash/astro";
+import { sqlite } from "emdash/db";
+
+// Sandboxed plugins are DEFAULT IMPORTS (descriptors produced by
+// `emdash-plugin build`), NOT factory calls.
+import core from "@dateline/core";
+import rsvp from "@dateline/rsvp";
+import importer from "@dateline/importer";
+
+export default defineConfig({
+  output: "server",
+  adapter: node({ mode: "standalone" }),
+  integrations: [
+    emdash({
+      database: sqlite({ url: "file:./data.db" }),
+      storage: local({ directory: "./uploads", baseUrl: "/_emdash/api/media/file" }),
+      sandboxed: [core, rsvp, importer],
+      sandboxRunner: "@emdash-cms/sandbox-workerd",
+    }),
+  ],
+});
 ```
 
-### 3. Add capabilities to your `wrangler.jsonc`
+Capabilities are declared inside each plugin's `emdash-plugin.jsonc` and travel with the plugin build — there is no separate per-binding capability variable to set in `wrangler.jsonc`.
 
-Dateline plugins need explicit capability declarations. Add to your Cloudflare Workers bindings using the `EMDASH_PLUGIN_MANIFEST_<PLUGIN_ID>` naming convention:
+### 3. Render events in your theme
 
-```jsonc
-{
-  "env": {
-    "production": {
-      "vars": {
-        "EMDASH_PLUGIN_MANIFEST_CORE": "{\"id\": \"dateline-core\", \"capabilities\": [\"content:read\", \"content:write\", \"media:read\"]}"
-      }
-    }
-  }
-}
+In any `.astro` page, read content through `getEmDashCollection` and render with `@dateline/views`:
+
+```astro
+---
+import { getEmDashCollection } from "emdash";
+import { CalendarMonth, EventCard } from "@dateline/views";
+
+const { entries: events } = await getEmDashCollection("dateline_events", {
+  sort: { starts_at: "asc" },
+  limit: 50,
+});
+---
+
+<CalendarMonth events={events} />
+{events.map((e) => <EventCard event={e} />)}
 ```
 
-See `/docs/capabilities-and-security.md` for the full capability reference.
-
-### 4. Deploy to Cloudflare Workers
+### 4. Run it
 
 ```bash
-pnpm run build
-wrangler deploy
+pnpm run build   # builds plugin dist/ (the sandbox runner embeds dist/plugin.mjs)
+pnpm run dev     # astro dev
 ```
+
+For the Cloudflare deploy path (D1 + R2 + the Dynamic Worker Loader sandbox) and a verified local `wrangler dev` preview, see the [installation guide](docs/installation.md#step-6-deploy-to-cloudflare-workers).
 
 ### 5. Try the reference site
 
-Explore the full working example:
+The reference site is the canonical, working example (calendar views, RSVP, recurring events, iCal feed, importer round-trip):
 
 ```bash
-cd examples/reference-site
-pnpm install
-pnpm run dev
+pnpm --filter @dateline/reference-site seed   # apply seed/seed.json to ./data.db
+pnpm --filter @dateline/reference-site dev    # astro dev on 127.0.0.1:4321
 ```
 
-The reference site demonstrates calendar views, RSVP flows, recurring event display, and iCal feeds.
+Then open `http://127.0.0.1:4321/events`. See [examples/reference-site/README.md](examples/reference-site/README.md) for the full set of flows and the Cloudflare deploy validation steps.
 
 ## Key concepts
 
 ### Capabilities and security
 
-Dateline plugins run sandboxed on Cloudflare Workers (Paid plan) with declared, minimal capabilities. See `/docs/capabilities-and-security.md`.
+Sandboxed plugins declare minimal capabilities (resource:verb form, e.g. `content:read`, `content:write`, `email:send`, `network:request:unrestricted`) in their `emdash-plugin.jsonc`. EmDash enforces them at the sandbox boundary on Workers Paid. See [docs/capabilities-and-security.md](docs/capabilities-and-security.md).
 
-### `ctx.waitUntil()` is mandatory
+### The plugin `ctx` surface
 
-Any async work that continues past the response (emails, cache invalidation, webhook processing) **must** use `ctx.waitUntil(promise)` or EmDash's `after()` helper. Bare promises are silently cancelled on Workers. See `/docs/plugin-development.md` for patterns.
+Inside a sandboxed handler, `ctx` exposes (verified on `@emdash-cms/sandbox-workerd@0.1.6`): `content`, `email`, `http`, `kv`, `log`, `media`, `plugin`, `site`, `storage`, `url`, `users`. Capability-gated members (`content`, `media`, `http`, `users`, `email`) are present only when the manifest declares the matching capability. `ctx.kv` has exactly `get`/`set`/`delete`/`list` (no atomic ops). There is **no** `ctx.waitUntil` in the sandboxed plugin `ctx` — deferring work past the response is a host-level concern. See [docs/plugin-development.md](docs/plugin-development.md).
 
-### Resource:verb capability names
+### Storage-backed RSVP capacity
 
-Dateline uses the canonical EmDash capability model: `content:read`, `content:write`, `network:request`, `email:send` (resource:verb form, not action-first). See `/docs/capabilities-and-security.md` for the full list.
+RSVP capacity lives in the plugin `storage` collection (counter rows + application-level conflict checks), guarded by a concurrent-oversell test — not an atomic KV counter (KV has no atomic ops). See [docs/plugin-development.md](docs/plugin-development.md#rsvp-with-capacity).
 
 ### Lazy recurring event materialization
 
-RRULE occurrences are computed on-read with a 2-year forward cap and cached in KV (TTL 1 hr). Never eagerly materialized. See `/docs/plugin-development.md#recurring-events`.
+RRULE occurrences are computed on-read with a 2-year forward cap and cached in KV (TTL 1 hr), never eagerly materialized. RRULE recurrences must set `tzid` for correct DST handling. See [docs/plugin-development.md](docs/plugin-development.md#recurring-events).
 
 ### Plugin-scoped KV
 
@@ -151,15 +181,15 @@ RRULE occurrences are computed on-read with a 2-year forward cap and cached in K
 
 ## Documentation
 
-- **[Installation guide](/docs/installation.md)** — detailed operator walkthrough
-- **[Capabilities & security](/docs/capabilities-and-security.md)** — `resource:verb` model, sandbox budgets, data access patterns
-- **[Plugin development](/docs/plugin-development.md)** — manifest skeleton, hooks, Block Kit patterns, sandbox profiler, ESLint rules
+- **[Installation guide](docs/installation.md)** — detailed operator walkthrough (dev + Cloudflare deploy)
+- **[Capabilities & security](docs/capabilities-and-security.md)** — resource:verb model, `ctx` surface, measured sandbox budgets, data access patterns
+- **[Plugin development](docs/plugin-development.md)** — single-file sandboxed format, hooks, Block Kit patterns, sandbox profiler, ESLint rules
+- **[Migration guide](MIGRATION.md)** — v0.1 → v0.2 first real installation guide
 - **[Reference site](examples/reference-site)** — full working example with Astro theme
 
 ## Status
 
-✅ **v0.1.0 shipped** (2026-05-05)  
-First public release of the core family: `@dateline/core`, `@dateline/rsvp`, `@dateline/recurring`, `@dateline/importer`, `@dateline/views`. See [CHANGELOG.md](CHANGELOG.md) for details.
+🚧 **v0.2.0 — EmDash 0.18 modernization.** Core family rebuilt on EmDash 0.18: `@dateline/core`, `@dateline/rsvp`, `@dateline/importer` converted to the single-file sandboxed format; `@dateline/recurring`, `@dateline/views`, `@dateline/blocks` (rebased on `@emdash-cms/blocks@0.18`). See [CHANGELOG.md](CHANGELOG.md) and [MIGRATION.md](MIGRATION.md) for details.
 
 ## License
 
