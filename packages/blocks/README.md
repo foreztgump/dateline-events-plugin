@@ -1,6 +1,6 @@
 # @dateline/blocks
 
-Internal Block Kit builder library for Dateline. Provides typed builders and validators for EmDash Block Kit JSON, ensuring all admin UI responses from sandboxed plugins conform to the Block Kit schema. Used by other Dateline packages to construct settings screens, detail views, and action buttons without hand-authoring JSON.
+Thin Block Kit wrapper for Dateline, rebased on **`@emdash-cms/blocks@^0.18`**. Re-exports the upstream typed builders (`blocks`, `elements`), the `validateBlocks` validator, and every block/element type from the React-free `@emdash-cms/blocks/server` subpath, so the package stays safe to bundle into sandboxed plugins. The only Dateline-specific addition is `assertResponse`, the plugin-route envelope guard upstream does not provide.
 
 ## Usage
 
@@ -15,36 +15,27 @@ export function settingsPage() {
         accessory: elements.button("publish", "Publish", { style: "primary" }),
       }),
     ],
-    toast: { text: "Loaded settings", type: "info" },
+    toast: { message: "Loaded settings", type: "info" },
   });
 }
 ```
 
-## Gotcha catalog
+## 0.18 shape notes
 
-### Stats blocks use `stats`, not `items`
+Upstream 0.18 is the source of truth for Block Kit shapes. The pre-0.18 Dateline
+copy used different field names that 0.18 now rejects — use the upstream shapes:
 
-```ts
-// ✅ Correct
-blocks.stats([{ text: "RSVPs", value: 42 }]);
+- **Stats blocks use `items`** (not `stats`): `blocks.stats([{ label: "RSVPs", value: 42 }])`.
+- **Buttons/inputs/columns use `label`** (not `text`): `elements.button("save", "Save")`, `{ key, label }` table columns, `submit: { label, actionId }`.
+- **Toasts use `message`** (not `text`): `{ message: "Saved", type: "success" }`.
 
-// ❌ Rejected by validateBlocks()
-[{ type: "stats", items: [{ text: "RSVPs", value: 42 }] }];
-```
+## assertResponse
 
-### Button elements use `text`, not `label`
-
-```ts
-// ✅ Correct
-elements.button("save", "Save");
-
-// ❌ Rejected by validateBlocks()
-[{ type: "actions", elements: [{ type: "button", action_id: "save", label: "Save" }] }];
-```
-
-### Plugin route responses return only `{ blocks, toast? }`
-
-`assertResponse()` rejects `redirect`, `body`, `headers`, `status`, and any other non-Block Kit keys. Dateline plugin routes should validate responses before returning them to EmDash.
+`assertResponse()` enforces the EmDash plugin-route contract: the response must be
+exactly `{ blocks, toast? }`. It rejects transport keys (`redirect`, `body`,
+`headers`, `status`) and any other unknown keys, then runs the upstream
+`validateBlocks` over the `blocks` array. Dateline plugin routes should validate
+responses with it before returning them to EmDash.
 
 ## See also
 

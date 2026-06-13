@@ -13,9 +13,9 @@ function attendeesPage() {
       blocks.section("Review confirmed, waitlisted, cancelled, and checked-in attendees."),
       blocks.table({
         columns: [
-          { key: "name", text: "Name" },
-          { key: "email", text: "Email" },
-          { key: "status", text: "Status", format: "badge" },
+          { key: "name", label: "Name" },
+          { key: "email", label: "Email" },
+          { key: "status", label: "Status", format: "badge" },
         ],
         rows: [],
         pageActionId: "dateline.rsvp.attendees.page",
@@ -33,9 +33,9 @@ function waitlistPage() {
       blocks.section("View queued attendees and manually promote the next guest when capacity opens."),
       blocks.table({
         columns: [
-          { key: "name", text: "Name" },
-          { key: "email", text: "Email" },
-          { key: "joinedAt", text: "Joined", format: "relative_time" },
+          { key: "name", label: "Name" },
+          { key: "email", label: "Email" },
+          { key: "joinedAt", label: "Joined", format: "relative_time" },
         ],
         rows: [],
         pageActionId: "dateline.rsvp.waitlist.page",

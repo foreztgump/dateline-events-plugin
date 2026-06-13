@@ -28,7 +28,7 @@ function settingsPage() {
           elements.textInput("currency", "Currency", { initialValue: "USD" }),
           elements.secretInput("x402Wallet", "x402 wallet address"),
         ],
-        submit: { text: "Save settings", actionId: "dateline.settings.save" },
+        submit: { label: "Save settings", actionId: "dateline.settings.save" },
       }),
     ],
   });

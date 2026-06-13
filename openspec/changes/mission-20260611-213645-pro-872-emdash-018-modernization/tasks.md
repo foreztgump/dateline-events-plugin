@@ -36,7 +36,7 @@ One milestone = one PR. Every PR routes through `pr-agent-runner` with `mission_
 - [ ] 4.1 README rewrite: real install flow; delete fictional sections; fix architecture diagram + Sandboxed column
 - [ ] 4.2 `docs/installation.md`, `docs/capabilities-and-security.md`, `docs/plugin-development.md`: purge + real `ctx` surface + measured budgets
 - [ ] 4.3 `MIGRATION.md` (v0.1→v0.2)
-- [ ] 4.4 Views: inline `entry.data.terms`; re-verify option shapes; blocks rebased onto upstream 0.18 typings
+- [x] 4.4 Views: inline `entry.data.terms` accessor (`entryTerms`/`entryTermSlugs`; no legacy lookup symbol pre-existed); re-verified `getEmDashCollection`/`getEmDashEntry`/`ContentEntry` shapes vs 0.18; blocks rebased onto upstream `@emdash-cms/blocks@^0.18` (re-export builders/validator/types via `/server`, kept `assertResponse`)
 - [ ] 4.5 Verify README install verbatim against fresh `npm create emdash@latest`
 - [x] 4.6 Storage/KV hygiene (PRO-879): core range-cache lazy 1h expiry (no `expirationTtl` in 0.18); rsvp rate-limit purge in cron (budget-capped); rsvp/proxy 500 branch for server faults; reference-site omit `rsvpRemaining` on storage read failure
 
