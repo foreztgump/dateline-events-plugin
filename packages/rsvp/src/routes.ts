@@ -4,8 +4,10 @@ import {
   DUPLICATE_RSVP_MESSAGE,
   HTTP_BAD_REQUEST,
   HTTP_CAPACITY_FULL,
+  HTTP_INTERNAL_ERROR,
   HTTP_OK,
   HTTP_TOO_MANY_REQUESTS,
+  INTERNAL_ERROR_MESSAGE,
   JSON_HEADERS,
   RATE_LIMIT_TTL_SECONDS,
   RSVP_STATUS_CANCELLED,
@@ -116,11 +118,17 @@ async function enforceRateLimit(ctx: RsvpContext, eventId: string, ipAddress: st
   }
 }
 
+// Client errors carry these DatelineRsvpError codes; everything else
+// (boundary failures, storage outages, unexpected throws) is a server fault.
+const CLIENT_ERROR_CODES = new Set(["INVALID_RSVP", "REQUEST_MISSING"]);
+
 function routeErrorResponse(error: unknown): Response {
   if (error instanceof DatelineRsvpError && error.code === "CAPACITY_FULL") return jsonResponse(HTTP_CAPACITY_FULL, { error: CAPACITY_FULL_MESSAGE });
   if (error instanceof DatelineRsvpError && error.code === "DUPLICATE_RSVP") return jsonResponse(HTTP_CAPACITY_FULL, { error: DUPLICATE_RSVP_MESSAGE });
   if (error instanceof DatelineRsvpError && error.code === "RATE_LIMITED") return jsonResponse(HTTP_TOO_MANY_REQUESTS, { error: error.message });
-  return jsonResponse(HTTP_BAD_REQUEST, { error: String(error) });
+  if (error instanceof DatelineRsvpError && CLIENT_ERROR_CODES.has(error.code)) return jsonResponse(HTTP_BAD_REQUEST, { error: String(error) });
+  // PRO-879: boundary/unexpected errors are server faults — do not mask them as 4xx.
+  return jsonResponse(HTTP_INTERNAL_ERROR, { error: INTERNAL_ERROR_MESSAGE });
 }
 
 function jsonResponse(status: number, body: unknown): Response {

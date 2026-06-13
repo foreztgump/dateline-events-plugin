@@ -35,6 +35,9 @@ export interface StoragePage<T = unknown> {
 export interface StorageCollection<T = unknown> {
   get(id: string): Promise<T | null>;
   put(id: string, data: T): Promise<void>;
+  // EmDash 0.18 StorageCollection exposes delete(id): Promise<boolean>
+  // (verified in node_modules/emdash .d.ts + VERIFIED-PLATFORM-0.18.md §storage).
+  delete(id: string): Promise<boolean>;
   query(options?: unknown): Promise<StoragePage<T>>;
   count(where?: unknown): Promise<number>;
 }

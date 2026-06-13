@@ -109,19 +109,25 @@ async function withRsvpCapacity(event: DatelineViewEvent): Promise<DatelineViewE
   const fallbackCapacity = event.rsvpCapacity;
   if (fallbackCapacity === undefined) return event;
   const capacity = await loadRsvpCapacity(event.id, fallbackCapacity);
+  // PRO-879: when the live remaining count is unknown (storage read failed) we
+  // omit rsvpRemaining entirely rather than echoing full capacity — an
+  // optimistic "N spots remaining" on an already-filling event would invite a
+  // 409 on submit. The UI hides the count when rsvpRemaining is undefined.
+  if (capacity.remaining === undefined) return { ...event, rsvpCapacity: capacity.capacity, rsvpRemaining: undefined };
   return { ...event, rsvpCapacity: capacity.capacity, rsvpRemaining: capacity.remaining };
 }
 
-async function loadRsvpCapacity(eventId: string, fallbackCapacity: number): Promise<{ capacity: number; remaining: number }> {
+async function loadRsvpCapacity(eventId: string, fallbackCapacity: number): Promise<{ capacity: number; remaining: number | undefined }> {
   try {
     const db = await getDb();
     const storage = new PluginStorageRepository(db, RSVP_PLUGIN_ID, RSVP_STORAGE_COLLECTION, RSVP_STORAGE_INDEXES);
     const record = await storage.get(`capacity:${eventId}`);
     if (isCapacityRecord(record)) return { capacity: record.capacity ?? fallbackCapacity, remaining: record.remaining };
+    return { capacity: fallbackCapacity, remaining: fallbackCapacity };
   } catch (error) {
-    console.warn("Failed to load RSVP capacity; using seeded fallback", { eventId, error: String(error) });
+    console.warn("Failed to load RSVP capacity; remaining unknown", { eventId, error: String(error) });
+    return { capacity: fallbackCapacity, remaining: undefined };
   }
-  return { capacity: fallbackCapacity, remaining: fallbackCapacity };
 }
 
 async function expandOccurrences(event: DatelineViewEvent): Promise<DatelineViewEvent[]> {

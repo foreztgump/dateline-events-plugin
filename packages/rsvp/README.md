@@ -65,6 +65,8 @@ RSVP extends the collections defined by core:
 
 **Custom fields:** Events can define custom RSVP fields (dietary restrictions, shirt size, etc.) via the event's `rsvpFields` metadata. Attendee records store these in the `customFields` object.
 
+**Rate-limit storage hygiene (PRO-879):** Per-IP RSVP rate limits are stored as `rate-limit:{eventId}:{ip}` records in `ctx.storage.rsvps` with an `expiresAt` timestamp. Expired records are ignored at read time, and the `dateline-rsvp-hold-expiry` cron sweep purges a budget-capped batch (`MAX_CRON_RATE_LIMIT_PURGES`, currently 3) of expired records per tick via `collection.delete(id)` to keep storage growth bounded within the 10-subrequest sandbox budget. **Residual growth:** if expired records accrue faster than the per-tick purge budget drains them (a sustained flood of distinct event+IP pairs), the backlog clears over subsequent ticks rather than instantly — steady-state size is bounded by `distinct active (eventId, IP) pairs + purge-backlog`. Raise `MAX_CRON_RATE_LIMIT_PURGES` (and/or the sweep frequency) only after confirming the sandbox subrequest budget headroom.
+
 ## See also
 
 - [Root README](../../README.md) — architecture overview

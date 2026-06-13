@@ -10,7 +10,7 @@ import {
   rsvpSubmit,
   waitlistJoin,
 } from "./index.js";
-import { MAX_CRON_HOLD_EXPIRATIONS } from "./constants.js";
+import { MAX_CRON_HOLD_EXPIRATIONS, MAX_CRON_RATE_LIMIT_PURGES } from "./constants.js";
 import { CAPACITY_FULL_MESSAGE } from "./constants.js";
 import type { RsvpContext } from "./types.js";
 
@@ -181,6 +181,32 @@ describe("@dateline/rsvp", () => {
     expect(resolved.filter((status) => status === "expired")).toHaveLength(MAX_CRON_HOLD_EXPIRATIONS);
   });
 
+  it("purges a budget-capped batch of expired rate-limit records on the hold-expiry sweep", async () => {
+    const expiredAt = new Date(Date.now() - 1000).toISOString();
+    const activeAt = new Date(Date.now() + 60_000).toISOString();
+    const rateLimits = {
+      ...Object.fromEntries(
+        Array.from({ length: MAX_CRON_RATE_LIMIT_PURGES + 2 }, (_, index) => [
+          `rate-limit:evt_1:203.0.113.${index}`,
+          { kind: "rateLimit", eventId: "evt_1", ipAddress: `203.0.113.${index}`, expiresAt: expiredAt },
+        ]),
+      ),
+      "rate-limit:evt_1:active": { kind: "rateLimit", eventId: "evt_1", ipAddress: "active", expiresAt: activeAt },
+    };
+    const ctx = memoryContext(rateLimits);
+
+    await cron({ name: "dateline-rsvp-hold-expiry" }, ctx);
+
+    const remaining = await Promise.all(
+      Object.keys(rateLimits).map(async (id) => ((await ctx.storage?.rsvps?.get(id)) === null ? null : id)),
+    );
+    const survivors = remaining.filter((id): id is string => id !== null);
+    // Exactly MAX_CRON_RATE_LIMIT_PURGES expired records are deleted; the rest
+    // (2 expired + 1 still-active) survive this tick.
+    expect(survivors).toHaveLength(3);
+    expect(survivors).toContain("rate-limit:evt_1:active");
+  });
+
   it("renders valid Block Kit admin pages and accepts waitlist joins", async () => {
     const ctx = memoryContext();
     const response = await waitlistJoin({ request: jsonRequest("/waitlist", { eventId: "evt_1", email: "wait@example.com", name: "Wait" }), ctx });
@@ -226,6 +252,7 @@ function memoryContext(initialRecords: Record<string, Record<string, unknown>> =
         put: vi.fn((id: string, data: unknown) => yieldThen(() => {
           records.set(id, { id, data });
         })),
+        delete: vi.fn((id: string) => yieldThen(() => records.delete(id))),
         query: vi.fn((options?: { where?: { kind?: string } }) => yieldThen(() => ({
           items: Array.from(records.values()).filter((entry) => matchesKind(entry.data, options?.where?.kind)),
         }))),

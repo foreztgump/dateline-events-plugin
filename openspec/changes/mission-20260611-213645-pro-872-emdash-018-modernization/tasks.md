@@ -38,6 +38,7 @@ One milestone = one PR. Every PR routes through `pr-agent-runner` with `mission_
 - [ ] 4.3 `MIGRATION.md` (v0.1→v0.2)
 - [ ] 4.4 Views: inline `entry.data.terms`; re-verify option shapes; blocks rebased onto upstream 0.18 typings
 - [ ] 4.5 Verify README install verbatim against fresh `npm create emdash@latest`
+- [x] 4.6 Storage/KV hygiene (PRO-879): core range-cache lazy 1h expiry (no `expirationTtl` in 0.18); rsvp rate-limit purge in cron (budget-capped); rsvp/proxy 500 branch for server faults; reference-site omit `rsvpRemaining` on storage read failure
 
 ## M5 — WS7 release v0.2.0 (PRO-881)
 - [ ] 5.1 Changesets minor bump; per-package CHANGELOGs
