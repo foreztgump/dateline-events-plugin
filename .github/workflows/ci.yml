@@ -83,6 +83,18 @@ jobs:
           tar -czf sandbox-plugin-build-artifacts/dateline-rsvp-build.tar.gz -C packages/rsvp dist emdash-plugin.jsonc
           tar -czf sandbox-plugin-build-artifacts/dateline-importer-build.tar.gz -C packages/importer dist emdash-plugin.jsonc
 
+      # `emdash-plugin validate`/`build` both pass when a plugin declares
+      # adminPages/adminWidgets but ships no top-level `admin` route handler;
+      # only the bundle validation pass (api.mjs bundlePlugin, the same gate as
+      # marketplace publish) catches that mismatch. Run it in --validate-only
+      # mode so the gate fails in CI instead of at publish time. Reuses the
+      # workspace deps + TMPDIR caches built for the build step above.
+      - name: Bundle-validate sandboxed plugins
+        run: |
+          (cd packages/core && TMPDIR=./node_modules/.cache/emdash-build ./node_modules/.bin/emdash-plugin bundle --validate-only)
+          (cd packages/rsvp && TMPDIR=./node_modules/.cache/emdash-build ./node_modules/.bin/emdash-plugin bundle --validate-only)
+          (cd packages/importer && TMPDIR=./node_modules/.cache/emdash-build ./node_modules/.bin/emdash-plugin bundle --validate-only)
+
       - name: Upload sandboxed plugin build artifacts
         uses: actions/upload-artifact@v4
         with:
