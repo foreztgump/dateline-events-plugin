@@ -26,11 +26,11 @@ One milestone = one PR. Every PR routes through `pr-agent-runner` with `mission_
 - [x] 2.8 Email surfaces: keep `email:send` (+ `hooks.email-events:register` only if actually used)
 
 ## M3 — WS5 reference site rebuild (PRO-878)
-- [ ] 3.1 Real `emdash()` config: dev (sqlite/local/workerd) + deploy (d1/r2/cloudflare sandbox); `sandboxed: [core, rsvp, importer]`
+- [x] 3.1 Real `emdash()` config: dev (sqlite/local/workerd) + deploy (d1/r2/cloudflare sandbox); `sandboxed: [core, rsvp, importer]`
 - [x] 3.2 Seed events/venues/organizers (`seed/seed.json`); mock `email:deliver` transport plugin
 - [x] 3.3 Delete `src/lib/fixtures.js`; pages render live data via `@dateline/views`
-- [ ] 3.4 Playwright e2e: calendars, event detail, RSVP flow incl. capacity + email, iCal feed, importer round-trip
-- [ ] 3.5 CI e2e job blocking from this milestone
+- [x] 3.4 Playwright e2e: calendars, event detail, RSVP flow incl. capacity + email, iCal feed, importer round-trip
+- [x] 3.5 CI e2e job blocking from this milestone
 
 ## M4 — WS4 docs truth + WS6 views/blocks (PRO-879, PRO-880)
 - [ ] 4.1 README rewrite: real install flow; delete fictional sections; fix architecture diagram + Sandboxed column
