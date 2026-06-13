@@ -8,6 +8,8 @@ GATE_PATTERN="emdash\\.config\\.ts|EMDASH_PLUGIN_MANIFEST|${ATOMIC_INCREMENT}|${
 GATED_SCOPES=(
   "packages/*/src"
   "packages/*/emdash-plugin.jsonc"
+  "docs"
+  "README.md"
   "examples/reference-site/src"
   "examples/reference-site/wrangler.jsonc"
 )

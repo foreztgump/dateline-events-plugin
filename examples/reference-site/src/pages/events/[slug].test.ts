@@ -51,6 +51,21 @@ describe("event detail page", () => {
     expect(html).toContain("5 spots remaining");
   });
 
+  it.sequential("renders the RSVP form without a remaining count when capacity is unknown (storage read failed)", async () => {
+    // Arrange
+    const container = await AstroContainer.create();
+    loadEventBySlugMock.mockResolvedValueOnce({ ...fridayMeetup, rsvpRemaining: undefined });
+
+    // Act
+    const html = await container.renderToString(EventPage, { params: { slug: "friday-meetup" } });
+
+    // Assert
+    expect(html).toContain('data-dateline-component="RsvpForm"');
+    expect(html).toContain("Submit RSVP");
+    expect(html).not.toContain("spots remaining");
+    expect(html).not.toContain("This event is full");
+  });
+
   it.sequential("renders a full-state message instead of the RSVP submit button when capacity is exhausted", async () => {
     // Arrange
     const container = await AstroContainer.create();

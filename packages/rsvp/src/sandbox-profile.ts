@@ -45,6 +45,7 @@ function profileContext(ctx: RsvpContext): RsvpContext {
           records.set(id, { id, data });
           return Promise.resolve();
         },
+        delete: (id) => Promise.resolve(records.delete(id)),
         query: () => Promise.resolve({ items: Array.from(records.values()) }),
         count: () => Promise.resolve(records.size),
       },

@@ -4,6 +4,7 @@ import {
   HOLD_STATUS_EXPIRED,
   MAX_CRON_HOLD_EXPIRATIONS,
   MAX_CRON_PROMOTIONS,
+  MAX_CRON_RATE_LIMIT_PURGES,
   RSVP_HOLD_EXPIRY_NAME,
   RSVP_STATUS_CANCELLED,
   RSVP_STATUS_CONFIRMED,
@@ -16,7 +17,7 @@ import { sendConfirmationEmail } from "./email.js";
 import { boundaryError } from "./errors.js";
 import { attendeeKey, rsvpStorage } from "./storage.js";
 import { enqueueWaitlist, popNextWaitlistEntry } from "./waitlist.js";
-import type { Attendee, AttendeeRecord, HoldRecord, HookEvent, RsvpContext, WaitlistRecord } from "./types.js";
+import type { Attendee, AttendeeRecord, HoldRecord, HookEvent, RateLimitRecord, RsvpContext, WaitlistRecord } from "./types.js";
 
 const DEFAULT_GUEST_NAME = "Guest";
 
@@ -53,7 +54,10 @@ export async function afterSave(event: HookEvent, ctx: RsvpContext): Promise<voi
 
 export async function cron(event: { name?: string }, ctx: RsvpContext): Promise<void> {
   if (event.name === RSVP_SWEEP_NAME) await promoteFromListedWaitlist(ctx);
-  if (event.name === RSVP_HOLD_EXPIRY_NAME) await expireCapacityHolds(ctx);
+  if (event.name === RSVP_HOLD_EXPIRY_NAME) {
+    await expireCapacityHolds(ctx);
+    await purgeExpiredRateLimits(ctx);
+  }
 }
 
 async function handleCancellation(ctx: RsvpContext, attendee: Attendee): Promise<void> {
@@ -104,6 +108,22 @@ async function expireCapacityHolds(ctx: RsvpContext): Promise<void> {
     for (const entry of holds) await expireHold(ctx, entry.id, entry.data);
   } catch (error) {
     throw boundaryError("cron(expire_capacity_holds)", error);
+  }
+}
+
+// PRO-879: rate-limit records are written per (eventId, IP) and only ignored at
+// read time once expired — they never self-delete. Purge a budget-capped batch
+// of expired records each tick so storage growth stays bounded.
+async function purgeExpiredRateLimits(ctx: RsvpContext): Promise<void> {
+  try {
+    const collection = rsvpStorage(ctx);
+    const page = await collection.query({ where: { kind: "rateLimit" } });
+    const expired = (page.items ?? page.entries ?? [])
+      .filter((entry) => isExpiredRateLimit(entry.data))
+      .slice(0, MAX_CRON_RATE_LIMIT_PURGES);
+    for (const entry of expired) await collection.delete(entry.id);
+  } catch (error) {
+    throw boundaryError("cron(purge_expired_rate_limits)", error);
   }
 }
 
@@ -230,6 +250,14 @@ function isExpiredActiveHold(value: unknown): value is HoldRecord {
 
 function isHoldRecord(value: unknown): value is HoldRecord {
   return typeof value === "object" && value !== null && "kind" in value && value.kind === "hold";
+}
+
+function isExpiredRateLimit(value: unknown): value is RateLimitRecord {
+  return isRateLimitRecord(value) && Date.parse(value.expiresAt) <= Date.now();
+}
+
+function isRateLimitRecord(value: unknown): value is RateLimitRecord {
+  return typeof value === "object" && value !== null && "kind" in value && value.kind === "rateLimit" && "expiresAt" in value;
 }
 
 function isWaitlistRecord(value: unknown): value is WaitlistRecord {

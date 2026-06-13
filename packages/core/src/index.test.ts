@@ -14,7 +14,8 @@ import {
 } from "./index.js";
 import plugin from "./plugin.js";
 import type { DatelineEvent } from "./index.js";
-import { invalidateEventCaches } from "./cache.js";
+import { invalidateEventCaches, readCachedFeed, writeCachedFeed } from "./cache.js";
+import { CACHE_TTL_SECONDS } from "./constants.js";
 
 const eventFixture: DatelineEvent = {
   id: "evt_1",
@@ -227,6 +228,40 @@ describe("cache invalidation via inverted index (PRO-480)", () => {
     await invalidateEventCaches(ctx, "evt_1");
 
     expect(await ctx.kv.get(cacheKey)).toBeNull();
+  });
+});
+
+describe("range cache lazy expiry (PRO-879)", () => {
+  it("treats a feed entry older than the 1h TTL as a miss and deletes the stale key", async () => {
+    const ctx = kvBackedContext([]);
+    const cacheKey = "dateline_events:calendar:2026-03-01..2026-03-31";
+    await writeCachedFeed(ctx, cacheKey, "{\"events\":[]}");
+    const stale = JSON.parse(await ctx.kv.get(cacheKey) as string) as { body: string; createdAt: number };
+    stale.createdAt -= (CACHE_TTL_SECONDS + 1) * 1000;
+    await ctx.kv.set(cacheKey, JSON.stringify(stale));
+
+    const result = await readCachedFeed(ctx, cacheKey);
+
+    expect(result).toBeNull();
+    expect(await ctx.kv.get(cacheKey)).toBeNull();
+  });
+
+  it("returns a fresh feed entry within the TTL window", async () => {
+    const ctx = kvBackedContext([]);
+    const cacheKey = "ical-feed:2026-03-01..2026-03-31";
+    await writeCachedFeed(ctx, cacheKey, "BEGIN:VCALENDAR");
+
+    await expect(readCachedFeed(ctx, cacheKey)).resolves.toBe("BEGIN:VCALENDAR");
+  });
+
+  it("serves a cached calendar feed on the second request without re-listing events", async () => {
+    const ctx = kvBackedContext([eventFixture]);
+    const request = new Request("https://example.com/calendar-feed?range=2026-03-01..2026-03-31");
+
+    await calendarFeed({ request, ctx });
+    await calendarFeed({ request, ctx });
+
+    expect(ctx.content.list).toHaveBeenCalledTimes(1);
   });
 });
 

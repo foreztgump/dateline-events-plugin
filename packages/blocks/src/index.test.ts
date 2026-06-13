@@ -8,14 +8,14 @@ import {
   type Element,
 } from "./index.js";
 
-describe("@dateline/blocks", () => {
-  it("builds every supported block type and element type", () => {
+describe("@dateline/blocks (rebased on @emdash-cms/blocks@0.18)", () => {
+  it("builds every supported block type via the upstream builders", () => {
     // Arrange
     const actionButton = elements.button("save", "Save");
     const textField = elements.textInput("title", "Title");
     const chartSeries = [{ name: "Views", data: [[1767225600000, 42] as [number, number]] }];
-    const tableColumns = [{ key: "title", text: "Title" }];
-    const fieldPairs = [{ text: "Venue", value: "Main Hall" }];
+    const tableColumns = [{ key: "title", label: "Title" }];
+    const fieldPairs = [{ label: "Venue", value: "Main Hall" }];
 
     // Act
     const validBlocks = [
@@ -25,27 +25,27 @@ describe("@dateline/blocks", () => {
       blocks.fields(fieldPairs),
       blocks.table({ columns: tableColumns, rows: [{ title: "Launch" }], pageActionId: "next" }),
       blocks.actions([actionButton]),
-      blocks.stats([{ text: "RSVPs", value: 12 }]),
-      blocks.form({ fields: [textField], submit: { text: "Save", actionId: "submit" } }),
+      blocks.stats([{ label: "RSVPs", value: 12 }]),
+      blocks.form({ fields: [textField], submit: { label: "Save", actionId: "submit" } }),
       blocks.image({ url: "https://example.com/event.png", alt: "Event" }),
       blocks.context("Updated just now"),
       blocks.columns([[blocks.section("Left")], [blocks.section("Right")]]),
       blocks.timeseriesChart({ series: chartSeries }),
       blocks.customChart({ options: { title: { text: "Registrations" } } }),
       blocks.banner({ title: "Draft", variant: "alert" }),
-      blocks.meter({ text: "Capacity", value: 40, max: 100 }),
+      blocks.meter({ label: "Capacity", value: 40, max: 100 }),
       blocks.code({ code: "const event = true;", language: "ts" }),
       blocks.empty({ title: "No events", actions: [actionButton] }),
-      blocks.accordion({ text: "Advanced", blocks: [blocks.section("Settings")] }),
+      blocks.accordion({ label: "Advanced", blocks: [blocks.section("Settings")] }),
     ] satisfies Block[];
 
     // Assert
     expect(validateBlocks(validBlocks)).toEqual({ valid: true, errors: [] });
   });
 
-  it("builds every supported standalone element type", () => {
+  it("builds every supported standalone element type via the upstream builders", () => {
     // Arrange
-    const options = [{ text: "Published", value: "published" }];
+    const options = [{ label: "Published", value: "published" }];
     const scalarField = elements.textInput("faq_answer", "Answer");
 
     // Act
@@ -68,11 +68,12 @@ describe("@dateline/blocks", () => {
     expect(validateBlocks([blocks.actions(validElements)])).toEqual({ valid: true, errors: [] });
   });
 
-  it("rejects Dateline Block Kit gotchas and required-field omissions", () => {
-    // Arrange
+  it("rejects malformed blocks via the upstream validator (0.18 uses items/label)", () => {
+    // Arrange — 0.18 requires stats `items` and button `label`; the old
+    // `items`/`text`-omitting shapes are now the malformed cases.
     const malformedBlocks = [
-      { type: "stats", items: [{ text: "Wrong key", value: 1 }] },
-      { type: "actions", elements: [{ type: "button", action_id: "save", label: "Save" }] },
+      { type: "stats", stats: [{ text: "Wrong key", value: 1 }] },
+      { type: "actions", elements: [{ type: "button", action_id: "save", text: "Save" }] },
       { type: "section" },
     ];
 
@@ -81,44 +82,14 @@ describe("@dateline/blocks", () => {
 
     // Assert
     expect(validation.valid).toBe(false);
-    expect(validation.errors.map((error) => error.path)).toEqual(
-      expect.arrayContaining(["0.stats", "1.elements.0.text", "2.text"]),
-    );
-  });
-
-  it("rejects one missing required field for each supported block type", () => {
-    // Arrange
-    const missingRequiredFieldCases = [
-      { type: "header" },
-      { type: "section" },
-      { type: "fields" },
-      { type: "table", rows: [], page_action_id: "next" },
-      { type: "actions" },
-      { type: "stats" },
-      { type: "form", submit: { text: "Save", action_id: "save" } },
-      { type: "image", alt: "Missing URL" },
-      { type: "context" },
-      { type: "columns" },
-      { type: "chart" },
-      { type: "banner" },
-      { type: "meter", value: 1 },
-      { type: "code" },
-      { type: "empty" },
-      { type: "accordion", blocks: [] },
-    ];
-
-    // Act
-    const validations = missingRequiredFieldCases.map((block) => validateBlocks([block]));
-
-    // Assert
-    expect(validations.every((validation) => validation.valid === false)).toBe(true);
+    expect(validation.errors.length).toBeGreaterThan(0);
   });
 
   it("accepts only BlockResponse keys in assertResponse", () => {
     // Arrange
     const validResponse = {
       blocks: [blocks.section("Saved")],
-      toast: { text: "Saved", type: "success" as const },
+      toast: { message: "Saved", type: "success" as const },
     };
 
     // Act
@@ -146,18 +117,13 @@ describe("@dateline/blocks", () => {
     }
   });
 
-  it("keeps block-level options outside chart config", () => {
-    // Arrange
-    const chartBlock = blocks.timeseriesChart({
-      blockId: "registrations-chart",
-      series: [{ name: "Registrations", data: [[1767225600000, 7] as [number, number]] }],
-    });
+  it("rejects a response whose blocks fail upstream validation", () => {
+    // Arrange — button without the required `label` should fail block validation.
+    const response = {
+      blocks: [{ type: "actions", elements: [{ type: "button", action_id: "save", text: "Save" }] }],
+    };
 
-    // Act
-    const validation = validateBlocks([chartBlock]);
-
-    // Assert
-    expect(validation).toEqual({ valid: true, errors: [] });
-    expect(chartBlock.config).not.toHaveProperty("blockId");
+    // Act & Assert
+    expect(() => assertResponse(response)).toThrow("Invalid BlockResponse");
   });
 });

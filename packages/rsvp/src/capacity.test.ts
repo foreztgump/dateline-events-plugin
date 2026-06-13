@@ -92,6 +92,7 @@ function storageContext(initialRecords: Record<string, Record<string, unknown>>)
       rsvps: {
         get: (id) => yieldThen(() => records.get(id)?.data ?? null),
         put: (id, data) => yieldThen(() => { records.set(id, { id, data }); }),
+        delete: (id) => yieldThen(() => records.delete(id)),
         query: () => yieldThen(() => ({ items: Array.from(records.values()) })),
         count: () => yieldThen(() => records.size),
       },

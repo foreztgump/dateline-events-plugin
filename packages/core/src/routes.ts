@@ -1,5 +1,5 @@
 import { materializeOccurrences } from "@dateline/recurring";
-import { calendarCacheKey, iCalCacheKey, indexCacheKeyForEvents, readCachedResponse, writeCachedResponse } from "./cache.js";
+import { calendarCacheKey, iCalCacheKey, indexCacheKeyForEvents, readCachedFeed, writeCachedFeed } from "./cache.js";
 import { EVENTS_COLLECTION, ICAL_HEADERS, JSON_HEADERS } from "./constants.js";
 import { boundaryError, DatelineCoreError } from "./errors.js";
 import { renderICal } from "./ical.js";
@@ -10,12 +10,12 @@ const DEFAULT_RANGE = "1970-01-01..2999-12-31";
 export async function calendarFeed(input: RouteInput): Promise<Response> {
   const range = readRange(input.request);
   const cacheKey = calendarCacheKey(range);
-  const cached = await readCachedResponse(input.ctx, cacheKey);
+  const cached = await readCachedFeed(input.ctx, cacheKey);
   if (cached) return jsonResponse(JSON.parse(cached));
   const events = await listEvents(input.ctx);
   const rangedEvents = await eventsInRange(events, parseRange(range));
   const body = JSON.stringify({ events: rangedEvents });
-  await writeCachedResponse(input.ctx, cacheKey, body);
+  await writeCachedFeed(input.ctx, cacheKey, body);
   await indexCacheKeyForEvents(input.ctx, { kind: "calendar", eventIds: rangedEvents.map(eventId), cacheKey });
   return new Response(body, { headers: JSON_HEADERS });
 }
@@ -23,12 +23,12 @@ export async function calendarFeed(input: RouteInput): Promise<Response> {
 export async function iCalFeed(input: RouteInput): Promise<Response> {
   const range = readRange(input.request);
   const cacheKey = iCalCacheKey(range);
-  const cached = await readCachedResponse(input.ctx, cacheKey);
+  const cached = await readCachedFeed(input.ctx, cacheKey);
   if (cached) return new Response(cached, { headers: ICAL_HEADERS });
   const events = await listEvents(input.ctx);
   const rangedEvents = await eventsInRange(events, parseRange(range));
   const body = renderICal(rangedEvents);
-  await writeCachedResponse(input.ctx, cacheKey, body);
+  await writeCachedFeed(input.ctx, cacheKey, body);
   await indexCacheKeyForEvents(input.ctx, { kind: "ical", eventIds: rangedEvents.map(eventId), cacheKey });
   return new Response(body, { headers: ICAL_HEADERS });
 }

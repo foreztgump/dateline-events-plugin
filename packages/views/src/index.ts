@@ -22,6 +22,8 @@ export { default as VenueMap } from "./components/VenueMap.astro";
 export { default as VenueMapHeadless } from "./components/VenueMapHeadless.astro";
 export { emdashLoader } from "./lib/emdash-loader.js";
 export type { EmDashLiveLoader, EmDashLoaderOptions } from "./lib/emdash-loader.js";
+export { entryTerms, entryTermSlugs } from "./lib/terms.js";
+export type { EntryWithTerms } from "./lib/terms.js";
 export type {
   CalendarAgendaProps,
   CalendarDayProps,

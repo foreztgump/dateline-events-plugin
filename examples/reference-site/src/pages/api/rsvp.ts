@@ -7,6 +7,11 @@ import { loadSeedEvents } from "../../lib/events.js";
 const HTTP_SEE_OTHER = 303;
 const HTTP_OK = 200;
 const HTTP_UNPROCESSABLE_ENTITY = 422;
+const HTTP_INTERNAL_ERROR = 500;
+const INTERNAL_ERROR_MESSAGE = "Something went wrong handling your RSVP. Please try again.";
+
+/** Client-side form/validation failure (4xx). Distinct from server faults (5xx). */
+class RsvpFormError extends Error {}
 const RSVP_PLUGIN_ID = "dateline-rsvp";
 const RSVP_STORAGE_COLLECTION = "rsvps";
 const RSVP_STORAGE_INDEXES = ["kind", "eventId", "email", "status", "expiresAt"];
@@ -27,7 +32,7 @@ export async function POST({ request }: { request: Request }): Promise<Response>
     if (pluginResponse.status !== HTTP_OK) return jsonResponse(pluginResponse.status, pluginResponse.body);
     return redirectToConfirmation(event, form.email);
   } catch (error) {
-    return invalidFormResponse(error);
+    return errorResponse(error);
   }
 }
 
@@ -81,7 +86,7 @@ function parseRsvpForm(form: FormData): RsvpForm {
   const event = formValue(form, "event");
   const name = formValue(form, "name");
   const email = formValue(form, "email");
-  if (!event || !name || !EMAIL_PATTERN.test(email)) throw new Error("Event, name, and a valid email are required.");
+  if (!event || !name || !EMAIL_PATTERN.test(email)) throw new RsvpFormError("Event, name, and a valid email are required.");
   return { event, name, email };
 }
 
@@ -92,7 +97,7 @@ function formValue(form: FormData, key: string): string {
 
 async function resolveEvent(eventValue: string): Promise<EventReference> {
   const event = (await loadSeedEvents()).find((candidate) => candidate.id === eventValue || candidate.slug === eventValue);
-  if (!event) throw new Error(`Unknown RSVP event: ${eventValue}`);
+  if (!event) throw new RsvpFormError(`Unknown RSVP event: ${eventValue}`);
   return { id: event.id, slug: event.slug ?? event.id, title: event.title };
 }
 
@@ -108,7 +113,10 @@ function jsonResponse(status: number, body: unknown): Response {
   return Response.json(body, { status });
 }
 
-function invalidFormResponse(error: unknown): Response {
-  const message = error instanceof Error ? error.message : "Invalid RSVP form data";
-  return Response.json({ error: message }, { status: HTTP_UNPROCESSABLE_ENTITY });
+function errorResponse(error: unknown): Response {
+  // Validation/form errors are client faults (422); anything else (storage,
+  // plugin route, unexpected throw) is a server fault (500) — don't mask it.
+  if (error instanceof RsvpFormError) return Response.json({ error: error.message }, { status: HTTP_UNPROCESSABLE_ENTITY });
+  console.error("RSVP proxy failed", { error: String(error) });
+  return Response.json({ error: INTERNAL_ERROR_MESSAGE }, { status: HTTP_INTERNAL_ERROR });
 }

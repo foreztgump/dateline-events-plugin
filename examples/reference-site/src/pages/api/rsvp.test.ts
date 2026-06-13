@@ -74,6 +74,16 @@ describe("reference RSVP API proxy", () => {
     expect(response.status).toBe(409);
     await expect(response.json()).resolves.toEqual({ error: "capacity full" });
   });
+
+  it("returns 500 when the plugin route throws an unexpected error (server fault, not 422)", async () => {
+    rsvpSubmitMock.mockRejectedValue(new Error("storage offline"));
+
+    const response = await POST({ request: formRequest({ event: "friday-meetup", name: "Guest", email: "guest@example.com" }) });
+
+    expect(response.status).toBe(500);
+    const body = (await response.json()) as { error?: unknown };
+    expect(typeof body.error).toBe("string");
+  });
 });
 
 function formRequest(fields: Record<string, string>): Request {

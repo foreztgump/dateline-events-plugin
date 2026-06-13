@@ -16,7 +16,7 @@ function settingsPage() {
       blocks.section("Remote imports use unrestricted network access so operators can enter feed URLs that are not known at install time. Only grant this plugin to trusted site administrators."),
       blocks.form({
         fields: [elements.textInput("operatorConsent", "Unrestricted network consent note", { placeholder: "Document your internal approval or runbook link" })],
-        submit: { text: "Save consent note", actionId: "dateline.importer.settings.save" },
+        submit: { label: "Save consent note", actionId: "dateline.importer.settings.save" },
       }),
     ],
   });
@@ -44,7 +44,7 @@ function csvPage() {
           elements.textInput("endColumn", "End column", { initialValue: "end" }),
           elements.textInput("timezoneColumn", "Timezone column", { initialValue: "timezone" }),
         ],
-        submit: { text: "Import mapped CSV", actionId: "dateline.importer.csv.import" },
+        submit: { label: "Import mapped CSV", actionId: "dateline.importer.csv.import" },
       }),
     ],
   });
