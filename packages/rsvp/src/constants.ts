@@ -1,5 +1,4 @@
 export const PLUGIN_ID = "dateline-rsvp";
-export const PLUGIN_VERSION = "0.1.0";
 export const ATTENDEES_COLLECTION = "dateline_attendees";
 export const RSVPS_STORAGE_COLLECTION = "rsvps";
 export const CAPACITY_FULL_MESSAGE = "capacity full";
