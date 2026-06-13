@@ -1,4 +1,3 @@
-import rrulePackage from "rrule";
 import { z } from "zod";
 import { createCacheKey, readCachedOccurrences, writeCachedOccurrences } from "./cache.js";
 import {
@@ -21,8 +20,9 @@ import {
 } from "./timezone.js";
 import type { MaterializeOccurrencesInput, Occurrence, OccurrenceCache } from "./types.js";
 import { validateRRule } from "./validate.js";
+import { getRRuleApi } from "./rrule-api.js";
 
-const { rrulestr } = rrulePackage;
+const { rrulestr } = getRRuleApi();
 
 const MaterializeInputSchema = z.object({
   rule: z.string().min(1),
@@ -184,3 +184,4 @@ async function tryWriteCachedOccurrences(cache: OccurrenceCache, cacheKey: strin
     return undefined;
   }
 }
+

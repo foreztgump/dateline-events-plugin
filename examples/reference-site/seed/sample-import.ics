@@ -1,0 +1,19 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Dateline//Reference Importer Sample//EN
+BEGIN:VEVENT
+UID:imported-harbor-cleanup@dateline-sample
+SUMMARY:Imported Harbor Cleanup
+DTSTART;TZID=America/Los_Angeles:20260612T090000
+DTEND;TZID=America/Los_Angeles:20260612T120000
+DESCRIPTION:Community harbor cleanup imported from an external iCal feed.
+END:VEVENT
+BEGIN:VEVENT
+UID:imported-night-market@dateline-sample
+SUMMARY:Imported Night Market
+DTSTART;TZID=America/New_York:20260619T180000
+DTEND;TZID=America/New_York:20260619T220000
+DESCRIPTION:Evening market imported from an external iCal feed.
+RRULE:FREQ=WEEKLY;COUNT=3
+END:VEVENT
+END:VCALENDAR

@@ -4,6 +4,7 @@ export const attendeeFields = [
   { name: "event", type: "reference", required: true },
   { name: "email", type: "email", required: true },
   { name: "name", type: "string", required: true },
+  { name: "eventTitle", type: "string", required: false },
   { name: "rsvpStatus", type: "enum", required: true, enum: ["confirmed", "waitlisted", "cancelled"] },
   { name: "ticketTierId", type: "string", required: false },
   { name: "checkedInAt", type: "datetime", required: false },

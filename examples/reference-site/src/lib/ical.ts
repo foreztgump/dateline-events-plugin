@@ -1,8 +1,10 @@
 import { renderICal } from "@dateline/core/ical";
-import { seedEvents } from "./fixtures.js";
+
+import { loadSeedEvents } from "./events.js";
 
 const ICAL_HEADERS = { "content-type": "text/calendar; charset=utf-8" } as const;
 
-export function renderReferenceICal(): Response {
-  return new Response(renderICal(seedEvents), { headers: ICAL_HEADERS });
+export async function renderReferenceICal(): Promise<Response> {
+  const events = await loadSeedEvents();
+  return new Response(renderICal(events), { headers: ICAL_HEADERS });
 }

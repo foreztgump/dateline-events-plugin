@@ -14,9 +14,9 @@ import {
 import { releaseCapacity, reserveCapacity } from "./capacity.js";
 import { sendConfirmationEmail } from "./email.js";
 import { boundaryError } from "./errors.js";
-import { rsvpStorage } from "./storage.js";
+import { attendeeKey, rsvpStorage } from "./storage.js";
 import { enqueueWaitlist, popNextWaitlistEntry } from "./waitlist.js";
-import type { Attendee, HoldRecord, HookEvent, RsvpContext } from "./types.js";
+import type { Attendee, AttendeeRecord, HoldRecord, HookEvent, RsvpContext, WaitlistRecord } from "./types.js";
 
 const DEFAULT_GUEST_NAME = "Guest";
 
@@ -43,8 +43,12 @@ export async function afterSave(event: HookEvent, ctx: RsvpContext): Promise<voi
   if (event.collection !== ATTENDEES_COLLECTION || !event.content) return;
   const attendee = attendeeFromContent(event.content);
   if (!attendee) return;
-  if (attendee.rsvpStatus === "confirmed") await sendConfirmationEmail(ctx, attendee);
-  if (attendee.rsvpStatus === "cancelled") await handleCancellation(ctx, attendee);
+  try {
+    if (attendee.rsvpStatus === RSVP_STATUS_CONFIRMED) await sendConfirmationEmail(ctx, attendee);
+    if (attendee.rsvpStatus === RSVP_STATUS_CANCELLED) await handleCancellation(ctx, attendee);
+  } catch (error) {
+    ctx.log?.warn("RSVP afterSave hook failed", { eventId: attendee.event, attendeeId: attendee.id, error: String(error) });
+  }
 }
 
 export async function cron(event: { name?: string }, ctx: RsvpContext): Promise<void> {
@@ -56,7 +60,7 @@ async function handleCancellation(ctx: RsvpContext, attendee: Attendee): Promise
   const releasedSeat = await releaseCapacity(ctx, attendee.event, attendee.email);
   if (!releasedSeat) return;
   const promotedAttendee = await safePromoteNextWaitlistedAttendee(ctx, attendee.event);
-  if (promotedAttendee) await sendConfirmationEmail(ctx, promotedAttendee);
+  if (promotedAttendee) await safeSendConfirmationEmail(ctx, promotedAttendee);
 }
 
 async function safePromoteNextWaitlistedAttendee(ctx: RsvpContext, eventId: string): Promise<Attendee | null> {
@@ -76,12 +80,19 @@ async function promoteNextWaitlistedAttendee(ctx: RsvpContext, eventId: string):
     if (!nextEntry) return null;
     await reserveCapacity(ctx, eventId, nextEntry.email);
     capacityReserved = true;
-    await updateAttendeeStatus(ctx, nextEntry.attendeeId, "confirmed");
-    return { id: nextEntry.attendeeId, event: eventId, email: nextEntry.email ?? "", name: nextEntry.name ?? DEFAULT_GUEST_NAME, rsvpStatus: "confirmed" };
+    const promoted: Attendee = {
+      id: nextEntry.attendeeId,
+      event: eventId,
+      email: nextEntry.email ?? "",
+      name: nextEntry.name ?? DEFAULT_GUEST_NAME,
+      eventTitle: nextEntry.eventTitle,
+      rsvpStatus: RSVP_STATUS_CONFIRMED,
+    };
+    return await updateStoredAttendeeStatus(ctx, promoted);
   } catch (error) {
     if (nextEntry) await safeRequeueWaitlist(ctx, eventId, nextEntry);
     if (capacityReserved) await safeReleasePromotionCapacity(ctx, eventId, nextEntry?.email);
-    throw boundaryError("ctx.content.update(dateline_attendees)", error);
+    throw boundaryError("rsvp.promoteNextWaitlistedAttendee", error);
   }
 }
 
@@ -98,36 +109,52 @@ async function expireCapacityHolds(ctx: RsvpContext): Promise<void> {
 
 async function promoteFromListedWaitlist(ctx: RsvpContext): Promise<void> {
   try {
-    const waitlistedAttendees = await listWaitlistedAttendees(ctx);
-    for (const attendee of waitlistedAttendees.slice(0, MAX_CRON_PROMOTIONS)) await promoteListedAttendee(ctx, attendee);
+    const waitlists = await listWaitlistEventIds(ctx);
+    let promotions = 0;
+    for (const eventId of waitlists) {
+      if (promotions >= MAX_CRON_PROMOTIONS) return;
+      const promoted = await safePromoteNextWaitlistedAttendee(ctx, eventId);
+      if (promoted) {
+        promotions += 1;
+        await safeSendConfirmationEmail(ctx, promoted);
+      }
+    }
   } catch (error) {
     throw boundaryError("cron(waitlisted_attendees)", error);
   }
 }
 
-async function listWaitlistedAttendees(ctx: RsvpContext): Promise<Attendee[]> {
-  if (!ctx.content?.list) throw new Error("ctx.content.list is required for RSVP waitlist promotion.");
+async function safeSendConfirmationEmail(ctx: RsvpContext, attendee: Attendee): Promise<void> {
   try {
-    const response = await ctx.content.list(ATTENDEES_COLLECTION, { filter: { rsvpStatus: RSVP_STATUS_WAITLISTED } });
-    return (response?.items ?? response?.entries ?? []).map(readAttendeeEntry).filter((entry) => entry !== null);
+    await sendConfirmationEmail(ctx, attendee);
   } catch (error) {
-    throw boundaryError("ctx.content.list(waitlisted_attendees)", error);
+    ctx.log?.warn("RSVP promotion confirmation email failed", { eventId: attendee.event, email: attendee.email, error: String(error) });
   }
 }
 
-async function promoteListedAttendee(ctx: RsvpContext, attendee: Attendee): Promise<void> {
-  if (!attendee.id) return;
-  let capacityReserved = false;
-  let attendeeConfirmed = false;
+async function listWaitlistEventIds(ctx: RsvpContext): Promise<string[]> {
   try {
-    await reserveCapacity(ctx, attendee.event, attendee.email);
-    capacityReserved = true;
-    await updateAttendeeStatus(ctx, attendee.id, "confirmed");
-    attendeeConfirmed = true;
-    await sendConfirmationEmail(ctx, { ...attendee, rsvpStatus: "confirmed" });
+    const page = await rsvpStorage(ctx).query({ where: { kind: "waitlist" } });
+    return (page.items ?? page.entries ?? [])
+      .map((entry) => entry.data)
+      .filter(isWaitlistRecord)
+      .filter((record) => record.entries.length > 0)
+      .map((record) => record.eventId);
   } catch (error) {
-    if (capacityReserved && !attendeeConfirmed) await safeReleasePromotionCapacity(ctx, attendee.event, attendee.email);
-    throw boundaryError("cron(promote_listed_attendee)", error);
+    throw boundaryError("ctx.storage.rsvps.query(waitlists)", error);
+  }
+}
+
+async function updateStoredAttendeeStatus(ctx: RsvpContext, attendee: Attendee): Promise<Attendee> {
+  try {
+    const key = attendeeKey(attendee.event, attendee.email);
+    const record = await rsvpStorage(ctx).get(key);
+    if (!isAttendeeRecord(record)) return attendee;
+    const updatedRecord = { ...record, rsvpStatus: attendee.rsvpStatus };
+    await rsvpStorage(ctx).put(key, updatedRecord);
+    return updatedRecord;
+  } catch (error) {
+    throw boundaryError("ctx.storage.rsvps.put(attendee-status)", error);
   }
 }
 
@@ -152,13 +179,10 @@ function attendeeFromContent(content: unknown): Attendee | null {
   const event = readPropertyString(content, "event");
   const email = readPropertyString(content, "email");
   const name = readPropertyString(content, "name");
+  const eventTitle = readPropertyString(content, "eventTitle");
   const rsvpStatus = readRsvpStatus(readProperty(content, "rsvpStatus"));
   if (!event || !rsvpStatus) return null;
-  return { id: readPropertyString(content, "id"), event, email, name: name || DEFAULT_GUEST_NAME, rsvpStatus };
-}
-
-function readAttendeeEntry(value: unknown): Attendee | null {
-  return attendeeFromContent(value);
+  return { id: readPropertyString(content, "id"), event, email, name: name || DEFAULT_GUEST_NAME, eventTitle, rsvpStatus };
 }
 
 function readRsvpStatus(value: unknown): Attendee["rsvpStatus"] | null {
@@ -184,17 +208,9 @@ function waitlistAttendee(eventId: string, entry: NonNullable<Awaited<ReturnType
     event: eventId,
     email: entry.email ?? "",
     name: entry.name ?? DEFAULT_GUEST_NAME,
-    rsvpStatus: "waitlisted",
+    eventTitle: entry.eventTitle,
+    rsvpStatus: RSVP_STATUS_WAITLISTED,
   };
-}
-
-async function updateAttendeeStatus(ctx: RsvpContext, attendeeId: string, rsvpStatus: Attendee["rsvpStatus"]): Promise<void> {
-  if (!ctx.content?.update) throw new Error("ctx.content.update is required for RSVP promotion.");
-  try {
-    await ctx.content.update(ATTENDEES_COLLECTION, attendeeId, { rsvpStatus });
-  } catch (error) {
-    throw boundaryError("ctx.content.update(dateline_attendees)", error);
-  }
 }
 
 async function expireHold(ctx: RsvpContext, id: string, value: unknown): Promise<void> {
@@ -215,3 +231,12 @@ function isExpiredActiveHold(value: unknown): value is HoldRecord {
 function isHoldRecord(value: unknown): value is HoldRecord {
   return typeof value === "object" && value !== null && "kind" in value && value.kind === "hold";
 }
+
+function isWaitlistRecord(value: unknown): value is WaitlistRecord {
+  return typeof value === "object" && value !== null && "kind" in value && value.kind === "waitlist" && "entries" in value && Array.isArray(value.entries);
+}
+
+function isAttendeeRecord(value: unknown): value is AttendeeRecord {
+  return typeof value === "object" && value !== null && "kind" in value && value.kind === "attendee";
+}
+

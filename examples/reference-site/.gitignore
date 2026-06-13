@@ -1,0 +1,15 @@
+# EmDash dev runtime artifacts (not committed)
+data.db
+data.db-shm
+data.db-wal
+uploads/
+.emdash-dev/
+emdash-env.d.ts
+
+# Playwright e2e artifacts (not committed)
+test-results/
+playwright-report/
+.playwright/
+
+# Secrets, never commit
+.dev.vars

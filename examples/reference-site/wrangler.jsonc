@@ -9,5 +9,25 @@
   },
   "observability": {
     "enabled": true
-  }
+  },
+  // Mission-scoped D1 database (binding DB) — consumed by emdash d1({ binding: "DB" }).
+  // Schema is applied automatically by EmDash migrations at setup; seed via the
+  // documented steps in README.md (Cloudflare deploy section).
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "dateline-refsite-db",
+      "database_id": "7c82560c-7344-4432-b699-5904375c0e32"
+    }
+  ],
+  // Mission-scoped R2 bucket (binding MEDIA) — consumed by emdash r2({ binding: "MEDIA" }).
+  "r2_buckets": [
+    {
+      "binding": "MEDIA",
+      "bucket_name": "dateline-refsite-media"
+    }
+  ],
+  // Dynamic Worker Loader binding for the Cloudflare sandbox runner (sandbox()
+  // from @emdash-cms/cloudflare). Requires a Workers Paid plan (user-confirmed).
+  "worker_loaders": [{ "binding": "LOADER" }]
 }

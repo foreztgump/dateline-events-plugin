@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { boundaryError } from "./errors.js";
+import { withAsyncLock } from "./lock.js";
 import { rsvpStorage } from "./storage.js";
 import type { Attendee, RsvpContext, WaitlistRecord } from "./types.js";
 
@@ -7,22 +8,28 @@ const WaitlistEntrySchema = z.object({
   attendeeId: z.string().min(1),
   email: z.string().email().optional(),
   name: z.string().min(1).optional(),
+  eventTitle: z.string().min(1).optional(),
   joinedAt: z.string().datetime(),
 });
 
 export type WaitlistEntry = z.infer<typeof WaitlistEntrySchema>;
+const waitlistLocks = new Map<string, Promise<void>>();
 
 export async function enqueueWaitlist(ctx: RsvpContext, attendee: Attendee): Promise<void> {
-  const queue = await readWaitlist(ctx, attendee.event);
-  const entry = waitlistEntry(attendee);
-  await writeWaitlist(ctx, attendee.event, [...queue, entry]);
+  await withWaitlistLock(attendee.event, async () => {
+    const queue = await readWaitlist(ctx, attendee.event);
+    const entry = waitlistEntry(attendee);
+    await writeWaitlist(ctx, attendee.event, [...queue, entry]);
+  });
 }
 
 export async function popNextWaitlistEntry(ctx: RsvpContext, eventId: string): Promise<WaitlistEntry | null> {
-  const [nextEntry, ...remainingEntries] = await readWaitlist(ctx, eventId);
-  if (!nextEntry) return null;
-  await writeWaitlist(ctx, eventId, remainingEntries);
-  return nextEntry;
+  return withWaitlistLock(eventId, async () => {
+    const [nextEntry, ...remainingEntries] = await readWaitlist(ctx, eventId);
+    if (!nextEntry) return null;
+    await writeWaitlist(ctx, eventId, remainingEntries);
+    return nextEntry;
+  });
 }
 
 export async function readWaitlist(ctx: RsvpContext, eventId: string): Promise<WaitlistEntry[]> {
@@ -56,6 +63,11 @@ function waitlistEntry(attendee: Attendee): WaitlistEntry {
     attendeeId: attendee.id ?? attendee.email,
     email: attendee.email,
     name: attendee.name,
+    eventTitle: attendee.eventTitle,
     joinedAt: new Date().toISOString(),
   };
+}
+
+async function withWaitlistLock<T>(eventId: string, operation: () => Promise<T>): Promise<T> {
+  return withAsyncLock(waitlistLocks, waitlistKey(eventId), operation);
 }

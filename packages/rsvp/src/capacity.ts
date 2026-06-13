@@ -1,5 +1,13 @@
-import { CAPACITY_FULL_MESSAGE, DUPLICATE_RSVP_MESSAGE } from "./constants.js";
+import {
+  CAPACITY_FULL_MESSAGE,
+  CLAIM_STATUS_CANCELLED,
+  CLAIM_STATUS_CONFIRMED,
+  CLAIM_STATUS_PENDING,
+  CLAIM_STATUS_RELEASED,
+  DUPLICATE_RSVP_MESSAGE,
+} from "./constants.js";
 import { boundaryError, DatelineRsvpError } from "./errors.js";
+import { withAsyncLock } from "./lock.js";
 import { rsvpStorage } from "./storage.js";
 import type { CapacityRecord, RsvpClaimRecord, RsvpContext, StorageCollection, StoragePage } from "./types.js";
 
@@ -38,23 +46,28 @@ function claimKey(eventId: string, email: string): string {
 }
 
 async function reserveStorageCapacity(ctx: RsvpContext, eventId: string, email?: string): Promise<void> {
+  const collection = rsvpStorage(ctx);
+  let insertedClaim: RsvpClaimRecord | null = null;
+  let insertedClaimKey = "";
   try {
-    const collection = rsvpStorage(ctx);
     await assertClaimAvailable(collection, eventId, email);
     if (!email) throw new DatelineRsvpError("INVALID_RSVP", "email is required for capacity claims");
-    const insertedClaim = claimRecord(eventId, email, "pending");
-    await collection.put(claimKey(eventId, email), insertedClaim);
+    insertedClaimKey = claimKey(eventId, email);
+    insertedClaim = claimRecord(eventId, email, CLAIM_STATUS_PENDING);
+    await collection.put(insertedClaimKey, insertedClaim);
     const capacityRecord = await readCapacity(collection, eventId);
-    const admittedClaimIds = await admittedClaimKeys(collection, eventId, capacityLimit(capacityRecord));
-    if (!admittedClaimIds.has(claimKey(eventId, email))) {
-      await collection.put(claimKey(eventId, email), { ...insertedClaim, status: "released" });
-      await refreshRemaining(collection, eventId, capacityRecord);
+    const claims = await listClaims(collection, eventId);
+    const admittedClaimIds = admittedClaimKeys(claims, capacityLimit(capacityRecord));
+    if (!admittedClaimIds.has(insertedClaimKey)) {
+      await collection.put(insertedClaimKey, { ...insertedClaim, status: CLAIM_STATUS_RELEASED });
+      await writeRemaining(collection, capacityRecord, confirmedClaimsCount(claims));
       throw new DatelineRsvpError("CAPACITY_FULL", CAPACITY_FULL_MESSAGE);
     }
-    await collection.put(claimKey(eventId, email), { ...insertedClaim, status: "confirmed" });
-    await refreshRemaining(collection, eventId, capacityRecord);
+    await collection.put(insertedClaimKey, { ...insertedClaim, status: CLAIM_STATUS_CONFIRMED });
+    await writeRemaining(collection, capacityRecord, confirmedClaimsCount(claims) + 1);
   } catch (error) {
     if (error instanceof DatelineRsvpError) throw error;
+    if (insertedClaim) await collection.put(insertedClaimKey, { ...insertedClaim, status: CLAIM_STATUS_RELEASED }).catch(() => undefined);
     throw boundaryError("ctx.storage.rsvps.put(capacity-reserve)", error);
   }
 }
@@ -66,7 +79,7 @@ async function releaseStorageCapacity(ctx: RsvpContext, eventId: string, email?:
     const claim = await collection.get(claimKey(eventId, email));
     if (!isConfirmedClaim(claim)) return false;
     const capacityRecord = await readCapacity(collection, eventId);
-    await collection.put(claimKey(eventId, email), { ...claim, status: "cancelled" });
+    await collection.put(claimKey(eventId, email), { ...claim, status: CLAIM_STATUS_CANCELLED });
     await refreshRemaining(collection, eventId, capacityRecord);
     return true;
   } catch (error) {
@@ -92,16 +105,27 @@ function claimRecord(eventId: string, email: string, status: RsvpClaimRecord["st
   return { kind: "claim", eventId, email: email.toLowerCase(), status, createdAt: new Date().toISOString(), sequence: claimSequence };
 }
 
-async function admittedClaimKeys(collection: StorageCollection, eventId: string, capacity: number): Promise<Set<string>> {
+function admittedClaimKeys(claims: Array<{ id: string; data: RsvpClaimRecord }>, capacity: number): Set<string> {
   if (capacity <= 0) return new Set();
-  const claims = await listClaims(collection, eventId);
   return new Set(claims.filter((claim) => isSeatClaim(claim.data)).sort(compareClaims).slice(0, capacity).map((claim) => claim.id));
 }
 
 async function refreshRemaining(collection: StorageCollection, eventId: string, capacityRecord: CapacityRecord): Promise<void> {
   const confirmedCount = (await listClaims(collection, eventId)).filter((claim) => isConfirmedClaim(claim.data)).length;
+  await writeRemaining(collection, capacityRecord, confirmedCount);
+}
+
+async function writeRemaining(
+  collection: StorageCollection,
+  capacityRecord: CapacityRecord,
+  confirmedCount: number,
+): Promise<void> {
   const capacity = capacityLimit(capacityRecord);
-  await collection.put(capacityKey(eventId), { ...capacityRecord, capacity, remaining: Math.max(0, capacity - confirmedCount) });
+  await collection.put(capacityKey(capacityRecord.eventId), { ...capacityRecord, capacity, remaining: Math.max(0, capacity - confirmedCount) });
+}
+
+function confirmedClaimsCount(claims: Array<{ id: string; data: RsvpClaimRecord }>): number {
+  return claims.filter((claim) => isConfirmedClaim(claim.data)).length;
 }
 
 async function listClaims(collection: StorageCollection, eventId: string): Promise<Array<{ id: string; data: RsvpClaimRecord }>> {
@@ -124,15 +148,15 @@ function capacityLimit(record: CapacityRecord): number {
 }
 
 function isActiveClaim(value: unknown): value is RsvpClaimRecord {
-  return isEventClaim(value) && value.status !== "cancelled" && value.status !== "released";
+  return isEventClaim(value) && value.status !== CLAIM_STATUS_CANCELLED && value.status !== CLAIM_STATUS_RELEASED;
 }
 
 function isConfirmedClaim(value: unknown): value is RsvpClaimRecord {
-  return isEventClaim(value) && value.status === "confirmed";
+  return isEventClaim(value) && value.status === CLAIM_STATUS_CONFIRMED;
 }
 
 function isSeatClaim(value: unknown): value is RsvpClaimRecord {
-  return isEventClaim(value) && (value.status === "pending" || value.status === "confirmed");
+  return isEventClaim(value) && (value.status === CLAIM_STATUS_PENDING || value.status === CLAIM_STATUS_CONFIRMED);
 }
 
 function isEventClaim(value: unknown, eventId?: string): value is RsvpClaimRecord {
@@ -151,21 +175,5 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 
 
 async function withCapacityLock<T>(eventId: string, operation: () => Promise<T>): Promise<T> {
-  const lockKey = capacityKey(eventId);
-  const previous = capacityLocks.get(lockKey) ?? Promise.resolve();
-  let releaseCurrentLock: () => void = () => undefined;
-  const current = new Promise<void>((resolve) => { releaseCurrentLock = resolve; });
-  const chained = previous.then(() => current);
-  capacityLocks.set(lockKey, chained);
-  await previous;
-  try {
-    return await operation();
-  } finally {
-    releaseCurrentLock();
-    cleanupLock(lockKey, chained);
-  }
-}
-
-function cleanupLock(lockKey: string, chained: Promise<void>): void {
-  if (capacityLocks.get(lockKey) === chained) capacityLocks.delete(lockKey);
+  return withAsyncLock(capacityLocks, capacityKey(eventId), operation);
 }

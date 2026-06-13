@@ -12,7 +12,12 @@
     },
     "./sandbox": {
       "import": "./dist/plugin.mjs",
-      "types": "./dist/plugin.d.mts"
+      "types": "./dist/plugin.d.mts",
+      "default": "./dist/plugin.mjs"
+    },
+    "./routes": {
+      "types": "./dist/routes.d.ts",
+      "import": "./dist/routes.js"
     }
   },
   "files": [
@@ -21,7 +26,7 @@
     "README.md"
   ],
   "scripts": {
-    "build": "mkdir -p node_modules/.cache/emdash-build && TMPDIR=./node_modules/.cache/emdash-build emdash-plugin build && tsc -b",
+    "build": "mkdir -p node_modules/.cache/emdash-build && TMPDIR=./node_modules/.cache/emdash-build emdash-plugin build && node ../../tools/bundle-sandbox-plugin.mjs && tsc -b",
     "dev": "emdash-plugin dev",
     "typecheck": "tsc -b --noEmit",
     "lint": "eslint src --cache",
@@ -30,11 +35,12 @@
     "lint:fix": "eslint src --cache --fix"
   },
   "peerDependencies": {
-    "emdash": "^0.18"
+    "emdash": "^0.18.0"
   },
   "devDependencies": {
     "@emdash-cms/plugin-cli": "^0.5.1",
     "@types/node": "^20.19.39",
+    "esbuild": "^0.27.7",
     "eslint": "^9.27.0",
     "rimraf": "^6.0.1",
     "typescript": "^6.0.3",

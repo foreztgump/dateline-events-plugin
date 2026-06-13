@@ -105,6 +105,53 @@ jobs:
       - name: Sandbox profile
         run: pnpm sandbox:profile
 
+  # M3 makes the reference-site Playwright e2e suite a BLOCKING gate (no
+  # continue-on-error). It boots the real EmDash dev server (workerd sandbox
+  # runner) via Playwright's webServer, which reseeds data.db first, then drives
+  # calendar render, RSVP submit/capacity, iCal feed, and importer round-trip.
+  e2e:
+    name: reference-site e2e
+    runs-on: ubuntu-latest
+    env:
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+
+      - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1
+        with:
+          version: 10.33.2
+
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # The reference site imports the sandboxed plugins from their dist output
+      # (the workerd runner embeds dist/plugin.mjs), so the workspace must be
+      # built before the dev server can load core/rsvp/importer.
+      - name: Build workspace
+        run: pnpm -r build
+
+      # Pin the Playwright browser to the version matching @playwright/test
+      # (chromium is cached at ~/.cache/ms-playwright on the runner image, but
+      # --with-deps guarantees the exact revision + system libs are present).
+      - name: Install Playwright chromium
+        run: pnpm --filter @dateline/reference-site exec playwright install --with-deps chromium
+
+      - name: Run e2e suite
+        run: pnpm --filter @dateline/reference-site exec playwright test
+
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: examples/reference-site/playwright-report/
+          if-no-files-found: ignore
+
   emdash-latest-canary:
     name: emdash@latest canary
     runs-on: ubuntu-latest

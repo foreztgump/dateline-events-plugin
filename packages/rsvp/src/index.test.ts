@@ -24,6 +24,8 @@ type TestRsvpContext = RsvpContext & {
 describe("@dateline/rsvp", () => {
   it("declares the RSVP sandbox manifest", () => {
     expect(Object.keys(plugin.routes ?? {})).toEqual(expect.arrayContaining(["rsvp-submit", "waitlist", "admin/attendees", "admin/waitlist"]));
+    expect(routeIsPublic("rsvp-submit")).toBe(true);
+    expect(routeIsPublic("waitlist")).toBe(true);
     expect(Object.keys(plugin.hooks ?? {})).toEqual(expect.arrayContaining(["content:afterSave", "plugin:install", "plugin:activate", "cron"]));
   });
 
@@ -72,11 +74,20 @@ describe("@dateline/rsvp", () => {
         eventId: "evt_1",
         entries: [{ attendeeId: "att_wait", email: "wait@example.com", name: "Wait Guest", joinedAt: "2026-05-01T00:00:00.000Z" }],
       },
+      "attendee:evt_1:wait%40example.com": {
+        kind: "attendee",
+        id: "att_wait",
+        event: "evt_1",
+        email: "wait@example.com",
+        name: "Wait Guest",
+        rsvpStatus: "waitlisted",
+        createdAt: "2026-05-01T00:00:00.000Z",
+      },
     });
 
     await afterSave({ collection: "dateline_attendees", content: { id: "att_cancel", event: "evt_1", email: "cancel@example.com", rsvpStatus: "cancelled" } }, ctx);
 
-    expect(ctx.mocks.contentUpdate).toHaveBeenCalledWith("dateline_attendees", "att_wait", { rsvpStatus: "confirmed" });
+    await expect(ctx.storage?.rsvps?.get("attendee:evt_1:wait%40example.com")).resolves.toMatchObject({ rsvpStatus: "confirmed" });
     expect(ctx.mocks.emailSend).toHaveBeenCalledWith(expect.objectContaining({ to: "wait@example.com" }));
   });
 
@@ -115,6 +126,27 @@ describe("@dateline/rsvp", () => {
     }, ctx);
 
     expect(ctx.mocks.emailSend).toHaveBeenCalledWith(expect.objectContaining({ to: "a@example.com", subject: "RSVP confirmed" }));
+  });
+
+  it("sends one route confirmation email that names the event", async () => {
+    const ctx = storageContext("evt_1", 1);
+
+    const response = await rsvpSubmit({
+      request: jsonRequest("/rsvp-submit", {
+        eventId: "evt_1",
+        email: "route@example.com",
+        name: "Route Guest",
+        eventTitle: "Friday Meetup RSVP Night",
+      }),
+      ctx,
+    });
+
+    expect(response.status).toBe(200);
+    expect(ctx.mocks.emailSend).toHaveBeenCalledTimes(1);
+    expect(ctx.mocks.emailSend).toHaveBeenCalledWith(expect.objectContaining({
+      to: "route@example.com",
+      text: "Hi Route Guest, your RSVP for Friday Meetup RSVP Night is confirmed.",
+    }));
   });
 
   it("registers cron schedule during install and activation when cron is available", async () => {
@@ -158,6 +190,11 @@ describe("@dateline/rsvp", () => {
     expect(validateBlocks(adminHandlers.waitlist().blocks).valid).toBe(true);
   });
 });
+
+function routeIsPublic(routeName: string): boolean {
+  const route = plugin.routes?.[routeName];
+  return typeof route === "object" && "public" in route && route.public === true;
+}
 
 function submitRsvp(ctx: RsvpContext, email: string, ipAddress: string): Promise<Response> {
   return rsvpSubmit({ request: jsonRequest("/rsvp-submit", { eventId: "evt_1", email, name: "Guest" }, ipAddress), ctx });

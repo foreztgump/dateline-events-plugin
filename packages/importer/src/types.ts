@@ -68,6 +68,8 @@ export interface DeferredRemoteFeedRecord {
   url: string;
   payload: unknown;
   createdAt: string;
+  /** Rows already imported across prior cron ticks; lets a many-row feed resume without re-creating earlier rows. */
+  importedRows?: number;
   lastError?: string;
 }
 

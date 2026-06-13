@@ -7,7 +7,7 @@ import RsvpForm from "./RsvpForm.astro";
 import { formatEventTimeRange, plainPortableText } from "../lib/format.js";
 import type { EventDetailProps } from "./component-props.js";
 
-const { event, venue, organizers = [] } = Astro.props as EventDetailProps;
+const { event, venue, organizers = [], rsvpAction } = Astro.props as EventDetailProps;
 const coordinates = venue ? venue.geo : undefined;
 const schemaVenue = venue ? { name: venue.name, address: venue.address, lat: coordinates?.lat, lng: coordinates?.lng } : undefined;
 const schemaOrganizers = organizers.map((organizer) => ({ name: organizer.name, url: organizer.website }));
@@ -25,5 +25,5 @@ const description = plainPortableText(event.description);
   {description && <section class="dt-event-detail__description whitespace-pre-line">{description}</section>}
   {venue && <VenueMap venue={venue} />}
   {organizers.length > 0 && <section class="dt-event-detail__organizers grid gap-3">{organizers.map((organizer) => <OrganizerCard organizer={organizer} />)}</section>}
-  {event.rsvpRequired && <RsvpForm event={event} />}
+  {event.rsvpRequired && <RsvpForm event={event} action={rsvpAction} />}
 </article>
