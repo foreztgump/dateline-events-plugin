@@ -148,9 +148,11 @@ For the Cloudflare deploy path (D1 + R2 + the Dynamic Worker Loader sandbox) and
 
 ### 5. Try the reference site
 
-The reference site is the canonical, working example (calendar views, RSVP, recurring events, iCal feed, importer round-trip):
+The reference site is the canonical, working example (calendar views, RSVP, recurring events, iCal feed, importer round-trip). Starting from a fresh checkout, run these in order — `seed` needs the workspace dependencies installed and `dev` needs the plugin packages built first:
 
 ```bash
+pnpm install                                  # install workspace dependencies (e.g. better-sqlite3)
+pnpm -r build                                 # build every package incl. @dateline/core (the dev server resolves its entry)
 pnpm --filter @dateline/reference-site seed   # apply seed/seed.json to ./data.db
 pnpm --filter @dateline/reference-site dev    # astro dev on 127.0.0.1:4321
 ```
