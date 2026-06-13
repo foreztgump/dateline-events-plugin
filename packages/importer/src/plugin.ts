@@ -21,6 +21,7 @@ const plugin: SandboxedPlugin = {
     },
   },
   routes: {
+    admin: (routeCtx) => Promise.resolve(adminRoute(routeCtx)),
     "admin/import/tec": async (routeCtx, ctx) => jsonRoute(importTec, routeCtx, ctx),
     "admin/import/ical": async (routeCtx, ctx) => jsonRoute(importICal, routeCtx, ctx),
     "admin/import/csv": async (routeCtx, ctx) => jsonRoute(importCsv, routeCtx, ctx),
@@ -30,6 +31,17 @@ const plugin: SandboxedPlugin = {
 };
 
 export default plugin;
+
+const DEFAULT_ADMIN_PAGE = "settings";
+
+function adminRoute(routeCtx: SandboxedRouteContext) {
+  const page = new URL(routeCtx.request.url).searchParams.get("page") ?? DEFAULT_ADMIN_PAGE;
+  if (page === "tec") return adminHandlers.tec();
+  if (page === "ical") return adminHandlers.ical();
+  if (page === "csv") return adminHandlers.csv();
+  if (page === "json") return adminHandlers.json();
+  return adminHandlers.settings();
+}
 
 type ResponseRoute = (input: { request: Request; ctx: ImporterContext }) => Promise<Response>;
 

@@ -1,5 +1,16 @@
 # @dateline/views
 
+## 0.2.0
+
+### Minor Changes
+
+- Update the trusted Astro view package for EmDash 0.18. Calendar and event components consume `getEmDashCollection` against the real platform, and `entry.data.terms` is read inline from the collection entry rather than via a removed helper. Timezone-aware formatters and `safeHref()` sanitization carry forward unchanged.
+
+### Patch Changes
+
+- Updated dependencies
+  - @dateline/core@0.2.0
+
 ## 0.1.1
 
 ### Patch Changes

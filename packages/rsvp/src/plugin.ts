@@ -23,12 +23,21 @@ const plugin: SandboxedPlugin = {
   routes: {
     "rsvp-submit": { public: true, handler: async (routeCtx, ctx) => jsonRoute(rsvpSubmit, routeCtx, ctx) },
     waitlist: { public: true, handler: async (routeCtx, ctx) => jsonRoute(waitlistJoin, routeCtx, ctx) },
+    admin: (routeCtx) => Promise.resolve(adminRoute(routeCtx)),
     "admin/attendees": () => Promise.resolve(adminHandlers.attendees()),
     "admin/waitlist": () => Promise.resolve(adminHandlers.waitlist()),
   },
 };
 
 export default plugin;
+
+const DEFAULT_ADMIN_PAGE = "attendees";
+
+function adminRoute(routeCtx: SandboxedRouteContext) {
+  const page = new URL(routeCtx.request.url).searchParams.get("page") ?? DEFAULT_ADMIN_PAGE;
+  if (page === "waitlist") return adminHandlers.waitlist();
+  return adminHandlers.attendees();
+}
 
 type ResponseRoute = (input: { request: Request; ctx: RsvpContext }) => Promise<Response>;
 

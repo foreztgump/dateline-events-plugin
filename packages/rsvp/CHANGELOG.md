@@ -1,5 +1,16 @@
 # @dateline/rsvp
 
+## 0.2.0
+
+### Minor Changes
+
+- Convert `@dateline/rsvp` to the EmDash 0.18 sandboxed format and rework capacity off the invented atomic-KV primitive. Capacity now lives in the `rsvps` storage collection as `claim` records with conflict-retry admission semantics; KV is no longer used for counters. Cron is registered via `ctx.cron.schedule()` in the `plugin:install` / `plugin:activate` lifecycle hooks and consumed through the real `cron` hook, with both the waitlist-promotion and hold-expiry/rate-limit-purge sweeps capped to stay inside the 10-subrequest sandbox budget. Boundary/unexpected route errors now surface as `500` instead of being masked as `4xx`. Confirmation email is delivered via a registered `email:deliver` transport.
+
+### Patch Changes
+
+- Updated dependencies
+  - @dateline/blocks@0.2.0
+
 ## 0.1.1
 
 ### Patch Changes

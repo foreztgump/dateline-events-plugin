@@ -1,5 +1,22 @@
 # @dateline/reference-site
 
+## 0.0.2
+
+### Patch Changes
+
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @dateline/blocks@0.2.0
+  - @dateline/core@0.2.0
+  - @dateline/importer@0.2.0
+  - @dateline/recurring@0.2.0
+  - @dateline/rsvp@0.2.0
+  - @dateline/views@0.2.0
+
 ## 0.0.1
 
 ### Patch Changes

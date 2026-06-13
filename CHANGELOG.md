@@ -1,5 +1,18 @@
 # Dateline
 
+## 0.2.0 — 2026-06-13
+
+EmDash 0.18 modernization (PRO-872 epic). The dependency family moves from `emdash` ^0.9 to ^0.18, the three runtime plugins convert to the real sandboxed plugin format, invented platform APIs and fictional docs are purged, and the reference site is rebuilt on real EmDash. All six published packages bump to 0.2.0.
+
+- `@dateline/core` — converted to the EmDash 0.18 sandboxed format: single `src/plugin.ts` default-exporting a typed `SandboxedPlugin` plus a hand-authored `emdash-plugin.jsonc` manifest. Dropped the legacy `definePlugin()`/factory shape and the invented `emdash.config.ts`/`EMDASH_PLUGIN_MANIFEST` surfaces. Data access is `ctx.content`/`ctx.storage` only — no raw SQL/D1. Events, venues, organizers, calendar/iCal feeds, schema.org, and GDPR helpers preserved on the real platform.
+- `@dateline/rsvp` — sandboxed conversion plus capacity rework off the invented atomic-KV primitive: capacity now lives in the `rsvps` storage collection as `claim` records with conflict-retry admission. Cron registered via `ctx.cron.schedule()` in lifecycle hooks and consumed through the real `cron` hook; waitlist-promotion and hold-expiry/rate-limit-purge sweeps capped to the 10-subrequest sandbox budget. Boundary/unexpected route errors now surface as 500 instead of masked 4xx.
+- `@dateline/importer` — sandboxed conversion: remote feed fetches (TEC/iCal/CSV/JSON) go through `ctx.http.fetch` gated by `network:request` + `allowedHosts`; deferred feeds persist and drain across invocations; idempotent source IDs and partial error reporting preserved.
+- `@dateline/blocks` — rebased onto `@emdash-cms/blocks@0.18`; typed builders and `validateBlocks()`/`assertResponse()` guards track the 0.18 surface; `entry.data.terms` inlined at call sites.
+- `@dateline/views` — updated trusted Astro components for EmDash 0.18 via `getEmDashCollection`; `entry.data.terms` read inline; tz-aware formatters and `safeHref()` carry forward.
+- `@dateline/recurring` — type-bump only; the tzid-anchored RRULE materialization algorithm (2-year cap, EXDATE/RDATE, KV occurrence cache) is intentionally untouched.
+- `examples/reference-site` — rebuilt on real EmDash 0.18 with seed data, live RSVP/capacity/email flows, importer round-trip, Playwright e2e (blocking CI), and Cloudflare deploy validation.
+- `docs` — truth pass purging invented APIs; `MIGRATION.md` added as the v0.1→v0.2 first-real-installation guide; capability model, `ctx` surface, and measured workerd budgets documented from `VERIFIED-PLATFORM-0.18.md`.
+
 ## 0.1.1 — 2026-05-06
 
 Audit-driven release: pr-agent surfaced all defects in two passes (r1 → fix-up → r2).
