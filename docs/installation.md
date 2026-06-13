@@ -166,9 +166,11 @@ Two limitations apply to the Cloudflare path and must be addressed before produc
 
 **Recommendation:** Prototype on Free; move to Paid before relying on sandbox isolation in production.
 
-## Stripe integration (if using tickets)
+## Payments / ticketing (planned — via Tender)
 
-When ticketing add-ons are installed, you'll need Stripe credentials. The Stripe API version is pinned at `2026-04-22.dahlia`.
+> **Not part of Dateline v0.2.0.** Dateline ships **free** RSVP only. Paid ticketing (seating, pricing, checkout) is a planned integration with the separate [Tender](https://github.com/foreztgump/tender) payments plugin family (gateway-agnostic; Stripe + Square), which owns the payment provider, webhook, and refund logic. The Dateline ↔ Tender ticket-purchase integration is not built yet. The Stripe notes below are forward-looking guidance for that future integration and for operators already running Tender — not steps required to run Dateline today.
+
+When the Tender Stripe provider is installed, you'll need Stripe credentials. The Stripe API version is pinned at `2026-04-22.dahlia`.
 
 1. Get your Stripe API key from the [Stripe Dashboard](https://dashboard.stripe.com/apikeys).
 2. **Never commit secrets to git.** Use wrangler secret management:
