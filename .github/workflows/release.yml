@@ -7,11 +7,18 @@ name: Release
 #   2. workflow_dispatch    -> dry-run (`changeset publish --dry-run`) for
 #      verification before cutting a real tag. No authentication, no publish.
 #
-# Provenance: when the source repo is PUBLIC and trusted publishing is
-# configured for each package on npmjs.com, the npm CLI generates provenance
-# automatically (id-token: write below mints the OIDC token). The very first
-# 0.3.0 publish is done locally (a first-ever publish cannot use trusted
-# publishing), so this workflow carries provenance from 0.3.1 onward.
+# Provenance & auth: the source repo is PUBLIC and trusted publishing is
+# configured for each package on npmjs.com, so the npm CLI authenticates via
+# OIDC (id-token: write below mints the token) and generates provenance
+# automatically — no long-lived npm token. The very first 0.3.0 publish was
+# done locally (a first-ever publish cannot use trusted publishing), so this
+# workflow carries provenance from 0.3.1 onward.
+#
+# OIDC trusted publishing requires npm CLI >= 11.5.1 (Node 22 bundles 10.x),
+# so the workflow upgrades npm before publishing. `changeset publish` shells
+# out to npm internally, which is what performs the OIDC token exchange.
+# NODE_AUTH_TOKEN must NOT be set (not even empty) or npm uses it instead of
+# falling back to OIDC.
 on:
   push:
     tags:
@@ -48,10 +55,16 @@ jobs:
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version-file: .nvmrc
-          # Sets up the npm auth context. The token is only consumed on a real
-          # publish; the dry-run path never authenticates.
+          # registry-url wires up the npm registry context that OIDC publishing
+          # uses. Required even tokenless — removing it breaks the OIDC path.
           registry-url: "https://registry.npmjs.org"
           cache: pnpm
+
+      # OIDC trusted publishing needs npm >= 11.5.1; Node 22 bundles 10.x.
+      # Pin to the v11 major (>= 11.5.1) so CI stays reproducible and a future
+      # npm 12 breaking change can't silently break a release.
+      - name: Upgrade npm for OIDC trusted publishing
+        run: npm install -g "npm@^11.5.1"
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -67,18 +80,12 @@ jobs:
         if: github.event_name == 'workflow_dispatch' && inputs.dry_run
         run: pnpm -r publish --dry-run --no-git-checks
 
+      # Authentication is tokenless: npm detects the OIDC environment (via the
+      # id-token: write permission) and exchanges it for a short-lived publish
+      # token against the trusted-publisher mappings configured on npmjs.com.
+      # Provenance is generated automatically under trusted publishing, so no
+      # --provenance flag or NPM_CONFIG_PROVENANCE is needed. Do NOT set
+      # NODE_AUTH_TOKEN here — any value (even empty) makes npm skip OIDC.
       - name: Publish to npm
         if: github.event_name == 'push'
         run: pnpm exec changeset publish
-        env:
-          # Provenance is scoped to the publish step ONLY (not the whole job) so
-          # the dry-run path never trips it. It also must NOT be set for the
-          # first-ever 0.3.0 publish: npm cannot generate provenance until a
-          # trusted-publisher mapping exists for the package, so 0.3.0 is
-          # published locally without provenance (see CONTRIBUTING.md). This
-          # workflow — and provenance — apply from 0.3.1 onward.
-          NPM_CONFIG_PROVENANCE: "true"
-          # Transitional: consumed only until trusted publishing is configured
-          # for every package on npmjs.com, after which this secret can be
-          # removed and OIDC handles authentication tokenlessly.
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
