@@ -22,7 +22,7 @@ Raw evidence lives in `openspec/changes/pro-884-paid-deploy-validation/evidence/
 
 | Field | Value |
 |---|---|
-| Account | `bb.goodbom@gmail.com` (`a031c48798996e827e90e72cfaf7e806`) |
+| Account | `b…m@gmail.com` (account ID `a031c4…e806`, redacted) |
 | Plan | Workers **Paid** — Dynamic Worker Loader available |
 | Wrangler / Node | `4.88.0` / `v22.21.0` |
 | Worker | `dateline-reference-site` |
@@ -154,7 +154,7 @@ core code on the Paid account. The sandboxed-plugin flows are gated by the PRO-9
 
 ## Teardown
 
-Live, billable resources provisioned for this validation (on `bb.goodbom@gmail.com`). The account
+Live, billable resources provisioned for this validation (on the redacted Cloudflare account). The account
 hosts unrelated production resources (pioneer-saloon, threatskope, etc.) — **do not touch those.**
 
 | Resource | Binding | Name / ID | Removal command |

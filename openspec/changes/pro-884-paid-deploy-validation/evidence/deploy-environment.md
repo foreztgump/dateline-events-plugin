@@ -4,21 +4,21 @@
 
 | Field | Value |
 |---|---|
-| Cloudflare account | `bb.goodbom@gmail.com` |
-| Account ID | `a031c48798996e827e90e72cfaf7e806` |
+| Cloudflare account | `b…m@gmail.com` (redacted) |
+| Account ID | `a031c4…e806` (redacted) |
 | Plan | Workers **Paid** (user-confirmed; Dynamic Worker Loader available, no error 10195) |
 | Wrangler | `4.88.0` |
 | Node | `v22.21.0` |
 | Worker name | `dateline-reference-site` |
 | Deployed URL | https://dateline-reference-site.networkreef-dev.workers.dev |
 | Live version | `c90cb134-35df-4abc-a739-fb488c26eeb4` |
-| Deployed at | 2026-06-14T03:28:16Z (Author: bb.goodbom@gmail.com) |
+| Deployed at | 2026-06-14T03:28:16Z (Author: redacted account) |
 
 `wrangler deployments list` (re-confirmed):
 
 ```
 Version(s):  (100%) c90cb134-35df-4abc-a739-fb488c26eeb4
-Author:      bb.goodbom@gmail.com
+Author:      <redacted account>
 ```
 
 ## Generated worker bindings (`dist/server/wrangler.json`)

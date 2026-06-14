@@ -70,7 +70,8 @@ Paid and captures proof.
   resource names + seed-remote steps), the `reference-site` spec
   (deploy-mode scenario upgraded from local `wrangler dev` to real Paid deploy).
 - Affected (live infra, not committed): a new D1 database, a new R2 bucket, and a
-  deployed Worker on the `bb.goodbom@gmail.com` Cloudflare account.
+  deployed Worker on the project's Cloudflare account (account identity redacted
+  from committed docs).
 - Acceptance: `VERIFIED-DEPLOY-PAID.md` committed with evidence that the
   capability boundary is enforced on Paid, the four resource limits are
   characterized on the real loader, the RSVP + iCal + importer flows are green
