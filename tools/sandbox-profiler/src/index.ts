@@ -29,7 +29,11 @@ export type ProfiledHandler = (ctx: ProfilingContext) => Promise<void> | void;
 
 export interface ProfilingOptions {
   storageSeedRecords?: StorageSeedRecords;
+  /** Monotonic millisecond clock; defaults to performance.now. Injected in unit tests for deterministic elapsed-time measurement. */
+  now?: () => number;
 }
+
+const defaultClock = (): number => performance.now();
 
 interface StorageCollection {
   get(id: string): Promise<unknown>;
@@ -48,10 +52,11 @@ interface StorageCollectionLookup {
 export type StorageSeedRecords = Record<string, Array<{ id: string; data: unknown }>>;
 
 export async function runWithProfiling(handler: ProfiledHandler, options: ProfilingOptions = {}): Promise<ProfileResult> {
+  const now = options.now ?? defaultClock;
   const counter = createSubrequestCounter();
-  const startedAt = performance.now();
+  const startedAt = now();
   await handler(createProfilingContext(counter, options.storageSeedRecords ?? {}));
-  const elapsedMicros = Math.round((performance.now() - startedAt) * MICROS_PER_MILLISECOND);
+  const elapsedMicros = Math.round((now() - startedAt) * MICROS_PER_MILLISECOND);
   const breaches = collectBreaches(elapsedMicros, counter.count);
   return { ok: breaches.length === 0, cpuMicros: elapsedMicros, subrequestCount: counter.count, breaches };
 }

@@ -1,36 +1,43 @@
 import { describe, expect, it } from "vitest";
 import { runWithProfiling, SANDBOX_CPU_BUDGET_MICROS } from "./index.js";
 
-// SLEEP_MS is intentionally tiny so the wall-clock measurement on noisy CI
-// runners stays well under SANDBOX_CPU_BUDGET_MICROS (50ms). The assertion
-// only requires cpuMicros >= SLEEP_MS * 1_000, which 1ms easily satisfies.
-const SLEEP_MS = 1;
+const MICROS_PER_MILLISECOND = 1_000;
+const PASSING_ELAPSED_MS = 5;
+const BUDGET_BREACH_ELAPSED_MS = 80;
 const SUBREQUESTS = 3;
-const BUDGET_BREACH_SLEEP_MS = 80;
 
-const sleep = (durationMs: number): Promise<void> =>
-  new Promise((resolve) => setTimeout(resolve, durationMs));
+// Makes elapsed-time measurement independent of host load — the source of the
+// CI flakiness this fixes. Returns successive readings on each call, holding the
+// final reading once exhausted, and is injected via the `now` option.
+const fakeClock = (...readings: [number, ...number[]]): (() => number) => {
+  let index = 0;
+  return () => readings[Math.min(index++, readings.length - 1)] ?? readings[0];
+};
 
 describe("runWithProfiling", () => {
   it("reports elapsed CPU micros and subrequest count for a passing handler", async () => {
-    const result = await runWithProfiling(async (ctx) => {
-      await sleep(SLEEP_MS);
-      await ctx.fetch("https://example.test/one");
-      await ctx.fetch("https://example.test/two");
-      await ctx.fetch("https://example.test/three");
-    });
+    const result = await runWithProfiling(
+      async (ctx) => {
+        await ctx.fetch("https://example.test/one");
+        await ctx.fetch("https://example.test/two");
+        await ctx.fetch("https://example.test/three");
+      },
+      { now: fakeClock(0, PASSING_ELAPSED_MS) },
+    );
 
     expect(result.ok).toBe(true);
     expect(result.subrequestCount).toBe(SUBREQUESTS);
-    expect(result.cpuMicros).toBeGreaterThanOrEqual(SLEEP_MS * 1_000);
+    expect(result.cpuMicros).toBe(PASSING_ELAPSED_MS * MICROS_PER_MILLISECOND);
   });
 
   it("reports a budget breach when a handler exceeds 50ms CPU", async () => {
-    const result = await runWithProfiling(async () => {
-      await sleep(BUDGET_BREACH_SLEEP_MS);
-    });
+    const result = await runWithProfiling(
+      () => undefined,
+      { now: fakeClock(0, BUDGET_BREACH_ELAPSED_MS) },
+    );
 
     expect(result.ok).toBe(false);
+    expect(result.cpuMicros).toBe(BUDGET_BREACH_ELAPSED_MS * MICROS_PER_MILLISECOND);
     expect(result.cpuMicros).toBeGreaterThan(SANDBOX_CPU_BUDGET_MICROS);
     expect(result.breaches).toContain("cpuMicros exceeded 50000");
   });
