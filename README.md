@@ -3,11 +3,12 @@
 [![CI](https://github.com/foreztgump/dateline-events-plugin/actions/workflows/ci.yml/badge.svg)](https://github.com/foreztgump/dateline-events-plugin/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Monorepo via pnpm](https://img.shields.io/badge/monorepo-pnpm-blue.svg)](https://pnpm.io)
-[![Status: pre-release](https://img.shields.io/badge/status-v0.2.0%20preview-orange.svg)](#status)
+[![npm version](https://img.shields.io/npm/v/@dateline/core.svg?label=%40dateline%2Fcore)](https://www.npmjs.com/package/@dateline/core)
+[![Status: v0.3.0](https://img.shields.io/badge/status-v0.3.0%20published-brightgreen.svg)](#status)
 
 Dateline is a modular events and calendar system for [EmDash CMS](https://emdashcms.org), running on Cloudflare Workers with edge-cached rendering. Today it covers events, venues, organizers, calendar/iCal feeds, **free** RSVPs with capacity, and event import. **Paid ticketing** (assigned seating, dynamic pricing, box-office check-in) is a planned integration via the separate [Tender](https://github.com/foreztgump/tender) payments plugin family — see [Status](#status) for what is and isn't shipped.
 
-> **Pre-release.** v0.2.0 is a developer preview: build it from source or run the reference site. The `@dateline/*` packages are **not yet published to npm** — `npm add @dateline/*` will not resolve until the first registry release.
+> **v0.3.0 — first npm release.** All six `@dateline/*` packages are published to npm (public, MIT). Install them directly per [Getting started](#getting-started) below; no build-from-source step is required for the basic path.
 
 ## Why Dateline?
 
@@ -18,7 +19,7 @@ Dateline solves four chronic WordPress events problems at the EmDash architectur
 3. **AI-first operations** — Dateline actions are reachable via REST routes today, with an MCP wrapper planned (vs EventON's one-line AI assists).
 4. **Unified versioning** — Events, RSVP, import, and recurring events under one coherent version story (vs TEC's separate plugin family). Paid ticketing is delegated to [Tender](https://github.com/foreztgump/tender) rather than reinvented.
 
-## What's in the box (v0.2.0)
+## What's in the box (v0.3.0)
 
 Dateline ships three sandboxed EmDash 0.18 plugins plus three helper libraries. The plugins use the single-file sandboxed format (`emdash-plugin.jsonc` + `src/plugin.ts`) and declare their capabilities in their manifest, which EmDash enforces at the sandbox boundary on a Cloudflare Workers Paid plan.
 
@@ -81,13 +82,15 @@ Dateline's sandboxed plugins are not registered through a config-file factory ca
 
 ### 1. Install the packages
 
-> **Not yet on npm.** The `@dateline/*` packages have not been published to a registry — the command below will fail until the first release. For now, clone this repo and build from source (`pnpm install && pnpm -r build`), or run the [reference site](#5-try-the-reference-site). Once published, the three plugins will distribute as EmDash plugins (marketplace install or a built tarball from `emdash-plugin bundle`) and the helper libraries from npm:
+From a fresh EmDash site, install the six `@dateline/*` packages plus the EmDash runtime (`^0.18` peer) and the local sandbox runner:
 
 ```bash
 pnpm add @dateline/core @dateline/rsvp @dateline/importer \
          @dateline/views @dateline/recurring @dateline/blocks \
          emdash@^0.18 @emdash-cms/sandbox-workerd@^0.1.6
 ```
+
+> The three sandboxed plugins (`core`, `rsvp`, `importer`) are default-imported into `sandboxed: [...]` (step 2); the helper libraries (`views`, `recurring`, `blocks`) are imported directly in your theme. All six install from npm — no `emdash-plugin bundle` or build-from-source step is needed for this path.
 
 ### 2. Wire the plugins in `astro.config.mjs`
 
@@ -194,15 +197,15 @@ RRULE occurrences are computed on-read with a 2-year forward cap and cached in K
 
 ## Status
 
-🚧 **v0.2.0 — EmDash 0.18 modernization (developer preview, not yet published).**
+✅ **v0.3.0 — first npm release (EmDash 0.18 modernization).**
 
-**What ships today** — six packages, all at `0.2.0`, MIT, CI-green:
-- `@dateline/core`, `@dateline/rsvp`, `@dateline/importer` — converted to the single-file sandboxed format
+**What ships today** — six packages, all at `0.3.0`, MIT, CI-green, [published to npm](https://www.npmjs.com/org/dateline):
+- `@dateline/core`, `@dateline/rsvp`, `@dateline/importer` — single-file sandboxed format
 - `@dateline/recurring`, `@dateline/views`, `@dateline/blocks` (rebased on `@emdash-cms/blocks@0.18`)
 - Functionality: events, venues, organizers, calendar/iCal feeds, schema.org, GDPR helpers, **free** RSVP with capacity + waitlist + confirmation email, and iCal/CSV/JSON/TEC import.
+- Releases from `0.3.1` onward publish through CI with [npm provenance](https://docs.npmjs.com/generating-provenance-statements) via trusted publishing.
 
 **Not yet shipped:**
-- **npm release** — the v0.2.0 release ran a publish *dry-run only*; nothing is on the registry. Install from source until the first real publish.
 - **Paid ticketing & payments** — no ticketing/seating/pricing/checkout code lives in this repo. Paid flows are planned as an integration with the separate [Tender](https://github.com/foreztgump/tender) payments plugin family (gateway-agnostic; Stripe + Square). The Dateline ↔ Tender ticket-purchase integration is not built yet.
 - **MCP wrapper** — Dateline actions are reachable via REST routes today; the MCP wrapper is planned, not implemented.
 
