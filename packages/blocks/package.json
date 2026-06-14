@@ -1,8 +1,29 @@
 {
   "name": "@dateline/blocks",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "type": "module",
   "license": "MIT",
+  "description": "Thin Block Kit wrapper for Dateline over @emdash-cms/blocks: re-exports typed builders, validateBlocks, and block/element types, plus the assertResponse plugin-route envelope guard. Safe to bundle into sandboxed plugins.",
+  "keywords": [
+    "dateline",
+    "emdash",
+    "block-kit",
+    "blocks",
+    "ui",
+    "cloudflare-workers"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/foreztgump/dateline-events-plugin.git",
+    "directory": "packages/blocks"
+  },
+  "homepage": "https://github.com/foreztgump/dateline-events-plugin/tree/main/packages/blocks#readme",
+  "bugs": {
+    "url": "https://github.com/foreztgump/dateline-events-plugin/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
@@ -13,6 +34,7 @@
   },
   "files": [
     "dist",
+    "!dist/**/*.test.*",
     "README.md"
   ],
   "scripts": {

@@ -1,8 +1,30 @@
 {
   "name": "@dateline/rsvp",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "type": "module",
   "license": "MIT",
+  "description": "Sandboxed EmDash plugin adding free RSVP to Dateline events: capacity enforcement, waitlists, confirmation email, and attendee status. No payment provider required.",
+  "keywords": [
+    "emdash",
+    "emdash-plugin",
+    "dateline",
+    "rsvp",
+    "events",
+    "waitlist",
+    "cloudflare-workers"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/foreztgump/dateline-events-plugin.git",
+    "directory": "packages/rsvp"
+  },
+  "homepage": "https://github.com/foreztgump/dateline-events-plugin/tree/main/packages/rsvp#readme",
+  "bugs": {
+    "url": "https://github.com/foreztgump/dateline-events-plugin/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "./dist/index.mjs",
   "types": "./dist/index.d.mts",
   "exports": {
@@ -22,6 +44,7 @@
   },
   "files": [
     "dist",
+    "!dist/**/*.test.*",
     "emdash-plugin.jsonc",
     "README.md"
   ],
