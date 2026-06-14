@@ -1,5 +1,12 @@
 # @dateline/reference-site
 
+## Unreleased
+
+- Validated a real Workers **Paid** deploy with the Dynamic Worker Loader (PRO-884):
+  `env.LOADER` active, remote D1 seeded, and `/`, `/events`, `/events.ics` serving
+  live content. Evidence in `VERIFIED-DEPLOY-PAID.md`. Documented the PRO-909 gap
+  (sandbox does not load until `PluginBridge` is exported from the worker entrypoint).
+
 ## 0.0.3
 
 ### Patch Changes

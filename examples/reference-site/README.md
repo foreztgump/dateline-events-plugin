@@ -30,13 +30,16 @@ rejection, the iCal feed, and the importer round-trip. This suite runs as a
 
 ## Cloudflare deploy validation
 
-> **Note (2026-06-13):** the live mission-scoped resources backing this section
-> have been torn down — D1 `dateline-refsite-db` (was id
-> `7c82560c-7344-4432-b699-5904375c0e32`) and R2 `dateline-refsite-media`. The
-> ids/names below remain in `wrangler.jsonc` for reference only. To deploy
-> again, recreate them (`wrangler d1 create dateline-refsite-db`,
-> `wrangler r2 bucket create dateline-refsite-media`) and update the new D1
-> `database_id` in `wrangler.jsonc` before running the steps below.
+> **Status (2026-06-14, PRO-884):** validated with a real remote `wrangler deploy`
+> to a **Workers Paid** account. Live resources currently provisioned: D1
+> `dateline-refsite-db` (id `0a405080-14bd-4ad1-b386-523e8a3585fb`), R2
+> `dateline-refsite-media`, KV `SESSION` (`853a0572831d42eab3326536155afff6`), and
+> Worker `dateline-reference-site`
+> (`https://dateline-reference-site.networkreef-dev.workers.dev`). These are left
+> running for the PRO-909 follow-up; teardown commands are in `VERIFIED-DEPLOY-PAID.md`.
+> To deploy fresh elsewhere, recreate the resources (`wrangler d1 create …`,
+> `wrangler r2 bucket create …`) and update the new D1 `database_id` in
+> `wrangler.jsonc`.
 
 The Cloudflare path swaps the host adapter to `@astrojs/cloudflare` and the
 EmDash backends to D1 / R2 / the Dynamic Worker Loader sandbox via the
@@ -76,5 +79,22 @@ serve content instead of redirecting to `/_emdash/admin/setup`:
 
 - **Remote D1:** export the seed as SQL and apply it with
   `wrangler d1 execute dateline-refsite-db --file <seed.sql> --remote`, or run the
-  EmDash seed against a libsql/HTTP D1 endpoint. (No remote `wrangler deploy` is
-  performed in this mission.)
+  EmDash seed against a libsql/HTTP D1 endpoint. The remote D1 was seeded this way
+  for the PRO-884 Paid deploy (44 tables, 800 rows).
+
+### Paid deploy validation (PRO-884)
+
+A real remote deploy to Workers Paid confirmed the Dynamic Worker Loader is active
+(`env.LOADER` present, no error 10195) and that `/`, `/events`, and `/events.ics`
+serve seeded content from the remote D1 binding. The full evidence — including the
+per-plugin capability boundary and resource limits proven from the deployed runner
+bundle — is in `VERIFIED-DEPLOY-PAID.md` at the repo root.
+
+> **Known gap (PRO-909):** sandboxed plugins do **not** load on this Cloudflare deploy
+> because the worker entrypoint does not export the `PluginBridge` Durable Object. The
+> Cloudflare sandbox runner requires `exports.PluginBridge` (plus a `durable_objects`
+> binding and a `new_sqlite_classes` migration) to be wired into the worker; the EmDash
+> Astro integration does not auto-wire this. Until PRO-909 lands, all
+> `/_emdash/api/plugins/<id>/<route>` requests return 404 and sandboxed-plugin flows
+> (RSVP submit, importer) are unavailable on the deployed site. Public SSR routes are
+> unaffected.
