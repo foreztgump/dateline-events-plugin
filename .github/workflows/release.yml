@@ -61,8 +61,10 @@ jobs:
           cache: pnpm
 
       # OIDC trusted publishing needs npm >= 11.5.1; Node 22 bundles 10.x.
+      # Pin to the v11 major (>= 11.5.1) so CI stays reproducible and a future
+      # npm 12 breaking change can't silently break a release.
       - name: Upgrade npm for OIDC trusted publishing
-        run: npm install -g npm@latest
+        run: npm install -g "npm@^11.5.1"
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
