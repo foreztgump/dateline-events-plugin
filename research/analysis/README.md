@@ -63,3 +63,20 @@ notes: |
 | eventon-slider | 2.1 | P3 |
 | eventon-csv-importer | 1.1.10 | P3 |
 | eventon-wishlist-add-on | 1.1.2 | P3 |
+
+## Running the capture scripts
+
+The Playwright capture scripts (`capture*.py`, `eventon/*.py`) drive a **local
+DDEV** WordPress site for clean-room analysis. Credentials come from the
+environment — never hardcode them:
+
+```bash
+export DDEV_PASSWORD="<your-local-ddev-admin-password>"
+# Optional overrides (defaults shown):
+export DDEV_BASE_URL="https://dateline-site-b.ddev.site:8443"
+export DDEV_USERNAME="admin"
+python3 research/analysis/eventon/capture.py
+```
+
+These target a localhost-only DDEV site; there are no production credentials in
+this repository.

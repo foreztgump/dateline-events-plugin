@@ -58,3 +58,4 @@ wrangler.toml.bak
 .factory-state
 
 .eslintcache
+__pycache__/

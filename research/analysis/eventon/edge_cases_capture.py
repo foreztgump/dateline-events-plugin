@@ -10,10 +10,10 @@ import json, os, time
 from datetime import datetime, timedelta
 from playwright.sync_api import sync_playwright, Page
 
-BASE_URL = "https://dateline-site-b.ddev.site:8443"
+BASE_URL = os.environ.get("DDEV_BASE_URL", "https://dateline-site-b.ddev.site:8443")
 SS_DIR = os.path.join(os.path.dirname(__file__), "screenshots")
-USERNAME = "admin"
-PASSWORD = "dateline-research"
+USERNAME = os.environ.get("DDEV_USERNAME", "admin")
+PASSWORD = os.environ["DDEV_PASSWORD"]
 
 observations = {}
 
