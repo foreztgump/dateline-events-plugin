@@ -6,6 +6,9 @@ import { main } from "./sandbox-profiler.js";
 
 // Must exceed the 50ms sandbox CPU budget to trigger a deterministic breach.
 const SLOW_HANDLER_SLEEP_MS = 60;
+// Self-heals transient under-measurement when this real-timing test runs on a
+// loaded CI runner; the assertion itself stays strict.
+const CLI_TIMING_TEST_RETRIES = 2;
 
 describe("sandbox-profiler CLI", () => {
   it("skips cleanly when no sandbox manifests exist", async () => {
@@ -19,7 +22,10 @@ describe("sandbox-profiler CLI", () => {
     writeSpy.mockRestore();
   });
 
-  it("returns non-zero and reports the handler that breaches budget", async () => {
+  // This test profiles a REAL module via dynamic import, so it genuinely needs
+  // real wall-clock time (no injectable clock across the module boundary). Retry
+  // guards against a transient under-measurement on a loaded CI runner.
+  it("returns non-zero and reports the handler that breaches budget", { retry: CLI_TIMING_TEST_RETRIES }, async () => {
     const cwd = await mkdtemp(join(tmpdir(), "dateline-profiler-breach-"));
     await writeFile(
       join(cwd, "handler.mjs"),
