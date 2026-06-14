@@ -1,8 +1,31 @@
 {
   "name": "@dateline/core",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "type": "module",
   "license": "MIT",
+  "description": "Foundational sandboxed EmDash plugin for Dateline: events, venues, organizers, calendar feeds (JSON + iCal), schema.org JSON-LD, and Block Kit admin.",
+  "keywords": [
+    "emdash",
+    "emdash-plugin",
+    "dateline",
+    "events",
+    "calendar",
+    "ical",
+    "schema.org",
+    "cloudflare-workers"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/foreztgump/dateline-events-plugin.git",
+    "directory": "packages/core"
+  },
+  "homepage": "https://github.com/foreztgump/dateline-events-plugin/tree/main/packages/core#readme",
+  "bugs": {
+    "url": "https://github.com/foreztgump/dateline-events-plugin/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "./dist/index.mjs",
   "types": "./dist/index.d.mts",
   "exports": {
@@ -30,7 +53,9 @@
   },
   "files": [
     "dist",
-    "emdash-plugin.jsonc"
+    "!dist/**/*.test.*",
+    "emdash-plugin.jsonc",
+    "README.md"
   ],
   "scripts": {
     "build": "mkdir -p node_modules/.cache/emdash-build && TMPDIR=./node_modules/.cache/emdash-build emdash-plugin build && node ../../tools/bundle-sandbox-plugin.mjs && tsc -b",

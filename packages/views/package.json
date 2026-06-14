@@ -1,8 +1,30 @@
 {
   "name": "@dateline/views",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "type": "module",
   "license": "MIT",
+  "description": "Native Astro component library for Dateline themes: calendar (month/week/day/agenda/list), event cards, event details, venue maps, and organizer cards, wired to EmDash's content API.",
+  "keywords": [
+    "dateline",
+    "astro",
+    "emdash",
+    "events",
+    "calendar",
+    "components",
+    "ui"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/foreztgump/dateline-events-plugin.git",
+    "directory": "packages/views"
+  },
+  "homepage": "https://github.com/foreztgump/dateline-events-plugin/tree/main/packages/views#readme",
+  "bugs": {
+    "url": "https://github.com/foreztgump/dateline-events-plugin/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
@@ -14,6 +36,7 @@
   },
   "files": [
     "dist",
+    "!dist/**/*.test.*",
     "README.md"
   ],
   "scripts": {

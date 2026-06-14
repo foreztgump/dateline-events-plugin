@@ -1,8 +1,32 @@
 {
   "name": "@dateline/importer",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "type": "module",
   "license": "MIT",
+  "description": "Sandboxed EmDash plugin importing events into Dateline from iCalendar (.ics), CSV, JSON, and The Events Calendar (TEC) exports, with UID deduplication.",
+  "keywords": [
+    "emdash",
+    "emdash-plugin",
+    "dateline",
+    "events",
+    "import",
+    "ical",
+    "csv",
+    "tec",
+    "cloudflare-workers"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/foreztgump/dateline-events-plugin.git",
+    "directory": "packages/importer"
+  },
+  "homepage": "https://github.com/foreztgump/dateline-events-plugin/tree/main/packages/importer#readme",
+  "bugs": {
+    "url": "https://github.com/foreztgump/dateline-events-plugin/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "./dist/index.mjs",
   "types": "./dist/index.d.mts",
   "exports": {
@@ -22,6 +46,7 @@
   },
   "files": [
     "dist",
+    "!dist/**/*.test.*",
     "emdash-plugin.jsonc",
     "README.md"
   ],

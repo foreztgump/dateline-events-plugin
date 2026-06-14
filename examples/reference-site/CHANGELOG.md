@@ -1,5 +1,17 @@
 # @dateline/reference-site
 
+## 0.0.3
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @dateline/core@0.3.0
+  - @dateline/rsvp@0.3.0
+  - @dateline/importer@0.3.0
+  - @dateline/recurring@0.3.0
+  - @dateline/views@0.3.0
+  - @dateline/blocks@0.3.0
+
 ## 0.0.2
 
 ### Patch Changes
