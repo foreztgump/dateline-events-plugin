@@ -37,10 +37,12 @@ public npm registry under the `@dateline` scope (npm org `dateline`).
    This rewrites `package.json` versions, updates `CHANGELOG.md` files, and
    rewrites internal `workspace:*` ranges. Commit the result.
 
-3. **Tag and push** to trigger the publish:
+3. **Tag and push** to trigger the publish (use the version you just released —
+   `v0.3.1` or later; never `v0.3.0`, which is the local first-publish handled
+   by the exception above):
    ```bash
-   git tag v0.3.0
-   git push origin v0.3.0
+   git tag v0.3.1
+   git push origin v0.3.1
    ```
    The `Release` workflow (`.github/workflows/release.yml`) builds the workspace
    and runs `changeset publish` on the tag.
