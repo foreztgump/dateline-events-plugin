@@ -17,7 +17,7 @@
     {
       "binding": "DB",
       "database_name": "dateline-refsite-db",
-      "database_id": "7c82560c-7344-4432-b699-5904375c0e32"
+      "database_id": "0a405080-14bd-4ad1-b386-523e8a3585fb"
     }
   ],
   // Mission-scoped R2 bucket (binding MEDIA) — consumed by emdash r2({ binding: "MEDIA" }).
