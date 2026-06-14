@@ -12,10 +12,10 @@ import json
 import os
 from playwright.sync_api import sync_playwright, Page
 
-BASE_URL = "https://dateline-site-b.ddev.site:8443"
+BASE_URL = os.environ.get("DDEV_BASE_URL", "https://dateline-site-b.ddev.site:8443")
 ANALYSIS_DIR = os.path.dirname(__file__)
-USERNAME = "admin"
-PASSWORD = "dateline-research"
+USERNAME = os.environ.get("DDEV_USERNAME", "admin")
+PASSWORD = os.environ["DDEV_PASSWORD"]
 
 PLUGINS = ["eventon-rsvp", "eventon-tickets", "eventon-seats",
            "eventon-ticket-variations-options"]
